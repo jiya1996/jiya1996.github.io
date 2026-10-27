@@ -1,0 +1,130 @@
+{
+  "flame": {
+    "name": "赤焰迷醉空间",
+    "bg": "#080808",
+    "card": "#1c1c1c",
+    "text": "#fff4f2",
+    "muted": "#e1b6bb",
+    "border": "#69303a",
+    "accent": "#df243b",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#c9ae88",
+      "well": "#100c0e",
+      "raised": "#211a1c",
+      "muted": "#a99c9b"
+    }
+  },
+  "neon": {
+    "name": "绿动天地",
+    "bg": "#050800",
+    "card": "#101600",
+    "text": "#f1ffe9",
+    "muted": "#bbd7a9",
+    "border": "#4f6c3c",
+    "accent": "#b9f441",
+    "onAccent": "#142106",
+    "materials": {
+      "metal": "#b7bd97",
+      "well": "#0b1006",
+      "raised": "#171d10",
+      "muted": "#a3ad91"
+    }
+  },
+  "grass": {
+    "name": "青春聚力",
+    "bg": "#eef8ee",
+    "card": "#ffffff",
+    "text": "#183923",
+    "muted": "#45634e",
+    "border": "#b2d2b6",
+    "accent": "#328447",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#867444",
+      "well": "#edf3ed",
+      "raised": "#ffffff",
+      "muted": "#6c7e70"
+    }
+  },
+  "warm": {
+    "name": "温暖治愈风",
+    "bg": "#ffdb99",
+    "card": "#ffffff",
+    "text": "#443519",
+    "muted": "#716043",
+    "border": "#dfcc99",
+    "accent": "#a8640b",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#8f653d",
+      "well": "#f6e6cb",
+      "raised": "#fffdfa",
+      "muted": "#8a755c"
+    }
+  },
+  "cute": {
+    "name": "可爱萌系风",
+    "bg": "#f5f5f5",
+    "card": "#ffffff",
+    "text": "#3d2a47",
+    "muted": "#7b6a83",
+    "border": "#ddc6e5",
+    "accent": "#a554b3",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#a77eb4",
+      "well": "#f0eaf2",
+      "raised": "#fffefe",
+      "muted": "#81738a"
+    }
+  },
+  "pop": {
+    "name": "霓虹撞色局",
+    "bg": "#f4f4f4",
+    "card": "#ffffff",
+    "text": "#202025",
+    "muted": "#5a5059",
+    "border": "#ded8df",
+    "accent": "#ed149f",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#695963",
+      "well": "#eee9ed",
+      "raised": "#ffffff",
+      "muted": "#82717f"
+    }
+  },
+  "energy": {
+    "name": "热情元气风",
+    "bg": "#b21a31",
+    "card": "#ffffff",
+    "text": "#4b241c",
+    "muted": "#82554a",
+    "border": "#e8c2b4",
+    "accent": "#c33826",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#b28b54",
+      "well": "#f5eceb",
+      "raised": "#fffdfa",
+      "muted": "#8e706d"
+    }
+  },
+  "star": {
+    "name": "星澜简介风",
+    "bg": "#f4f5f7",
+    "card": "#ffffff",
+    "text": "#153354",
+    "muted": "#4b6280",
+    "border": "#b5cbe5",
+    "accent": "#225fae",
+    "onAccent": "#ffffff",
+    "materials": {
+      "metal": "#7e8ca8",
+      "well": "#e9edf4",
+      "raised": "#ffffff",
+      "muted": "#76839b"
+    }
+  }
+}
