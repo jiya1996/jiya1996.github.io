@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-label="Tpoker · 游戏感赛事">
+<defs><radialGradient id="bg"><stop stop-color="#523821"/><stop offset="1" stop-color="#100b08"/></radialGradient><linearGradient id="gold"><stop stop-color="#f9e2ae"/><stop offset="1" stop-color="#b88a4e"/></linearGradient></defs>
+<rect width="100%" height="100%" fill="url(#bg)"/>
+<rect x="42.00000000000001" y="26.4" width="1116.0" height="387.2" rx="13.2" fill="none" stroke="#b99762" stroke-opacity=".45"/>
+<path d="M 72.0 374.0 Q 420.0 66.0 1104.0 88.0" fill="none" stroke="#dfb978" stroke-opacity=".13" stroke-width="57.2"/>
+<text x="50%" y="118.80000000000001" text-anchor="middle" dominant-baseline="middle" fill="url(#gold)" font-size="123.20000000000002" font-family="Georgia,serif">♠</text>
+<text x="50%" y="233.20000000000002" text-anchor="middle" dominant-baseline="middle" fill="url(#gold)" font-size="105.6" font-weight="700" font-family="Georgia,serif" letter-spacing="1.5839999999999999">Tpoker</text>
+<text x="50%" y="343.2" text-anchor="middle" dominant-baseline="middle" fill="#cfb88e" font-size="33.0" font-family="PingFang SC,Microsoft YaHei,sans-serif" letter-spacing="8.8">游戏感赛事</text>
+</svg>
