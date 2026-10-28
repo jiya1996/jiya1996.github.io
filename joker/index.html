@@ -1,0 +1,1332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080808">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'">
+  <title>joker · 用户赛事</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080808'/%3E%3Cpath d='M32 8 54 20v24L32 56 10 44V20z' fill='none' stroke='%23c9ae88' stroke-width='3'/%3E%3Ctext x='32' y='39' text-anchor='middle' fill='%23df243b' font-size='22' font-family='serif'%3EJ%3C/text%3E%3C/svg%3E">
+  <style>:root{color-scheme:dark;--bg:#080808;--card:#1c1c1c;--well:#100c0e;--raised:#211a1c;--ink:#fff4f2;--muted:#a99c9b;--soft:#e1b6bb;--border:#69303a;--line:#3a2a2e;--accent:#df243b;--metal:#c9ae88;--blue:#6cbbef;--green:#8bcaad;--radius:16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6}button,input,textarea,select{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button,a{touch-action:manipulation}button{color:inherit;cursor:pointer}a{color:inherit;text-decoration:none}button:disabled{opacity:.38;cursor:not-allowed}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--metal);outline-offset:4px}input:focus,textarea:focus,select:focus{outline:2px solid #df243b88;border-color:var(--accent)}button svg,a svg{vertical-align:middle;flex-shrink:0}h1,h2,h3,p{margin:0}h1,h2,h3{font-weight:600}h1{font-family:"Songti SC","Noto Serif SC",serif;font-size:28px;letter-spacing:1px;line-height:1.4}h2{font-size:18px}h3{font-size:15px}small{font-size:11px}.muted{color:var(--muted)}.metal{color:var(--metal)}.accent{color:var(--accent)}.tiny{font-size:11px}.nowrap{white-space:nowrap}.spaced{display:flex;align-items:center;justify-content:space-between;gap:12px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.stack{display:grid;gap:12px}.space-top{margin-top:20px}.space-bottom{margin-bottom:20px}.divider{height:1px;background:var(--line);margin:20px 0}.eyebrow{color:var(--metal);font:9px/1.5 Georgia,serif;letter-spacing:2.5px;text-transform:uppercase}.pill{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:30px;padding:3px 10px;font-size:10px;color:var(--metal);gap:4px}.pill.success{color:var(--green);border-color:#335346}.pill.pending{color:#edbd82;border-color:#63472d}.pill.locked{color:var(--muted)}.badge-dot{height:5px;width:5px;border-radius:50%;background:var(--accent)}
+#app{width:min(100%,500px);margin:0 auto;min-height:100dvh;border-left:1px solid #241a1d;border-right:1px solid #241a1d}.app-header{position:sticky;top:0;z-index:15;height:64px;padding:12px 20px;background:#100d0ff2;backdrop-filter:blur(16px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px}.header-brand{display:flex;align-items:center;gap:10px;min-width:0}.header-brand>svg{width:32px;height:32px}.header-brand b{display:block;font-size:14px;letter-spacing:2px;color:var(--accent)}.header-title{font-size:15px;flex:1}.icon-button{display:grid;place-items:center;width:40px;height:40px;min-width:40px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--metal)}.icon-button.small{width:30px;height:30px;min-width:30px}.header-link{font-size:11px;color:var(--metal)}.page{padding:25px 20px 40px}.page.wide{padding:25px 28px 60px}.section-heading{margin:25px 0 13px;display:flex;justify-content:space-between;align-items:center;gap:12px}.section-heading h2{font-size:15px}.section-heading small{font-size:8px;letter-spacing:2px;color:var(--metal)}.section-heading:first-child{margin-top:0}.page-subtitle{font-size:12px;color:var(--muted);margin:8px 0 22px}.card{padding:20px;background:linear-gradient(140deg,var(--raised),var(--well));border:1px solid var(--line);border-radius:var(--radius)}.card.flat{background:var(--well)}.card.active{border-color:#956644}.card.danger{border-color:#8b2c3d}.hint{font-size:12px;line-height:1.8;color:var(--muted)}.notice{padding:12px 14px;border:1px solid var(--line);border-left:2px solid var(--accent);border-radius:8px;background:#1d1217;font-size:12px;color:var(--soft)}.empty{padding:38px 20px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius);background:#100c0e}.empty>svg{width:76px;height:76px;color:var(--metal);opacity:.6;margin-bottom:15px}.empty h2{font-size:18px;margin-bottom:6px}.empty p{color:var(--muted);font-size:12px;max-width:310px;margin:0 auto 16px}.button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:11px 17px;border:1px solid var(--line);border-radius:9px;background:var(--raised);color:var(--ink);font-size:13px;line-height:1.4}.button:hover{border-color:#8a555c;background:#2b1c22}.button.primary{background:var(--accent);border-color:var(--accent);color:#fff}.button.primary:hover{background:#ed3550}.button.gold{background:var(--metal);border-color:var(--metal);color:#251b15}.button.ghost{background:transparent}.button.small{min-height:34px;padding:8px 12px;font-size:11px}.button.wide{display:flex;width:100%}.button.danger{color:#ff9eac;border-color:#823344}.link-button{border:0;background:none;color:var(--metal);padding:7px 0;font-size:12px;text-align:left;min-height:34px}.actions{display:flex;gap:10px;flex-wrap:wrap}.actions>.button{flex:1}.form-grid{display:grid;gap:18px}.field{display:grid;gap:7px;font-size:13px}.field>span{color:#d3c0c3}.field small{color:var(--muted);font-size:11px}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid var(--line);background:#0e0b0d;color:var(--ink);border-radius:8px;padding:12px 13px;min-height:46px;font-size:16px;line-height:1.4}.field textarea{min-height:90px;resize:vertical}.field input[readonly]{color:var(--muted);background:#161115}.field input::placeholder{color:#76666c}.checkbox{display:flex;align-items:center;gap:9px;font-size:12px;color:#cfbfc2;cursor:pointer;min-height:36px}.checkbox input{accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.segmented{display:flex;gap:4px;border:1px solid var(--line);border-radius:30px;padding:4px;background:var(--raised);width:max-content;max-width:100%;overflow-x:auto}.segmented button,.segmented a{border:0;background:transparent;color:var(--muted);padding:8px 17px;border-radius:25px;white-space:nowrap;font-size:12px}.segmented [aria-selected=true],.segmented [aria-pressed=true],.segmented .selected{color:#fff;background:var(--accent)}.tabs-scroll{overflow:auto;display:flex;gap:9px;padding:4px 0 12px;scrollbar-width:thin}.tabs-scroll button,.tabs-scroll a{min-width:fit-content;border:1px solid var(--line);border-radius:25px;padding:8px 14px;background:var(--well);color:var(--muted);font-size:12px}.tabs-scroll [aria-selected=true],.tabs-scroll .selected{color:var(--metal);border-color:var(--metal);background:var(--raised)}
+.hero{position:relative;overflow:hidden;padding:10px 0 24px;margin-bottom:8px;border-bottom:1px solid var(--line)}.hero .hero-crest{position:absolute;right:0;top:3px;width:104px;height:104px;color:var(--metal);opacity:.55}.hero h1{font-size:28px;max-width:290px;margin:12px 0 8px}.hero p{font-size:11px;color:var(--muted);max-width:275px}.brand-word{font-family:"Songti SC",serif;color:var(--accent);letter-spacing:5px;font-size:21px}.identity{margin-top:19px}.identity-top{display:flex;align-items:center;gap:13px}.avatar{width:64px;height:64px;border:1px solid #8d7054;border-radius:50%;background:#151013;display:grid;place-items:center;overflow:hidden;color:var(--metal);font-family:"Songti SC",serif;font-size:25px;flex-shrink:0}.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}.avatar.small{width:38px;height:38px;font-size:17px}.avatar.large{width:88px;height:88px;font-size:32px}.identity-name{flex:1;min-width:0}.identity-name h2{font-size:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.identity-name p{font-size:10px;color:var(--muted);margin-top:2px}.identity-bottom{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);text-align:center}.metric+.metric{border-left:1px solid var(--line)}.metric b{display:block;font:23px/1.2 Georgia,serif;color:var(--metal)}.metric span{display:block;color:var(--muted);font-size:10px;margin-top:5px}.level-summary{width:100%;text-align:left;margin-top:14px;display:grid;grid-template-columns:56px 1fr 16px;align-items:center;gap:13px;background:linear-gradient(125deg,#38121c,#181114);border:1px solid #6b3542;padding:15px;border-radius:13px}.level-summary svg{width:56px;height:56px;color:var(--metal)}.level-summary b{display:block;font-size:16px;font-family:"Songti SC",serif}.level-summary small{display:block;color:var(--soft);font-size:10px;margin-top:3px}.feature-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.feature{position:relative;min-height:145px;text-align:left;overflow:hidden;border:1px solid #574039;border-radius:12px;padding:17px;background:linear-gradient(130deg,#29181d,#100c0e);color:var(--ink)}.feature h2{font:22px/1.5 "Songti SC",serif;margin:12px 0 6px}.feature p{font-size:10px;color:var(--muted)}.feature>.art{position:absolute;right:-15px;bottom:0;width:95px;height:95px;color:var(--metal);opacity:.22;transform:rotate(12deg)}.feature>.arrow{position:absolute;top:13px;right:12px;color:var(--metal)}.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--well)}.service{min-height:102px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:transparent;border:0;color:var(--metal);text-align:center}.service+.service{border-left:1px solid var(--line)}.service svg{width:27px;height:27px;stroke-width:1.5}.service b{font-size:12px;color:var(--ink);font-weight:400}.footer-note{text-align:center;font-size:10px;color:var(--muted);margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}.auth-art{display:flex;justify-content:center;margin:5px 0 20px}.auth-art svg{width:92px;height:92px;color:var(--metal)}.auth-title{text-align:center;margin-bottom:25px}.auth-title p{font-size:12px;color:var(--muted);margin-top:9px}
+.progress{height:5px;border-radius:5px;background:#050405;overflow:hidden;margin:14px 0 7px;border:1px solid #3e2a2f}.progress>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--metal));border-radius:5px}.level-card{position:relative;padding:26px 22px;min-height:205px;background:radial-gradient(ellipse at 90% 10%,#59332655,transparent 60%),linear-gradient(135deg,#281d1c,#100c0e);border:1px solid #826244;border-radius:17px;overflow:hidden}.level-card .crest{position:absolute;right:10px;top:18px;width:130px;height:130px;color:var(--metal);opacity:.9}.level-card .level-title{font:30px/1.5 "Songti SC",serif;position:relative;padding-right:95px;margin:8px 0}.level-card .level-value{font:28px Georgia,serif;color:var(--metal);margin:10px 0}.level-card p{font-size:12px;position:relative}.level-card .progress{position:relative;max-width:100%}.level-card .pill{position:relative;background:#201719}.level-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:14px 0 23px}.level-picker a{font-size:10px;border:1px solid var(--line);border-radius:7px;text-align:center;padding:8px 2px;color:var(--muted)}.level-picker a span{display:block;font-size:8px}.level-picker a.selected{border-color:var(--metal);color:var(--metal);background:#332119}.reward-grid{display:grid;gap:12px}.reward-card{display:grid;grid-template-columns:46px minmax(0,1fr);gap:13px;padding:17px;border:1px solid var(--line);border-radius:12px;background:var(--well)}.reward-card>.reward-icon{width:46px;height:46px;color:var(--metal);border:1px solid #584033;border-radius:11px;display:grid;place-items:center}.reward-card h3{font-size:14px}.reward-card p{font-size:11px;color:var(--muted);margin-top:4px}.quota{display:flex;gap:11px;margin:12px 0;color:var(--soft);font-size:11px;flex-wrap:wrap}.quota b{font:18px Georgia,serif;color:var(--metal);margin:0 2px}.reward-card.locked{opacity:.65}.reward-card .actions{margin-top:12px}.reward-detail{grid-column:1/-1}.summary-block{padding:16px 0}.summary-block summary{cursor:pointer;color:var(--metal);font-size:13px}.summary-block p,.summary-block ul{font-size:12px;color:var(--muted);line-height:1.9;margin-top:12px}.summary-block ul{padding-left:20px}.data-table{width:100%;border-collapse:collapse;font-size:12px}.data-table th{color:var(--muted);font-size:10px;font-weight:400;text-align:left;letter-spacing:.4px}.data-table th,.data-table td{padding:13px 8px;border-bottom:1px solid var(--line)}.data-table td:not(:first-child),.data-table th:not(:first-child){text-align:right}.data-table tr:last-child td{border-bottom:0}.data-table td b{font:19px Georgia,serif;color:var(--metal)}.data-table small{display:block;color:var(--muted);font-size:10px}.data-table .opponent b{color:var(--blue)}.table-scroll{overflow:auto}.radar{display:block;width:100%;max-width:410px;margin:8px auto}.radar-label{font:11px sans-serif;fill:var(--soft)}.legend{display:flex;justify-content:center;gap:16px;font-size:10px;margin:12px 0}.legend i{display:inline-block;width:8px;height:8px;margin-right:5px;background:var(--metal);border-radius:50%}.legend .opponent i{background:var(--blue)}.record{padding:15px 0;border-bottom:1px solid var(--line)}.record:last-child{border-bottom:0}.record b{font-size:13px}.record p{font-size:11px;color:var(--muted);margin-top:4px}.record time{font-size:10px;color:var(--muted)}.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-stats>div{border:1px solid var(--line);border-radius:10px;background:var(--well);padding:15px}.mini-stats b{font:27px Georgia,serif;color:var(--metal);display:block}.mini-stats span{font-size:11px;color:var(--muted)}.rank-row{display:grid;grid-template-columns:32px 38px minmax(0,1fr) 64px;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.rank-row:last-child{border-bottom:0}.rank-row .rank-number{font:20px Georgia,serif;color:var(--metal)}.rank-row.me{background:#3a172155;margin:0 -12px;padding:14px 12px;border-radius:8px}.rank-row b{font-size:13px}.rank-row small{color:var(--muted);font-size:10px;display:block}.rank-row .value{text-align:right;font:21px Georgia,serif;color:var(--metal)}
+.card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 9px}.gift-tile{border:0;background:none;padding:0;color:var(--metal);position:relative;text-align:center;min-width:0}.gift-tile>svg{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 8px #0008);transition:transform .2s}.gift-tile:hover>svg{transform:translateY(-4px)}.gift-tile .card-count{position:absolute;right:-3px;top:-5px;min-width:25px;height:25px;border:1px solid #ad8d5d;border-radius:50%;background:#23191d;display:grid;place-items:center;font:14px Georgia,serif}.gift-tile .card-caption{font-size:10px;color:var(--soft);display:block;margin-top:7px}.gift-tile.zero svg{opacity:.58}.balance-strip{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:12px;padding:15px;background:var(--well);gap:12px}.balance-strip b{font:30px Georgia,serif;color:var(--metal);margin:0 3px}.balance-strip small{display:block;color:var(--muted);font-size:10px}.card-detail-art{width:112px;margin:auto}.card-detail-art svg{width:100%;height:auto}.operation-list{display:grid;gap:10px;margin-top:20px}.operation-list button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;background:var(--well);border:1px solid var(--line);border-radius:10px;text-align:left;padding:15px;color:var(--ink)}.operation-list button span small{display:block;margin-top:3px;color:var(--muted);font-size:10px}.claim-code{font:bold 22px/1.5 ui-monospace,monospace;letter-spacing:2px;color:var(--metal);border:1px dashed #8c6c49;border-radius:10px;background:#0d090b;padding:18px 8px;text-align:center;margin:15px 0}.claim-card{padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--well)}.claim-card+.claim-card{margin-top:13px}.claim-card h3{font-size:15px}.claim-card p{font-size:11px;color:var(--muted);margin-top:5px}.wheel-wrap{position:relative;width:min(100%,360px);aspect-ratio:1;margin:15px auto 22px}.wheel{width:100%;height:100%;transition:transform 2.6s cubic-bezier(.15,.7,.12,1);filter:drop-shadow(0 0 24px #df243b33)}.wheel.is-spinning{transform:rotate(var(--spin))}.wheel-pointer{position:absolute;left:50%;top:-8px;transform:translateX(-50%);z-index:2;color:var(--metal);font-size:32px;line-height:1;text-shadow:0 0 10px var(--accent)}.wheel-center{position:absolute;left:50%;top:50%;width:78px;height:78px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--metal);background:radial-gradient(circle,#543621,#2e1420);box-shadow:0 0 22px #000;display:grid;place-items:center;color:var(--metal);font:bold 18px "Songti SC",serif}.probabilities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}.probabilities div{border:1px solid var(--line);padding:10px 4px;border-radius:8px;text-align:center;background:var(--well)}.probabilities b{display:block;color:var(--metal);font-size:12px}.probabilities small{color:var(--muted);font-size:11px}.draw-results{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px 7px;margin:20px 0}.draw-results.single{grid-template-columns:1fr;max-width:140px;margin:20px auto}.draw-results svg{width:100%;height:auto}.draw-results p{text-align:center;font-size:10px;color:var(--metal)}.draw-stage{text-align:center;padding:30px 5px}.draw-stage svg{width:100px;height:100px;color:var(--metal);animation:award-pulse 1s infinite alternate}.draw-stage p{color:var(--muted);font-size:12px;margin-top:15px}
+.honor-summary{text-align:center;padding:26px 20px}.honor-summary .avatar{margin:0 auto 12px}.honor-summary h2{font:24px "Songti SC",serif;margin:8px 0}.honor-summary .achievement{font:40px Georgia,serif;color:var(--metal);display:block;margin:14px 0 4px}.honor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.honor-tile{border:1px solid var(--line);border-radius:12px;background:var(--well);padding:14px 8px;text-align:center;color:var(--metal);min-width:0}.honor-tile svg{width:74px;height:74px;max-width:100%}.honor-tile b{display:block;font-size:12px;font-weight:500;color:var(--ink);margin-top:4px}.honor-tile small{display:block;font-size:9px;color:var(--muted);margin-top:5px}.honor-tile.locked svg{filter:grayscale(1);opacity:.38}.honor-tile.unlocked{border-color:#977142;background:radial-gradient(ellipse at top,#53351c55,var(--well) 70%)}.honor-tile .progress{height:3px;margin:9px 0 5px}.honor-detail-title{text-align:center}.honor-detail-title>svg{width:120px;height:120px;color:var(--metal)}.honor-detail-title h2{font:26px "Songti SC",serif;margin:8px 0}.badge-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:16px 0}.badge-gallery svg{width:100%;height:auto;color:var(--metal)}.badge-gallery figure{margin:0;text-align:center;font-size:10px;color:var(--muted)}.award-stage{position:relative;overflow:hidden;min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #865e3e;border-radius:14px;background:radial-gradient(ellipse at center,#561b28,#0d090b 70%);text-align:center}.award-stage:before,.award-stage:after{content:"";position:absolute;width:220px;height:220px;border:1px solid #a67c3b44;border-radius:50%;box-shadow:0 0 25px #df243b33}.award-stage:after{width:175px;height:175px;transform:rotate(30deg);border-style:dashed}.award-stage>svg{width:120px;height:120px;color:var(--metal);z-index:1}.award-stage h3{font:26px "Songti SC",serif;color:var(--metal);z-index:1;margin:6px 0}.award-stage p{font-size:10px;letter-spacing:3px;color:var(--soft);z-index:1}.award-stage.playing:before{animation:award-ring 2.2s linear infinite}.award-stage.playing:after{animation:award-ring 3.5s linear reverse infinite}.award-stage.playing>svg{animation:award-enter .7s ease-out,award-pulse 1.6s .7s infinite alternate}.effect-row{display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--well);margin-top:10px}.effect-row>svg{width:58px;height:58px;color:var(--metal)}.effect-row>div{flex:1}.effect-row b{font-size:13px}.effect-row small{display:block;color:var(--muted);font-size:10px}.effect-row.selected{border-color:var(--metal)}.hand-pair{display:flex;justify-content:center;gap:18px;margin:20px 0 28px}.hand-slot{width:137px;max-width:42%;border:1px solid var(--line);background:#1b1015;border-radius:14px;padding:6px;color:var(--metal);position:relative}.hand-slot.selected{border-color:var(--accent);box-shadow:0 0 0 2px #df243b33}.hand-slot>svg{width:100%;height:auto;display:block}.hand-slot>span{font-size:10px;display:block;text-align:center;padding:2px 0 7px}.number-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:15px 0 23px}.number-grid button{height:51px;border:1px solid var(--line);border-radius:9px;background:var(--well);font:22px Georgia,serif;color:var(--metal)}.number-grid button.selected{background:var(--accent);color:white;border-color:var(--accent)}.avatar-editor{display:flex;align-items:center;justify-content:space-between;gap:15px}.crop-area{width:min(100%,320px);aspect-ratio:1;position:relative;margin:15px auto;touch-action:none;overflow:hidden;background:#050405;border-radius:12px}.crop-area canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none}.crop-overlay{position:absolute;inset:0;pointer-events:none;border-radius:50%;box-shadow:0 0 0 80px #000b;border:2px solid var(--metal)}.crop-area.dragging canvas{cursor:grabbing}.crop-controls{display:grid;gap:8px}.crop-controls input{width:100%;accent-color:var(--accent)}.address-card{padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--well);margin-bottom:12px}.address-card h3{font-size:15px}.address-card p{font-size:12px;color:var(--muted);margin-top:7px}.address-card .address-actions{display:flex;justify-content:space-between;gap:15px;padding-top:13px;margin-top:13px;border-top:1px solid var(--line)}
+.merchant-mode #app{width:min(100%,1220px)}.merchant-mode .page{max-width:1150px;margin:auto}.merchant-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:24px}.merchant-tabs{display:flex;gap:7px;overflow:auto;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:25px}.merchant-tabs a{white-space:nowrap;padding:9px 16px;background:var(--well);border:1px solid var(--line);border-radius:25px;font-size:12px;color:var(--muted)}.merchant-tabs a.selected{background:var(--accent);color:#fff;border-color:var(--accent)}.merchant-grid{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:20px;align-items:start}.merchant-column{display:grid;gap:18px}.merchant-grid .card h2{margin-bottom:14px}.template-row{display:grid;grid-template-columns:42px minmax(0,1fr) 80px 80px;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.template-row .field input{font-size:14px;padding:9px;min-height:40px}.template-row .field{font-size:11px}.template-row .field>span{color:var(--muted)}.template-row .tier-icon{width:34px;height:47px}.template-row .tier-icon svg{width:100%;height:100%}.template-row.prob-row{grid-template-columns:42px minmax(0,1fr) 115px}.template-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.template-grid .field input{font-size:14px}.prob-total{font:24px Georgia,serif;color:var(--metal)}.prob-total.invalid{color:#ff8fa3}.merchant-details{border:1px solid var(--line);border-radius:12px;background:var(--well);padding:15px;margin-bottom:12px}.merchant-details>summary{cursor:pointer;display:list-item;font-size:14px;color:var(--metal)}.merchant-details .form-grid{margin-top:17px}.benefit-edit{display:grid;grid-template-columns:1fr 75px;gap:10px;margin:10px 0}.benefit-edit .field input{font-size:14px}.benefit-edit .field{font-size:11px}.merchant-mode .record-table{min-width:600px}.merchant-mode .data-table .button{white-space:nowrap}.stats-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.input-suffix{display:flex;align-items:center;gap:8px}.input-suffix span{white-space:nowrap;color:var(--muted)}.mini-cashier{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:20px}.mini-cashier a,.mini-cashier span{padding:15px 3px;text-align:center;font-size:12px;color:var(--muted)}.mini-cashier .selected{color:var(--accent);background:#371621}.cashier-entry{width:100%;display:flex;align-items:center;gap:15px;text-align:left;padding:22px;background:linear-gradient(130deg,#4b1524,#211217);border:1px solid #934153;border-radius:14px}.cashier-entry>svg{width:40px;height:40px;color:var(--metal)}.cashier-entry b{display:block;font-size:18px;font-family:"Songti SC",serif}.cashier-entry small{color:var(--soft);font-size:11px}.cashier-entry>span:last-child{margin-left:auto;color:var(--metal)}
+dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e;border-radius:18px;background:#181014;color:var(--ink);box-shadow:0 25px 90px #000b;overflow:auto}dialog::backdrop{background:#000b;backdrop-filter:blur(5px)}.dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:18px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#181014;z-index:3}.dialog-heading h2{font-size:17px}.dialog-body{padding:20px}.dialog-actions{display:flex;gap:10px;padding:0 20px 20px}.dialog-actions .button{flex:1}.dialog-body .form-grid+.actions{margin-top:20px}#toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(15px);background:#f2e6d8;color:#291d20;padding:12px 20px;max-width:min(90vw,500px);border:1px solid #bd9f7b;border-radius:12px;box-shadow:0 10px 40px #0008;opacity:0;pointer-events:none;z-index:100;transition:.2s;text-align:center;font-size:13px}#toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}.data-updated{padding:9px 15px;text-align:center;background:#432113;color:#ebc79b;font-size:11px}.data-updated button{border:0;background:none;color:#fff;text-decoration:underline;margin-left:8px}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes award-enter{from{opacity:0;transform:scale(.3) rotate(-25deg)}to{opacity:1;transform:scale(1) rotate(0)}}@keyframes award-pulse{from{filter:drop-shadow(0 0 2px #c9ae8855);transform:scale(.97)}to{filter:drop-shadow(0 0 15px #c9ae8888);transform:scale(1.03)}}@keyframes award-ring{to{transform:rotate(360deg)}}
+@media(max-width:700px){.merchant-mode .page{padding:22px 16px 45px}.merchant-grid{grid-template-columns:1fr}.merchant-heading{display:block}.merchant-heading .actions{margin-top:16px}.stats-form{grid-template-columns:1fr 1fr}.template-grid{grid-template-columns:1fr 1fr}.merchant-tabs{margin-right:-16px;padding-right:16px}.app-header{padding:11px 16px}.page{padding:23px 16px 35px}.page.wide{padding:23px 16px 35px}.hero h1{font-size:25px}.identity-name h2{font-size:17px}.identity .avatar{width:54px;height:54px}.feature h2{font-size:21px}.card-grid{gap:14px 8px}.honor-grid{gap:8px}.honor-tile{padding:13px 6px}.honor-tile b{font-size:11px}.level-card .crest{width:112px;height:112px;right:6px}.level-card .level-title{font-size:27px;padding-right:82px}.template-row{grid-template-columns:34px minmax(0,1fr) 68px 68px;gap:7px}.template-row.prob-row{grid-template-columns:34px 1fr 95px}.hand-pair{gap:16px}.merchant-details .data-table th,.merchant-details .data-table td{padding:10px 5px}.merchant-details input{min-width:70px}.form-row{gap:10px}}
+@media(max-width:360px){.page{padding-left:12px;padding-right:12px}.feature-pair{gap:8px}.feature{padding:13px}.honor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.probabilities{gap:5px}.level-picker a{font-size:9px}.level-picker a span{font-size:7px}}
+.level-card .level-title{display:grid;gap:2px;padding-right:112px;line-height:1.25;margin:12px 0 16px}.level-card .level-name{font-size:22px;line-height:1.4;overflow-wrap:anywhere}
+@media(max-width:700px){.level-card .level-title{padding-right:96px;font-size:30px}.level-card .level-name{font-size:21px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}.header-return{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:36px;padding:7px 8px;border:1px solid var(--line);border-radius:9px;font-size:11px;color:var(--metal);white-space:nowrap}.header-return:hover{border-color:var(--metal)}
+</style>
+  
+  
+  
+</head>
+<body>
+  <div id="app"><main class="page"><p class="muted">正在打开joker用户赛事…</p></main></div>
+  <dialog id="dialog" aria-label="操作详情"></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript>请启用JavaScript以操作用户赛事原型。</noscript>
+<script defer>(function (root) {
+  'use strict';
+  const CARDS = ['9', '10', 'J', 'Q', 'K', 'A', '小王', '大王'];
+  const MERGE = [10, 5, 2, 2, 3, 4, 3, 0];
+  const TICKETS = [0, 0, 0, 0, 3, 8, 15, 25];
+  const LEVEL_NAMES = ['青铜', '白银', '黄金', '铂金', '钻石', '星耀', '最强王者', '无双王者', '荣耀王者', '传奇王者'];
+  const HONORS = [
+    ['champion', '冠军', '正式赛事获得第一名，每场累计一次。', 5, 2],
+    ['runnerup', '亚军', '正式赛事获得第二名，每场累计一次。', 5, 1],
+    ['third', '季军', '正式赛事获得第三名，每场累计一次。', 5, 1],
+    ['kill27', '二七击杀', '由荷官登记二七击杀事件。', 5, 1],
+    ['climb86', '86上山', '由荷官登记86上山事件。', 5, 1],
+    ['pistol47', '47小手枪', '由荷官登记47小手枪事件。', 5, 1],
+    ['luckyWin', '幸运手牌获胜', '使用已设置的幸运手牌获胜，由荷官登记。', 5, 1],
+    ['doubleKill', '双杀', '由荷官登记单场双杀事件。', 5, 1],
+    ['tripleKill', '三杀', '由荷官登记单场三杀事件。', 5, 2],
+    ['quadKill', '四杀', '由荷官登记单场四杀事件。', 1, 1],
+    ['pentaKill', '五杀', '由荷官登记单场五杀事件。', 1, 2],
+    ['multiKill', '五杀以上', '由荷官登记单场五杀以上事件。', 1, 4],
+    ['sharkWin', '鲨鱼获胜', '由荷官确认鲨鱼获胜事件。', 1, 1],
+    ['sharkEnd', '终结鲨鱼', '由荷官确认终结鲨鱼事件。', 5, 1],
+    ['straightFlush', '同花顺', '正式对局中获得同花顺，由荷官登记。', 1, 1],
+    ['royalFlush', '皇家同花顺', '正式对局中获得皇家同花顺，由荷官登记。', 1, 4],
+    ['quads', '四条', '正式对局中获得四条，由荷官登记。', 5, 1]
+  ].map(function (x) { return {id:x[0], name:x[1], description:x[2], first:x[3], reward:x[4]}; });
+  const SPECIAL = [
+    ['hunterKing','猎杀王者','当前猎人总榜前三名'],
+    ['master','德州大师','商家确认的大师荣誉'],
+    ['captain','最强队长','商家确认的队长荣誉'],
+    ['teammate','最强队友','商家确认的队友荣誉'],
+    ['sniper','猎人狙击手','商家确认的猎人荣誉'],
+    ['hunter','头号猎人','商家确认的猎人荣誉'],
+    ['attendance','满勤玩家','商家确认的到店荣誉'],
+    ['grandmaster','荣耀大师','商家确认的高阶大师荣誉'],
+    ['deepFear','深渊恐惧','商家确认的特殊荣誉'],
+    ['bluff','偷鸡之王','商家确认的特殊荣誉'],
+    ['coronation','王之加冕','商家确认的冠军荣誉'],
+    ['highRoller','至尊豪客','商家确认的特殊荣誉']
+  ].map(function (x) { return {id:x[0], name:x[1], description:x[2], special:true}; });
+  const copy = function (x) { return JSON.parse(JSON.stringify(x)); };
+  function assert(ok, message) { if (!ok) throw new Error(message); }
+  function integer(n, min, max, label) {
+    assert(Number.isSafeInteger(n) && n >= min && n <= max, (label || '数量') + '不在有效范围内');
+    return n;
+  }
+  function benefit(id, title, quantity, type, detail) {
+    return {id:id, title:title, quantity:quantity, type:type || 'gift', detail:detail || ''};
+  }
+  function defaultLevels() {
+    const rewards = [
+      [benefit('drink','注册赠饮',1,'gift','可乐或雪碧任选一份')],
+      [benefit('cocktail','鸡尾酒',1,'gift','升级赠饮，额度固定，领完不重置')],
+      [benefit('ticket','门票',1,'ticket'),benefit('snack','小吃',1)],
+      [benefit('ticket','门票',2,'ticket'),benefit('drink','特调',1),benefit('snack','小吃',1)],
+      [benefit('ticket','门票',2,'ticket'),benefit('room','珠海贵宾楼使用权',1,'gift','录屏参考权益，A版可编辑演示')],
+      [benefit('ticket','门票',2,'ticket'),benefit('room','深圳贵宾楼使用权',1,'gift','录屏参考权益，A版可编辑演示')],
+      [benefit('team','创建战队资格',1,'access','资格说明展示；本次不包含独立战队系统'),benefit('ticket','升级门票',1,'ticket','按已确认规则改为固定总量'),benefit('drink','特调',1),benefit('task','隐藏任务资格',1,'access','达到本等级后解锁资格说明')],
+      [benefit('ticket','周卡',2,'ticket'),benefit('drink','特调',1),benefit('snack','小吃',1),benefit('hotel','希尔顿白金卡',1,'gift','录屏参考权益，可在商家模板中修改'),benefit('seat','预约保留座位',1),benefit('ride','港澳往返接送',1)],
+      [benefit('ticket','周卡',2,'ticket'),benefit('effect','专属出场特效资格',1,'access'),benefit('podium','前三额外门票',2,'ticket','需存在已结算的前三战绩'),benefit('drink','特调',1),benefit('snack','小吃',1),benefit('flight','全国随心飞',1),benefit('hotel','万豪白金卡',1)],
+      [benefit('ticket','月卡',1,'ticket'),benefit('chip','定制专属积分牌',1,'gift','20万分纪念积分牌，到店领取，不计入赛事积分'),benefit('double','冠军奖励双倍资格',1,'access','资格说明展示，具体赛事奖励另行核对'),benefit('effect','定制专属特效资格',1,'access'),benefit('drink','特调',2),benefit('snack','小吃',2)]
+    ];
+    return LEVEL_NAMES.map(function (name, i) {
+      return {level:i+1, name:name, threshold:i ? 700 * Math.pow(2,i-1) : 0, rewards:rewards[i]};
+    });
+  }
+  function createState() {
+    const rules = {};
+    HONORS.forEach(function (h) {
+      rules[h.id] = {thresholds:[h.first,h.first*2,h.first*4,h.first*8,h.first*16], rewards:[h.reward,h.reward*2,h.reward*3,h.reward*4,h.reward*5]};
+    });
+    return {
+      schema:1, revision:0, updatedAt:null, processed:[], accounts:[], claims:[], log:[],
+      merchant:{name:'joker', stores:[{id:'main',name:'joker主店 · 演示'},{id:'branch',name:'joker分店 · 演示'}]},
+      settings:{
+        probabilities:[65.86,30,2,1,0.5,0.6,0.03,0.01], probabilityVersion:1, probabilityHistory:[],
+        levels:defaultLevels(), honorRules:rules, honorVersion:1,
+        giftPrizes:['','饮品礼遇','小吃礼遇','特调礼遇','门店礼遇礼包','尊享礼遇礼包','荣耀礼遇礼包','传奇礼遇礼包']
+      }
+    };
+  }
+  function newAccount(data, memberId, at) {
+    return {
+      id:data.id, memberId:memberId, phone:data.phone, salt:data.salt, passwordHash:data.passwordHash,
+      nickname:data.nickname || ('joker玩家'+memberId), avatar:'', createdAt:at, storeId:data.storeId || 'main',
+      addresses:[], growthCents:0, growthLedger:[], tickets:0, ticketLedger:[],
+      gifts:Object.fromEntries(CARDS.map(function(c){return [c,0];})), drawCredits:0, hunterTotal:0, hunterLedger:[],
+      draws:[], giftHistory:[], matches:[], honorAdjustments:{}, specials:{}, rewards:{},
+      hand:null, handActivity:[], entranceEffect:null
+    };
+  }
+  function account(state, id) {
+    const a = state.accounts.find(function(x){return x.id===id;});
+    assert(a, '请先登录赛事账号');
+    return a;
+  }
+  function levelFor(state, cents) {
+    return state.settings.levels.filter(function(l){return Math.round(l.threshold*100)<=cents;}).slice(-1)[0];
+  }
+  function membership(state, a) {
+    const current=levelFor(state,a.growthCents), next=state.settings.levels[current.level] || null;
+    const floor=Math.round(current.threshold*100), ceiling=next ? Math.round(next.threshold*100) : floor;
+    return {current:current,next:next,growth:a.growthCents/100,gap:next ? Math.max(0,(ceiling-a.growthCents)/100) : 0,progress:next ? Math.max(0,Math.min(1,(a.growthCents-floor)/(ceiling-floor))) : 1};
+  }
+  function settled(a) { return a.matches.filter(function(m){return m.status==='settled';}).sort(function(a,b){return new Date(b.at)-new Date(a.at);}); }
+  function stats(a) {
+    const all=settled(a), recent=all.slice(0,5), sng=all.filter(function(m){return m.game==='SNG';}), mtt=all.filter(function(m){return m.game==='MTT';});
+    const pct=function(rows,predicate){return {count:rows.length, wins:rows.filter(predicate).length, ratio:rows.length ? rows.filter(predicate).length/rows.length : null};};
+    const podium=function(m){return m.rank<=3;};
+    return {axes:[pct(recent,podium),pct(all,podium),pct(all,function(m){return m.rank===1;}),pct(sng,podium),pct(mtt,podium)],total:all.length,pending:a.matches.length-all.length,recent:recent,points:all.reduce(function(n,m){return n+m.points;},0)};
+  }
+  function honorCounts(a) {
+    const result={};
+    HONORS.forEach(function(h){result[h.id]=a.honorAdjustments[h.id] || 0;});
+    settled(a).forEach(function(m){if(m.rank===1)result.champion++;if(m.rank===2)result.runnerup++;if(m.rank===3)result.third++;});
+    return result;
+  }
+  function honorProgress(state,a,id) {
+    const rule=state.settings.honorRules[id], count=honorCounts(a)[id] || 0;
+    const reached=rule.thresholds.filter(function(t){return count>=t;}).length;
+    const target=rule.thresholds[reached] || null, floor=reached ? rule.thresholds[reached-1] : 0;
+    return {count:count,level:reached,target:target,gap:target ? target-count : 0,progress:target ? (count-floor)/(target-floor) : 1};
+  }
+  function effectUnlocked(state,a,id) {
+    if (!id) return true;
+    if (HONORS.some(function(h){return h.id===id;})) return (honorCounts(a)[id]||0)>0;
+    return !!a.specials[id];
+  }
+  // 额度在解锁时留快照。修改模板不会把已领取额度重新生成一遍。
+  function syncRewards(state,a,at) {
+    const current=membership(state,a).current.level;
+    state.settings.levels.filter(function(l){return l.level<=current;}).forEach(function(l){
+      l.rewards.forEach(function(b){
+        if(b.type==='access')return;
+        if(b.id==='podium'&&!settled(a).some(function(m){return m.rank<=3;}))return;
+        const key='level:'+l.level+':'+b.id;
+        if(!a.rewards[key])a.rewards[key]={key:key,kind:'level',level:l.level,title:b.title,detail:b.detail,type:b.type,total:b.quantity,claimed:0,at:at};
+      });
+    });
+    HONORS.forEach(function(h){
+      const p=honorProgress(state,a,h.id),rule=state.settings.honorRules[h.id];
+      for(let i=0;i<p.level;i++){
+        const key='honor:'+h.id+':'+(i+1);
+        if(!a.rewards[key])a.rewards[key]={key:key,kind:'honor',honorId:h.id,level:i+1,title:h.name+' LV'+(i+1)+'门票',type:'ticket',total:rule.rewards[i],claimed:0,at:at};
+      }
+    });
+  }
+  function probabilityUnits(values) {
+    assert(Array.isArray(values)&&values.length===8,'请设置全部8档概率');
+    const units=values.map(function(p){
+      assert(Number.isFinite(p)&&p>=0&&p<=100,'概率必须在0%到100%之间');
+      assert(Math.abs(p*100-Math.round(p*100))<0.000001,'概率最多保留两位小数');
+      return Math.round(p*100);
+    });
+    assert(units.reduce(function(a,b){return a+b;},0)===10000,'8档概率合计必须为100%');
+    return units;
+  }
+  function pickCard(values,roll) {
+    const weights=probabilityUnits(values);
+    integer(roll,0,9999,'抽样值');
+    let sum=0;
+    for(let i=0;i<weights.length;i++){sum+=weights[i];if(roll<sum)return CARDS[i];}
+    throw new Error('抽奖配置不完整');
+  }
+  function rankings(state,kind,period,now) {
+    const at=new Date(now || Date.now()), month=new Date(at.getTime()+8*3600000).toISOString().slice(0,7);
+    const rows=state.accounts.map(function(a){
+      let value;
+      if(kind==='hunter')value=period==='month'?(a.hunterLedger||[]).filter(function(e){return new Date(new Date(e.at).getTime()+8*3600000).toISOString().slice(0,7)===month;}).reduce(function(n,e){return n+e.count;},0):a.hunterTotal;
+      else value=settled(a).filter(function(m){return period!=='month'||new Date(new Date(m.at).getTime()+8*3600000).toISOString().slice(0,7)===month;}).reduce(function(n,m){return n+m.points;},0);
+      return {id:a.id,memberId:a.memberId,nickname:a.nickname,avatar:a.avatar,value:value};
+    }).filter(function(a){return a.value>0;}).sort(function(a,b){return b.value-a.value||a.memberId-b.memberId;});
+    let last=null,rank=0;
+    return rows.map(function(a,i){if(a.value!==last)rank=i+1;last=a.value;return Object.assign(a,{rank:rank});});
+  }
+  function validateLevels(levels) {
+    assert(Array.isArray(levels)&&levels.length===10,'需要完整的10级成长模板');
+    let prev=-1;
+    levels.forEach(function(l,i){
+      assert(l.level===i+1&&String(l.name).trim(),'请填写等级名称');
+      assert(Number.isFinite(l.threshold)&&l.threshold>=0&&l.threshold>prev,'累计门槛必须逐级递增');
+      if(i===0)assert(l.threshold===0,'LV1的门槛应为0');
+      prev=l.threshold;
+      l.rewards.forEach(function(b){assert(b.title.trim(),'请填写权益名称');integer(b.quantity,0,100000,'权益总份数');});
+    });
+  }
+  function log(state,a,text,at,extra) {
+    state.log.unshift(Object.assign({id:extra && extra.id || (at+'-'+state.log.length),accountId:a ? a.id : null,text:text,at:at},extra || {}));
+  }
+  function applyAction(input,action) {
+    assert(input && input.schema===1,'本地数据格式不兼容');
+    assert(action && action.id && action.type,'操作信息不完整');
+    if(input.processed.includes(action.id))return copy(input);
+    const s=copy(input), at=action.at || new Date().toISOString(), d=action.data || {};
+    let a=action.accountId ? account(s,action.accountId) : null;
+    if(a)syncRewards(s,a,at);
+    switch(action.type) {
+      case 'register':
+        assert(/^1\d{10}$/.test(d.phone),'请填写11位手机号');
+        assert(!s.accounts.some(function(x){return x.phone===d.phone;}),'该手机号已有赛事账号，请直接登录');
+        assert(d.salt&&d.passwordHash,'密码信息不完整');
+        a=newAccount(d,1001+s.accounts.length,at);s.accounts.push(a);
+        log(s,a,'注册赛事账号',at);
+        break;
+      case 'profile':
+        assert(d.nickname.trim().length>=1&&d.nickname.trim().length<=24,'昵称需要1至24个字');
+        if(d.avatar!==undefined)assert(typeof d.avatar==='string'&&d.avatar.length<900000&&(!d.avatar||/^data:image\/(png|jpeg|webp);base64,/.test(d.avatar)),'头像格式不支持或文件过大');
+        a.nickname=d.nickname.trim();if(d.avatar!==undefined)a.avatar=d.avatar;
+        log(s,a,'更新个人资料',at);
+        break;
+      case 'saveAddress': {
+        const row={id:d.id || action.id,name:String(d.name||'').trim(),salutation:d.salutation==='女士'?'女士':'先生',phone:String(d.phone||'').trim(),region:String(d.region||'').trim(),detail:String(d.detail||'').trim(),isDefault:!!d.isDefault};
+        assert(row.name&&row.region&&row.detail,'请填写联系人、省市和详细地址');
+        assert(/^1\d{10}$/.test(row.phone),'请填写正确的收货手机号');
+        assert(row.name.length<=30&&row.region.length<=100&&row.detail.length<=200,'地址内容过长');
+        const i=a.addresses.findIndex(function(x){return x.id===row.id;});
+        if(i>=0)a.addresses[i]=row;else a.addresses.push(row);
+        if(row.isDefault)a.addresses.forEach(function(x){x.isDefault=x.id===row.id;});
+        if(!a.addresses.some(function(x){return x.isDefault;}))a.addresses[0].isDefault=true;
+        log(s,a,'保存收货地址',at);break;
+      }
+      case 'deleteAddress':
+        assert(a.addresses.some(function(x){return x.id===d.id;}),'地址已不存在');
+        a.addresses=a.addresses.filter(function(x){return x.id!==d.id;});
+        if(a.addresses.length&&!a.addresses.some(function(x){return x.isDefault;}))a.addresses[0].isDefault=true;
+        log(s,a,'删除收货地址',at);break;
+      case 'defaultAddress':
+        assert(a.addresses.some(function(x){return x.id===d.id;}),'地址已不存在');
+        a.addresses.forEach(function(x){x.isDefault=x.id===d.id;});break;
+      case 'growth':
+        integer(d.deltaCents,-100000000,100000000,'成长变动');
+        assert(d.deltaCents!==0,'请输入需要登记的金额');
+        assert(a.growthCents+d.deltaCents>=0,'退款不能超过累计成长值');
+        a.growthCents+=d.deltaCents;
+        a.growthLedger.unshift({id:action.id,deltaCents:d.deltaCents,at:at,note:d.note || '商家演示登记',storeId:d.storeId || 'main'});
+        log(s,a,'成长值变动 '+(d.deltaCents/100),at);break;
+      case 'saveMatch': {
+        const m={id:d.id || action.id,game:d.game,status:d.status,rank:Number(d.rank),points:Number(d.points),kills:Number(d.kills||0),at:d.at || at,storeId:d.storeId || 'main'};
+        assert(['SNG','MTT'].includes(m.game),'请选择赛事类型');
+        assert(['settled','pending','cancelled'].includes(m.status),'请选择有效赛事状态');
+        integer(m.rank,1,10000,'名次');integer(m.kills,0,10000,'击杀数');
+        assert(Number.isFinite(m.points)&&m.points>=0&&m.points<=100000000,'赛事积分不正确');
+        assert(Number.isFinite(new Date(m.at).getTime()),'赛事日期不正确');
+        const i=a.matches.findIndex(function(x){return x.id===m.id;});
+        if(i>=0)a.matches[i]=m;else a.matches.push(m);
+        log(s,a,'保存'+m.game+'赛事记录',at);break;
+      }
+      case 'deleteMatch':
+        a.matches=a.matches.filter(function(m){return m.id!==d.id;});log(s,a,'删除演示战绩',at);break;
+      case 'hunter':
+        integer(d.count,1,100000,'新增猎人卡');
+        a.hunterTotal+=d.count;a.drawCredits+=d.count;
+        a.hunterLedger.unshift({id:action.id,count:d.count,at:at});
+        a.giftHistory.unshift({id:action.id,text:'荷官登记猎人卡 '+d.count+'张，抽奖机会 +'+d.count,at:at});
+        log(s,a,'登记猎人卡 '+d.count+'张',at);break;
+      case 'setAssets':
+        integer(d.tickets,0,100000000,'门票余额');integer(d.drawCredits,0,100000000,'抽奖机会');
+        CARDS.forEach(function(c){integer(d.gifts[c],0,100000000,c+'卡数量');});
+        if(a.tickets!==d.tickets)a.ticketLedger.unshift({id:action.id,amount:d.tickets-a.tickets,at:at,text:'A版演示资产调整'});
+        a.tickets=d.tickets;a.drawCredits=d.drawCredits;a.gifts=copy(d.gifts);
+        a.giftHistory.unshift({id:action.id,text:'商家调整A版演示资产',at:at});log(s,a,'调整演示资产',at);break;
+      case 'draw': {
+        integer(d.count,1,10,'抽奖次数');assert(d.count===1||d.count===10,'请选择单抽或十连抽');
+        assert(!a.draws.some(function(x){return !x.revealed;}),'还有一笔已保存的抽奖结果，请先查看并收下卡片');
+        assert(a.drawCredits>=d.count,'抽奖机会不足');
+        assert(Array.isArray(d.rolls)&&d.rolls.length===d.count,'抽奖结果信息不完整');
+        const results=d.rolls.map(function(n){return pickCard(s.settings.probabilities,n);});
+        a.drawCredits-=d.count;results.forEach(function(c){a.gifts[c]++;});
+        a.draws.unshift({id:action.id,results:results,at:at,version:s.settings.probabilityVersion,revealed:false});
+        a.giftHistory.unshift({id:action.id,text:'抽奖获得 '+results.map(function(c){return c+'卡';}).join('、'),at:at});
+        log(s,a,'完成'+(d.count===10?'十连抽':'单次抽奖'),at);break;
+      }
+      case 'ackDraw': {
+        const draw=a.draws.find(function(x){return x.id===d.id;});
+        assert(draw,'未找到抽奖结果');draw.revealed=true;break;
+      }
+      case 'merge': {
+        const i=CARDS.indexOf(d.card);assert(i>=0&&i<7,'该卡不能继续合成');
+        integer(d.count,1,100000,'合成数量');
+        const cost=MERGE[i]*d.count;assert(a.gifts[d.card]>=cost,'卡片数量不足');
+        a.gifts[d.card]-=cost;a.gifts[CARDS[i+1]]+=d.count;
+        a.giftHistory.unshift({id:action.id,text:cost+'张'+d.card+'卡合成'+d.count+'张'+CARDS[i+1]+'卡',at:at});
+        log(s,a,'卡片合成',at);break;
+      }
+      case 'exchange': {
+        const i=CARDS.indexOf(d.card);assert(i>=4,'该卡不支持兑换门票');
+        integer(d.count,1,100000,'兑换数量');assert(a.gifts[d.card]>=d.count,'可用卡片不足');
+        const amount=TICKETS[i]*d.count;a.gifts[d.card]-=d.count;a.tickets+=amount;
+        a.ticketLedger.unshift({id:action.id,amount:amount,at:at,text:d.card+'卡兑换门票'});
+        a.giftHistory.unshift({id:action.id,text:d.count+'张'+d.card+'卡兑换'+amount+'张门票',at:at});
+        log(s,a,'兑换门票 '+amount+'张',at);break;
+      }
+      case 'claimGift': {
+        const i=CARDS.indexOf(d.card);assert(i>0,'9卡仅用于合成下一档卡片');
+        integer(d.count,1,100000,'领取数量');assert(a.gifts[d.card]>=d.count,'可用卡片不足');
+        assert(s.settings.giftPrizes[i].trim(),'商家尚未设置这档礼物');
+        a.gifts[d.card]-=d.count;
+        s.claims.unshift({id:action.id,code:'R'+action.id.replace(/[^a-z0-9]/gi,'').slice(-9).toUpperCase(),accountId:a.id,kind:'card',card:d.card,count:d.count,title:s.settings.giftPrizes[i],status:'pending',at:at,storeId:d.storeId || 'main'});
+        a.giftHistory.unshift({id:action.id,text:'申请'+d.count+'份'+s.settings.giftPrizes[i]+'，冻结'+d.count+'张'+d.card+'卡',at:at});
+        log(s,a,'申请礼物领取单',at);break;
+      }
+      case 'claimReward': {
+        const reward=a.rewards[d.key];assert(reward,'奖励尚未解锁');
+        integer(d.count,1,100000,'领取份数');assert(reward.total-reward.claimed>=d.count,'剩余可领份数不足');
+        reward.claimed+=d.count;
+        const isTicket=reward.type==='ticket';
+        if(isTicket){a.tickets+=d.count;a.ticketLedger.unshift({id:action.id,amount:d.count,at:at,text:reward.title});}
+        s.claims.unshift({id:action.id,code:'R'+action.id.replace(/[^a-z0-9]/gi,'').slice(-9).toUpperCase(),accountId:a.id,kind:'reward',rewardKey:d.key,count:d.count,title:reward.title,status:isTicket?'credited':'pending',at:at,storeId:d.storeId || 'main'});
+        log(s,a,'领取'+reward.title+' '+d.count+'份',at);break;
+      }
+      case 'cancelClaim': {
+        const claim=s.claims.find(function(c){return c.id===d.id&&c.accountId===a.id;});
+        assert(claim&&claim.status==='pending','这张领取单不能取消');
+        claim.status='cancelled';claim.cancelledAt=at;
+        if(claim.kind==='card')a.gifts[claim.card]+=claim.count;
+        else a.rewards[claim.rewardKey].claimed-=claim.count;
+        a.giftHistory.unshift({id:action.id,text:'取消'+claim.title+'领取，恢复可用数量',at:at});
+        log(s,a,'取消领取单',at);break;
+      }
+      case 'redeemClaim': {
+        const claim=s.claims.find(function(c){return c.id===d.id;});
+        assert(claim&&claim.status==='pending','领取单已处理，请勿重复核销');
+        claim.status='used';claim.usedAt=at;
+        log(s,account(s,claim.accountId),'商家演示核销：'+claim.title,at);break;
+      }
+      case 'setHonors':
+        HONORS.forEach(function(h){integer(d.counts[h.id],0,1000000,'荣誉次数');});
+        a.honorAdjustments=copy(d.counts);
+        a.specials=Object.fromEntries(SPECIAL.map(function(h){return [h.id,!!d.specials[h.id]];}));
+        log(s,a,'商家登记荣誉次数与特殊荣誉',at);break;
+      case 'effect':
+        assert(effectUnlocked(s,a,d.id),'该荣誉尚未解锁，暂不能设为出场特效');
+        a.entranceEffect=d.id || null;log(s,a,'保存出场特效',at);break;
+      case 'setHand':
+        assert(!a.hand,'手牌已设置，不能再次修改');
+        assert(Array.isArray(d.cards)&&d.cards.length===2,'请选择两张手牌');
+        d.cards.forEach(function(n){integer(n,2,10,'手牌点数');});
+        a.hand={cards:copy(d.cards),at:at};
+        a.handActivity.unshift({id:action.id,at:at,text:'设置幸运手牌 '+d.cards.join(' + ')});
+        log(s,a,'首次设置并锁定幸运手牌',at);break;
+      case 'handWin':
+        assert(a.hand,'请先设置幸运手牌');
+        a.honorAdjustments.luckyWin=(a.honorAdjustments.luckyWin||0)+1;
+        a.handActivity.unshift({id:action.id,at:at,text:'幸运手牌 '+a.hand.cards.join(' + ')+' 获胜，荷官登记1次'});
+        log(s,a,'登记幸运手牌获胜',at);break;
+      case 'probabilities':
+        probabilityUnits(d.values);s.settings.probabilityHistory.unshift({version:s.settings.probabilityVersion,values:copy(s.settings.probabilities),at:at});
+        s.settings.probabilities=copy(d.values);s.settings.probabilityVersion++;
+        log(s,null,'更新商家共享抽奖模板 v'+s.settings.probabilityVersion,at);break;
+      case 'levelTemplate':
+        validateLevels(d.levels);s.settings.levels=copy(d.levels);log(s,null,'更新商家共享成长权益模板',at);break;
+      case 'honorTemplate':
+        HONORS.forEach(function(h){
+          const r=d.rules[h.id];assert(r&&Array.isArray(r.thresholds)&&r.thresholds.length===5,'需要完整的五级荣誉规则');
+          let prev=0;r.thresholds.forEach(function(t){integer(t,1,1000000,'达成次数');assert(t>prev,'荣誉门槛须逐级递增');prev=t;});
+          assert(r.rewards.length===5,'请填写每一级奖励');r.rewards.forEach(function(n){integer(n,0,100000,'奖励门票');});
+        });
+        s.settings.honorRules=copy(d.rules);s.settings.honorVersion++;log(s,null,'更新商家共享荣誉模板',at);break;
+      case 'giftTemplate':
+        assert(d.prizes.length===8,'需要完整的8档礼物设置');
+        s.settings.giftPrizes=d.prizes.map(function(x){return String(x).trim().slice(0,60);});
+        log(s,null,'更新卡片对应礼物',at);break;
+      case 'merchant':
+        assert(String(d.name).trim(),'请填写商家名称');
+        assert(d.stores.length===2&&d.stores.every(function(x){return String(x.name).trim();}),'请填写演示门店名称');
+        s.merchant.name=d.name.trim();s.merchant.stores=copy(d.stores);log(s,null,'更新商家与演示门店名称',at);break;
+      default: throw new Error('未识别的操作');
+    }
+    s.accounts.forEach(function(x){syncRewards(s,x,at);if(x.entranceEffect&&!effectUnlocked(s,x,x.entranceEffect))x.entranceEffect=null;});
+    s.processed.push(action.id);
+    s.revision++;s.updatedAt=at;
+    return s;
+  }
+  const api={CARDS:CARDS,MERGE:MERGE,TICKETS:TICKETS,LEVEL_NAMES:LEVEL_NAMES,HONORS:HONORS,SPECIAL:SPECIAL,copy:copy,createState:createState,newAccount:newAccount,account:account,levelFor:levelFor,membership:membership,stats:stats,settled:settled,honorCounts:honorCounts,honorProgress:honorProgress,effectUnlocked:effectUnlocked,probabilityUnits:probabilityUnits,pickCard:pickCard,rankings:rankings,validateLevels:validateLevels,applyAction:applyAction};
+  root.RZHCore=api;
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script>
+<script defer>/* joker 原创 SVG：与业务状态分离，仅返回安全的图形字符串。 */
+(function (root) {
+  'use strict';
+  var serial = 0;
+  var COLORS = { metal: '#c9ae88', accent: '#df243b', ink: '#fff4f2', bg: '#100c0e' };
+  function number(value, fallback, min, max) {
+    var n = Number(value);
+    return Number.isFinite(n) ? Math.max(min, Math.min(max, Math.round(n))) : fallback;
+  }
+  function escapeText(value) {
+    return String(value).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function nextId() { serial += 1; return 'rzh-art-' + serial; }
+  function svg(box, content, attrs) {
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + box +
+      '" focusable="false" ' + (attrs || 'aria-hidden="true"') + '>' + content + '</svg>';
+  }
+  var ICONS = {
+    edit: '<path d="m15.2 4.8 4 4M4 20l4.6-1 11-11a2.8 2.8 0 0 0-4-4l-11 11L4 20Z"/><path d="M13 5H6a2 2 0 0 0-2 2v5m8 8h5a3 3 0 0 0 3-3v-5"/>',
+    radar: '<path d="m12 2 9.5 6.9-3.6 11.2H6.1L2.5 8.9 12 2Z"/><path d="m12 6 5.7 4.1-2.2 6.8h-7l-2.2-6.8L12 6Zm0-4v20M2.5 8.9l19 0M6.1 20.1 12 12l5.9 8.1M12 12l9.5-3.1M12 12 2.5 8.9"/>',
+    level: '<path d="m12 2 8 4v6c0 5-8 10-8 10S4 17 4 12V6l8-4Z"/><path d="m12 7 3 4-3 4-3-4 3-4Zm-8 8-2-1m4 4-2 1m16-4 2-1m-4 4 2 1"/>',
+    cards: '<rect x="4" y="3" width="13" height="17" rx="2"/><path d="m17 6 3 1a2 2 0 0 1 1.3 2.4l-3.2 11a2 2 0 0 1-2.5 1.3L8 19.5"/><path d="m10.5 8 3 4-3 4-3-4 3-4Z"/>',
+    gift: '<rect x="3" y="9" width="18" height="4" rx="1"/><path d="M5 13v8h14v-8M12 9v12m0-12C4 10 4 2 8 3c3 0 4 6 4 6Zm0 0c8 1 8-7 4-6-3 0-4 6-4 6Z"/>',
+    lottery: '<circle cx="12" cy="13" r="8.5"/><path d="m9 2 3 5 3-5H9ZM12 7v2m5.6.4-1.5 1.5M20 15h-2m-2.2 5-1-1.8m-5.6 1.7 1-1.7M4 15h2m.4-5.6 1.5 1.5"/><circle cx="12" cy="13" r="2"/>',
+    trophy: '<path d="M7 3h10v7a5 5 0 0 1-10 0V3ZM7 5H3v3a5 5 0 0 0 5 5m9-8h4v3a5 5 0 0 1-5 5M12 15v5m-4 1h8"/>',
+    hands: '<rect x="2" y="4" width="9" height="15" rx="2"/><rect x="13" y="4" width="9" height="15" rx="2"/><path d="m6.5 9 2 3-2 3-2-3 2-3Zm11-1c-4 3-4 5 0 7 4-2 4-4 0-7Z"/>',
+    address: '<path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+    back: '<path d="m14 5-7 7 7 7"/>',
+    arrow: '<path d="m9 5 7 7-7 7"/>',
+    store: '<path d="m4 3-2 6h20l-2-6H4ZM4 9v12h16V9M9 21v-8h6v8"/><path d="M2 9c0 4 5 4 5 0 0 4 5 4 5 0 0 4 5 4 5 0 0 4 5 4 5 0"/>',
+    history: '<path d="M3 11a9 9 0 1 1 2 7M3 5v6h6m3-5v7l4 2"/>',
+    settings: '<path d="m9 3-1 3-3 1 .5 3L3 12l2.5 2-.5 3 3 1 1 3h6l1-3 3-1-.5-3L21 12l-2.5-2 .5-3-3-1-1-3H9Z"/><circle cx="12" cy="12" r="3"/>',
+    user: '<circle cx="12" cy="7" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/>',
+    users: '<circle cx="9" cy="7" r="3.5"/><path d="M2 21v-2a7 7 0 0 1 14 0v2m1-17a3.5 3.5 0 0 1 0 7m2 3a6 6 0 0 1 3 5v2"/>',
+    logout: '<path d="M10 3H4v18h6m5-14 5 5-5 5M8 12h12"/>',
+    check: '<path d="m5 12 4 4L20 5"/>',
+    close: '<path d="m5 5 14 14M19 5 5 19"/>',
+    plus: '<path d="M12 4v16M4 12h16"/>',
+    minus: '<path d="M4 12h16"/>',
+    lock: '<rect x="5" y="10" width="14" height="12" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4m-4 5v3"/>',
+    unlock: '<rect x="5" y="10" width="14" height="12" rx="2"/><path d="M8 10V6a4 4 0 0 1 7.5-2m-3.5 11v3"/>',
+    copy: '<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>',
+    refresh: '<path d="M20 8a8 8 0 0 0-14-3L3 8m0-5v5h5m-4 8a8 8 0 0 0 14 3l3-3m0 5v-5h-5"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    download: '<path d="M12 2v14m-5-5 5 5 5-5M3 16v6h18v-6"/>',
+    upload: '<path d="M12 17V3m-5 5 5-5 5 5M3 16v6h18v-6"/>',
+    camera: '<path d="m8 4-2 3H3v14h18V7h-3l-2-3H8Z"/><circle cx="12" cy="13" r="4"/>',
+    search: '<circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/>',
+    home: '<path d="m2 11 10-9 10 9M5 9v13h14V9M9 22v-8h6v8"/>',
+    receipt: '<path d="M5 2h14v20l-3-2-4 2-4-2-3 2V2Zm4 5h6m-6 5h6m-6 5h3"/>',
+    calendar: '<rect x="3" y="5" width="18" height="17" rx="2"/><path d="M7 2v6m10-6v6M3 11h18m-13 5h2m4 0h2"/>',
+    sound: '<path d="m3 9 5 0 6-5v16l-6-5H3V9Zm14-2a7 7 0 0 1 0 10m3-13a11 11 0 0 1 0 16"/>',
+    mute: '<path d="m3 9 5 0 6-5v16l-6-5H3V9Zm14 0 5 6m0-6-5 6"/>',
+    external: '<path d="M14 3h7v7m0-7L10 14m1-10H3v17h17v-8"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/>',
+    star: '<path d="m12 2 3 6.3 7 .9-5 4.9 1.2 7-6.2-3.3-6.2 3.3 1.2-7-5-4.9 7-.9L12 2Z"/>',
+    crown: '<path d="m3 6 4 5 5-8 5 8 4-5-2 14H5L3 6Zm3 10h12"/>',
+    filter: '<path d="M3 4h18l-7 8v8l-4-2v-6L3 4Z"/>',
+    trash: '<path d="M3 6h18M9 6V3h6v3M6 6l1 16h10l1-16M10 10v8m4-8v8"/>',
+    medal: '<circle cx="12" cy="15" r="6"/><path d="M8 10 5 2h5l2 7 2-7h5l-3 8"/><path d="m12 12 1 2 2 .3-1.5 1.5.4 2.2-1.9-1-1.9 1 .4-2.2L9 14.3l2-.3 1-2Z"/>',
+    ticket: '<path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Zm5 0v2m0 3v2m0 3v2m0 2v-2"/>',
+    chart: '<path d="M3 2v20h19M7 17v-5m5 5V6m5 11v-8"/>',
+    spark: '<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/>',
+    heart: '<path d="M12 21C-4 11 5-1 12 7c7-8 16 4 0 14Z"/>'
+  };
+  var ALIASES = {
+    profile: 'edit', avatar: 'user', membership: 'level', levels: 'level', rank: 'chart',
+    wallet: 'cards', card: 'cards', honor: 'trophy', honors: 'trophy', hand: 'hands',
+    pin: 'address', merchant: 'store', record: 'history', records: 'history',
+    right: 'arrow', chevron: 'arrow', left: 'back', x: 'close', exit: 'logout',
+    audio: 'sound', volume: 'sound', bell: 'sound', delete: 'trash',
+    编辑资料: 'edit', 能力雷达: 'radar', 等级一览: 'level', 礼物卡包: 'cards',
+    猎人卡抽奖: 'lottery', 我的荣誉: 'trophy', 我的手牌: 'hands', 我的地址: 'address',
+    返回: 'back', 商家: 'store', 记录: 'history', 保存: 'check'
+  };
+  function icon(name, size) {
+    name = String(name || '');
+    var key = Object.prototype.hasOwnProperty.call(ALIASES, name) ? ALIASES[name] : name;
+    var d = Object.prototype.hasOwnProperty.call(ICONS, key) ? ICONS[key] : ICONS.spark;
+    var n = number(size, 24, 12, 96);
+    return svg('0 0 24 24', '<g fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">' + d + '</g>',
+      'class="rzh-icon" width="' + n + '" height="' + n + '" aria-hidden="true"');
+  }
+  function star(x, y, r, fill, stroke) {
+    var pts = [];
+    for (var i = 0; i < 10; i += 1) {
+      var a = -Math.PI / 2 + i * Math.PI / 5;
+      var q = i % 2 ? r * 0.45 : r;
+      pts.push((x + Math.cos(a) * q).toFixed(2) + ',' + (y + Math.sin(a) * q).toFixed(2));
+    }
+    return '<polygon points="' + pts.join(' ') + '" fill="' + (fill || 'none') + '" stroke="' + (stroke || COLORS.metal) + '" stroke-width="1"/>';
+  }
+  function suit(kind, x, y, scale, fill) {
+    var shape = {
+      spade: '<path d="M0-16C-5-9-17-2-15 6c2 8 11 8 14 2l-4 13H5L1 8c3 6 12 6 14-2C17-2 5-9 0-16Z"/>',
+      heart: '<path d="M0 18C-31-3-14-24 0-10 14-24 31-3 0 18Z"/>',
+      diamond: '<path d="M0-20 15 0 0 20-15 0Z"/>',
+      club: '<path d="M-1 7c-9 11-23-1-14-9 4-4 8-3 10-2C-14-19 14-19 5-4c2-1 6-2 10 2C24 6 10 18 1 7l4 14H-5l4-14Z"/>'
+    }[kind] || '<path d="M0-20 15 0 0 20-15 0Z"/>';
+    return '<g transform="translate(' + x + ' ' + y + ') scale(' + scale + ')" fill="' + (fill || COLORS.metal) + '">' + shape + '</g>';
+  }
+  function laurel(fill) {
+    return '<g fill="' + fill + '" opacity=".72">' +
+      '<path d="M25 84C8 61 17 32 32 22c-9 13-13 36-7 62Zm1-7c-13 1-17-8-18-14 9 0 14 4 18 14Zm-5-17C9 58 9 49 10 44c8 2 11 7 11 16Zm2-16c-10-5-7-13-4-18 6 4 7 10 4 18Zm6-14c-5-9 0-15 4-18 4 7 1 12-4 18Z"/>' +
+      '<g transform="translate(120 0) scale(-1 1)"><path d="M25 84C8 61 17 32 32 22c-9 13-13 36-7 62Zm1-7c-13 1-17-8-18-14 9 0 14 4 18 14Zm-5-17C9 58 9 49 10 44c8 2 11 7 11 16Zm2-16c-10-5-7-13-4-18 6 4 7 10 4 18Zm6-14c-5-9 0-15 4-18 4 7 1 12-4 18Z"/></g></g>';
+  }
+  function crest(level, kind) {
+    var n = number(level, 1, 1, 10), id = nextId(), metal = ['#ad8260', '#c5c8ce', '#d1aa67', '#d9d2bb', '#e0c9cb', '#ce92a1', '#dab170', '#e0bf88', '#ead3a5', '#f4dfb3'][n - 1];
+    var gem = ['#754532', '#63636e', '#9b6a2b', '#636461', '#985661', '#8b3f59', '#a51832', '#8a142d', '#ac1b35', '#d52b40'][n - 1];
+    var inner = suit('spade', 60, 56, 0.72, 'url(#' + id + '-gold)');
+    if (kind === 'trophy') inner = '<path d="M46 36h28v20c0 19-28 19-28 0V36Zm0 4H35v9c0 13 11 14 11 14m28-23h11v9c0 13-11 14-11 14M60 71v13m-13 4h26" fill="none" stroke="url(#' + id + '-gold)" stroke-width="2" stroke-linecap="round"/>';
+    else if (kind === 'crown' || n >= 7) inner = '<path d="m40 43 10 12 10-22 10 22 10-12-5 31H45l-5-31Z" fill="url(#' + id + '-gold)" stroke="' + metal + '"/><path d="M47 67h26" stroke="' + gem + '" stroke-width="2"/>' + suit('diamond', 60, 57, 0.25, gem);
+    else if (kind === 'diamond') inner = '<path d="m60 30 23 27-23 28-23-28 23-27Zm0 0v55M37 57h46M46 41l14 44 14-44" fill="none" stroke="url(#' + id + '-gold)" stroke-width="1.7"/>';
+    else if (kind === 'star') inner = star(60, 57, 24, 'url(#' + id + '-gold)', metal);
+    var rays = n >= 5 ? '<path d="m28 35-8-13 16 5M92 35l8-13-16 5M25 70l-12-4 11 15m71-11 12-4-11 15" fill="none" stroke="' + metal + '" stroke-width="2"/>' : '';
+    var stars = '';
+    for (var s = 0; s < Math.min(5, Math.ceil(n / 2)); s += 1) stars += star(60 + (s - (Math.min(5, Math.ceil(n / 2)) - 1) / 2) * 10, 100, 3, metal, metal);
+    return svg('0 0 120 120',
+      '<defs><linearGradient id="' + id + '-gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0d2"/><stop offset=".45" stop-color="' + metal + '"/><stop offset="1" stop-color="#796044"/></linearGradient><linearGradient id="' + id + '-gem" x1="0" y1="0" x2="1" y2="1"><stop stop-color="' + gem + '"/><stop offset="1" stop-color="#150d12"/></linearGradient></defs>' +
+      laurel(metal) + rays +
+      '<path d="m60 13 33 19-2 35c-3 22-31 38-31 38S32 89 29 67l-2-35 33-19Z" fill="#110d0f" stroke="url(#' + id + '-gold)" stroke-width="2"/>' +
+      '<path d="m60 21 25 15-2 29c-2 17-23 30-23 30S39 82 37 65l-2-29 25-15Z" fill="url(#' + id + '-gem)" stroke="' + metal + '" stroke-width=".75"/>' +
+      '<path d="m60 21 25 15-2 29-23 30V21Z" fill="#fff" opacity=".035"/>' +
+      inner + stars + '<path d="m60 5 3 5-3 5-3-5 3-5Z" fill="' + metal + '"/>' +
+      '<text x="60" y="115" text-anchor="middle" fill="' + metal + '" font-family="Georgia,serif" font-size="8" letter-spacing="1.4">LV ' + n + '</text>',
+      'class="rzh-crest" role="img" aria-label="第' + n + '级徽章"');
+  }
+  function card(rank, options) {
+    options = options || {};
+    var giftRanks = ['9', '10', 'J', 'Q', 'K', 'A', '小王', '大王'];
+    var allowed = ['2', '3', '4', '5', '6', '7', '8'].concat(giftRanks);
+    var label = allowed.indexOf(String(rank)) >= 0 ? String(rank) : '?';
+    var tier = giftRanks.indexOf(label), id = nextId(), isJoker = label === '小王' || label === '大王';
+    var metal = label === '大王' ? '#f1ce8c' : label === '小王' ? '#ced0d7' : COLORS.metal;
+    var red = '#e75d6d', fill = (tier < 0 ? Number(label) % 2 : tier % 2) ? red : '#d2bb9a';
+    var defs = '<defs><linearGradient id="' + id + '-face" x1="0" y1="0" x2="1" y2="1"><stop stop-color="' + (label === '大王' ? '#511426' : '#292025') + '"/><stop offset=".52" stop-color="#160f13"/><stop offset="1" stop-color="#0d0a0c"/></linearGradient><linearGradient id="' + id + '-metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffeed0"/><stop offset=".35" stop-color="' + metal + '"/><stop offset=".7" stop-color="#8b6a4e"/><stop offset="1" stop-color="#e7cc9e"/></linearGradient><radialGradient id="' + id + '-glow"><stop stop-color="#df243b" stop-opacity=".22"/><stop offset="1" stop-color="#df243b" stop-opacity="0"/></radialGradient></defs>';
+    var frame = '<rect x="5" y="5" width="190" height="270" rx="14" fill="url(#' + id + '-face)" stroke="url(#' + id + '-metal)" stroke-width="1.5"/><rect x="13" y="13" width="174" height="254" rx="8" fill="none" stroke="' + metal + '" stroke-opacity=".22"/><path d="M19 64V27a8 8 0 0 1 8-8h35m76 0h35a8 8 0 0 1 8 8v37M19 216v37a8 8 0 0 0 8 8h35m76 0h35a8 8 0 0 0 8-8v-37" fill="none" stroke="' + metal + '" stroke-opacity=".45" stroke-width=".7"/>';
+    var body = '';
+    if (options.back) {
+      var lattice = '';
+      for (var k = -3; k < 8; k += 1) {
+        lattice += '<path d="M25 ' + (35 + k * 30) + ' 175 ' + (185 + k * 30) + 'M175 ' + (35 + k * 30) + ' 25 ' + (185 + k * 30) + '" stroke="' + metal + '" stroke-opacity=".065"/>';
+      }
+      body = '<clipPath id="' + id + '-clip"><rect x="20" y="20" width="160" height="240" rx="5"/></clipPath><g clip-path="url(#' + id + '-clip)">' + lattice + '</g>' +
+        '<path d="M100 35 170 140 100 245 30 140 100 35Z" fill="none" stroke="' + metal + '" stroke-width="1"/><ellipse cx="100" cy="140" rx="48" ry="73" fill="#100c0e" stroke="' + metal + '"/><ellipse cx="100" cy="140" rx="41" ry="65" fill="none" stroke="' + metal + '" stroke-width=".6" stroke-dasharray="1 4"/>' +
+        suit('spade', 100, 121, 1.08, 'url(#' + id + '-metal)') +
+        '<text x="100" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="21" font-weight="700" letter-spacing="4" fill="' + metal + '">joker</text><path d="M77 180h46" stroke="' + metal + '"/><text x="100" y="196" text-anchor="middle" font-family="sans-serif" font-size="6" letter-spacing="2.2" fill="' + metal + '">TOURNAMENT CLUB</text>' +
+        suit('club', 30, 31, .25, metal) + suit('diamond', 170, 31, .25, metal) + suit('heart', 30, 249, .25, metal) + suit('spade', 170, 249, .25, metal);
+    } else {
+      var suitKind = ['club', 'diamond', 'heart', 'heart', 'spade', 'spade'][tier] || 'diamond';
+      var cornerLabel = isJoker ? (label === '小王' ? 'JOKER' : 'JOKER') : label;
+      var cornerSize = isJoker ? 9 : label === '10' ? 22 : 27;
+      var corner = '<g fill="' + fill + '"><text x="25" y="38" text-anchor="middle" font-family="Georgia,serif" font-size="' + cornerSize + '" font-weight="700">' + cornerLabel + '</text></g>' + suit(suitKind, 26, isJoker ? 50 : 55, .25, fill);
+      body += corner + '<g transform="translate(200 280) rotate(180)">' + corner + '</g>';
+      if (/^(?:[2-9]|10)$/.test(label)) {
+        var pipLayouts = {
+          '2': [[100, 88], [100, 192]],
+          '3': [[100, 80], [100, 140], [100, 200]],
+          '4': [[62, 87], [138, 87], [62, 193], [138, 193]],
+          '5': [[62, 87], [138, 87], [100, 140], [62, 193], [138, 193]],
+          '6': [[62, 80], [138, 80], [62, 140], [138, 140], [62, 200], [138, 200]],
+          '7': [[62, 80], [138, 80], [100, 110], [62, 140], [138, 140], [62, 200], [138, 200]],
+          '8': [[62, 80], [138, 80], [100, 110], [62, 140], [138, 140], [100, 170], [62, 200], [138, 200]],
+          '9': [[62, 78], [138, 78], [62, 116], [138, 116], [100, 140], [62, 164], [138, 164], [62, 202], [138, 202]],
+          '10': [[62, 76], [138, 76], [62, 116], [138, 116], [100, 102], [100, 178], [62, 164], [138, 164], [62, 204], [138, 204]]
+        };
+        var pips = pipLayouts[label], pipScale = Number(label) <= 3 ? .65 : Number(label) <= 5 ? .57 : Number(label) <= 8 ? .48 : .43;
+        body += '<path d="M48 64h104v152H48V64Z" fill="none" stroke="' + metal + '" stroke-opacity=".1"/>';
+        body += '<g class="rzh-card-pips" data-count="' + label + '">';
+        pips.forEach(function (p) {
+          body += suit(suitKind, p[0], p[1], pipScale, fill);
+        });
+        body += '</g>';
+      } else if (label === 'A') {
+        body += '<ellipse cx="100" cy="139" rx="58" ry="78" fill="none" stroke="' + metal + '" stroke-opacity=".32"/><ellipse cx="100" cy="139" rx="52" ry="71" fill="none" stroke="' + metal + '" stroke-opacity=".2" stroke-dasharray="1 4"/>' +
+          suit('spade', 100, 132, 2.45, 'url(#' + id + '-metal)') +
+          '<path d="m100 92 9 14-9 15-9-15 9-14Z" fill="#54172a"/><text x="100" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="4" fill="' + metal + '">ACE</text>';
+      } else if (isJoker) {
+        var king = label === '大王';
+        body += '<circle cx="100" cy="137" r="77" fill="url(#' + id + '-glow)"/><path d="M100 52 164 140 100 228 36 140 100 52Z" fill="none" stroke="' + metal + '" stroke-opacity=".32"/>';
+        if (king) {
+          body += '<g transform="translate(0 -4)"><path d="m60 85 15 17 25-38 25 38 15-17-8 38H68l-8-38Z" fill="url(#' + id + '-metal)"/><circle cx="60" cy="85" r="4" fill="' + metal + '"/><circle cx="100" cy="64" r="5" fill="' + metal + '"/><circle cx="140" cy="85" r="4" fill="' + metal + '"/><path d="M74 112h52" stroke="#7a2436" stroke-width="3"/></g>';
+        } else {
+          body += '<path d="M61 111 55 81l30 19 15-34 15 34 30-19-6 30H61Z" fill="#2a222c" stroke="' + metal + '" stroke-width="1.6"/><circle cx="55" cy="81" r="4" fill="' + metal + '"/><circle cx="100" cy="66" r="4" fill="' + metal + '"/><circle cx="145" cy="81" r="4" fill="' + metal + '"/>';
+        }
+        body += '<path d="M72 116h56v26c-1 25-17 37-28 37s-27-12-28-37v-26Z" fill="#1d1218" stroke="' + metal + '" stroke-width="1.3"/><path d="m79 135 11-4 4 5m12 0 4-5 11 4" stroke="' + metal + '" stroke-width="2" fill="none"/><path d="m92 153 8 5 8-5M100 137v11" stroke="' + metal + '" stroke-width="1.3" fill="none"/><path d="m67 166 18 28 15-10 15 10 18-28-4 36H71l-4-36Z" fill="' + (king ? '#9e1c34' : '#42323c') + '" stroke="' + metal + '" stroke-width="1"/>' +
+          '<text x="100" y="223" text-anchor="middle" font-family="sans-serif" font-size="17" letter-spacing="6" fill="' + metal + '">' + label + '</text>';
+      } else {
+        var queen = label === 'Q', jack = label === 'J';
+        body += '<path d="M100 54 153 84v108l-53 31-53-31V84l53-30Z" fill="#1b1116" stroke="' + metal + '" stroke-opacity=".42"/><path d="M100 64v148M55 113h90M55 166h90" stroke="' + metal + '" stroke-opacity=".13"/>';
+        body += '<path d="' + (jack ? 'M73 102 70 88l30-22 30 22-3 14H73Z' : queen ? 'm70 96-5-20 18 12 17-24 17 24 18-12-5 20H70Z' : 'm67 100-4-31 19 16 18-27 18 27 19-16-4 31H67Z') + '" fill="url(#' + id + '-metal)" stroke="' + metal + '" stroke-width="1"/>' +
+          '<path d="M77 107h46v31c-2 19-14 29-23 29s-21-10-23-29v-31Z" fill="#291820" stroke="' + metal + '"/><path d="m83 124 10-3m14 0 10 3m-17 1v14m-7 10 7 3 7-3" fill="none" stroke="' + metal + '" stroke-width="1.4"/>' +
+          '<path d="m63 195 12-29 25 12 25-12 12 29H63Z" fill="#6b1830" stroke="' + metal + '"/>' +
+          suit(queen ? 'heart' : jack ? 'diamond' : 'spade', 100, 192, .32, metal) +
+          '<text x="100" y="219" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="3" fill="' + metal + '">' + (jack ? 'JACK' : queen ? 'QUEEN' : 'KING') + '</text>';
+      }
+      body += '<path d="M76 240h48" stroke="' + metal + '" stroke-opacity=".4"/><text x="100" y="254" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="4" fill="' + metal + '">joker</text>';
+    }
+    return svg('0 0 200 280', defs + frame + body,
+      'class="rzh-playing-card' + (options.small ? ' is-small' : '') + (options.back ? ' is-back' : '') + '" role="img" aria-label="' + escapeText(options.back ? 'joker牌背' : label + (tier < 0 && label !== '?' ? '点手牌' : '礼遇卡')) + '"');
+  }
+  var HONOR_NAMES = ['冠军', '亚军', '季军', '二七击杀', '86上山', '47小手枪', '幸运手牌获胜', '双杀', '三杀', '四杀', '五杀', '五杀以上', '鲨鱼获胜', '终结鲨鱼', '同花顺', '皇家同花顺', '四条（牌型）', '猎杀王者', '德州大师', '最强队长', '最强队友', '猎人狙击手', '头号猎人', '满勤玩家', '荣耀大师', '深渊恐惧', '偷鸡之王', '王之加冕', '至尊豪客'];
+  function honor(id, level) {
+    var raw = String(id || ''), key = raw.toLowerCase(), n = number(level, 1, 0, 5), hash = 0;
+    for (var h = 0; h < key.length; h += 1) hash = (hash * 31 + key.charCodeAt(h)) >>> 0;
+    var title = HONOR_NAMES.indexOf(raw) >= 0 ? raw : '荣誉徽章';
+    var index = HONOR_NAMES.indexOf(raw);
+    if (index < 0) {
+      if (/champion|冠军|coronation|加冕/.test(key)) index = 0;
+      else if (/runner|silver|亚军/.test(key)) index = 1;
+      else if (/third|bronze|季军/.test(key)) index = 2;
+      else if (/27|二七/.test(key)) index = 3;
+      else if (/86/.test(key)) index = 4;
+      else if (/47/.test(key)) index = 5;
+      else if (/royal|皇家/.test(key)) index = 15;
+      else if (/straight|同花顺/.test(key)) index = 14;
+      else if (/quads|four.kind|四条/.test(key)) index = 16;
+      else if (/shark|鲨鱼|深渊/.test(key)) index = 12;
+      else if (/attendance|streak|满勤/.test(key)) index = 23;
+      else if (/captain|队长/.test(key)) index = 19;
+      else if (/team|队友/.test(key)) index = 20;
+      else if (/hunter|狙击|猎/.test(key)) index = 21;
+      else index = hash % 29;
+    }
+    var uid = nextId(), metal = n ? ['#ad8260', '#c9cbd1', '#d4b16e', '#e2c49a', '#f2ddae'][n - 1] : '#746366';
+    var jewel = n ? ['#66283a', '#6b4850', '#8c3b45', '#a12642', '#c42541'][n - 1] : '#292126';
+    var main = '';
+    if (index <= 2 || index === 18 || index === 24) {
+      main = '<path d="M42 31h28v20c0 19-28 19-28 0V31Zm0 5H31v8c0 12 11 14 11 14m28-22h11v8c0 12-11 14-11 14M56 67v13m-12 4h24" fill="none" stroke="' + metal + '" stroke-width="2"/>';
+      if (index <= 2) main += '<text x="56" y="54" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="' + metal + '">' + (index + 1) + '</text>';
+      else main += star(56, 49, 8, metal, metal);
+    } else if (index === 3 || index === 4 || index === 5 || index === 6) {
+      var digits = index === 3 ? ['2', '7'] : index === 4 ? ['8', '6'] : index === 5 ? ['4', '7'] : ['A', 'A'];
+      main = '<g transform="rotate(-10 47 55)"><rect x="31" y="28" width="29" height="48" rx="3" fill="#190e14" stroke="' + metal + '"/><text x="45" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="24" fill="' + metal + '">' + digits[0] + '</text></g><g transform="rotate(10 67 55)"><rect x="53" y="28" width="29" height="48" rx="3" fill="#2c1320" stroke="' + metal + '"/><text x="67" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="24" fill="' + metal + '">' + digits[1] + '</text></g>';
+    } else if (index >= 7 && index <= 11) {
+      var count = index === 7 ? '2' : index === 8 ? '3' : index === 9 ? '4' : index === 10 ? '5' : '5+';
+      main = '<path d="m33 30 46 48m0-48L33 78M27 31l10-8 5 14-8 6-7-12Zm58 0-10-8-5 14 8 6 7-12Z" stroke="' + metal + '" stroke-width="2" fill="none"/><circle cx="56" cy="53" r="19" fill="#1c0d15" stroke="' + metal + '"/><text x="56" y="61" text-anchor="middle" font-family="Georgia,serif" font-size="25" fill="' + metal + '">' + count + '</text>';
+    } else if (index === 12 || index === 13 || index === 25) {
+      main = '<path d="M26 66c10-5 16-9 23-14l8-26 8 20c9-1 17 2 24 8l-11 5 8 13-18-7-17 12-11-7-14-4Z" fill="none" stroke="' + metal + '" stroke-width="1.8"/><path d="m53 61 7-4 7 3m-27 9 11-10" fill="none" stroke="' + metal + '" stroke-width="1.2"/><circle cx="72" cy="53" r="1.6" fill="' + metal + '"/>';
+    } else if (index === 14 || index === 15 || index === 16) {
+      main = suit(index === 14 ? 'heart' : 'spade', 56, 54, 1.13, metal);
+      if (index === 15) main += '<path d="m40 28-2-13 10 7 8-12 8 12 10-7-2 13H40Z" fill="' + metal + '"/>';
+      else main += '<text x="56" y="87" text-anchor="middle" fill="' + metal + '" font-family="Georgia,serif" font-size="10" letter-spacing="1">' + (index === 16 ? 'FOUR' : 'STRAIGHT') + '</text>';
+    } else if (index === 19 || index === 20) {
+      main = '<path d="M56 25v50m0-46c-11-8-22-3-27 2v29c8-5 18-7 27-1 10-6 20-4 27 1V31c-7-6-16-9-27-2Z" fill="none" stroke="' + metal + '" stroke-width="1.7"/>' + star(56, 48, index === 19 ? 11 : 8, metal, metal) + '<path d="M42 81h28" stroke="' + metal + '"/>';
+    } else if (index === 21 || index === 22 || index === 17) {
+      main = '<circle cx="56" cy="53" r="23" stroke="' + metal + '" fill="none"/><circle cx="56" cy="53" r="13" stroke="' + metal + '" fill="none"/><path d="M56 23v16m0 28v16M26 53h16m28 0h16m-38-8 16 16m0-16L48 61" stroke="' + metal + '" stroke-width="1.6"/>';
+    } else if (index === 23) {
+      main = '<rect x="32" y="31" width="48" height="46" rx="4" stroke="' + metal + '" fill="none" stroke-width="1.6"/><path d="M42 24v15m28-15v15M32 44h48m-36 17 8 8 16-17" stroke="' + metal + '" fill="none" stroke-width="2"/>';
+    } else {
+      main = '<path d="m34 47 8 9 14-25 14 25 8-9-5 29H39l-5-29Z" fill="' + metal + '"/>' + suit(index === 26 ? 'club' : 'diamond', 56, 62, .3, jewel);
+    }
+    var smallStars = '';
+    for (var k = 0; k < n; k += 1) smallStars += star(56 + (k - (n - 1) / 2) * 9, 96, 2.6, metal, metal);
+    return svg('0 0 112 112',
+      '<defs><radialGradient id="' + uid + '"><stop stop-color="' + jewel + '"/><stop offset="1" stop-color="#120b10"/></radialGradient></defs>' +
+      '<circle cx="56" cy="54" r="45" fill="url(#' + uid + ')" stroke="' + metal + '" stroke-width="1.2"/><circle cx="56" cy="54" r="39" fill="none" stroke="' + metal + '" stroke-opacity=".45" stroke-width=".6"/>' +
+      '<path d="M19 32c-14 22-5 49 15 58M93 32c14 22 5 49-15 58M15 50l-6-3m8 15-7 1m14 11-7 5m80-29 6-3m-8 15 7 1m-14 11 7 5" fill="none" stroke="' + metal + '" stroke-width="1.2"/>' +
+      main + smallStars + '<path d="m56 3 3 5-3 5-3-5 3-5Z" fill="' + metal + '"/>' +
+      '<text x="56" y="109" text-anchor="middle" fill="' + metal + '" font-family="Georgia,serif" font-size="6.5" letter-spacing="2">joker</text>',
+      'class="rzh-honor' + (n === 0 ? ' is-locked' : '') + '" role="img" aria-label="' + escapeText(title + (n ? '第' + n + '级' : '未点亮')) + '"');
+  }
+  function brand() {
+    return svg('0 0 40 40',
+      '<path d="m20 3 15 8v12c0 8-15 15-15 15S5 31 5 23V11l15-8Z" fill="#3b1220" stroke="#c9ae88" stroke-width="1"/>' +
+      '<text x="20" y="27" text-anchor="middle" font-family="Georgia,serif" font-size="25" font-weight="700" fill="#df243b">J</text>',
+      'class="rzh-brand" role="img" aria-label="joker"');
+  }
+  var api = Object.freeze({ icon: icon, crest: crest, card: card, honor: honor, brand: brand });
+  root.RZHArt = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+}(typeof window !== 'undefined' ? window : globalThis));
+</script>
+<script defer>(function () {
+  'use strict';
+  const C=window.RZHCore, A=window.RZHArt;
+  const sandbox=(new URLSearchParams(location.search).get('sandbox')||'').replace(/[^a-z0-9_-]/gi,'').slice(0,50);
+  const KEY='rzh-user-events-a-v1'+(sandbox?':'+sandbox:''), SESSION=KEY+':session', STORE=KEY+':store';
+  const $=function(s,root){return (root||document).querySelector(s);};
+  const $$=function(s,root){return Array.from((root||document).querySelectorAll(s));};
+  const esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  const uid=function(){return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+'-'+Array.from(crypto.getRandomValues(new Uint8Array(12))).map(function(n){return n.toString(16).padStart(2,'0');}).join('');};
+  const number=function(n){return Number(n).toLocaleString('zh-CN',{maximumFractionDigits:2});};
+  const date=function(at,short){return new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',year:short?undefined:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(at));};
+  const pct=function(v){return v===null?'暂无':(v*100).toFixed(1).replace(/\.0$/,'')+'%';};
+  const art=function(name,size){return A.icon(name,size||22);};
+  const avatar=function(a,size){return `<span class="avatar ${size||''}">${a.avatar?'<img src="'+esc(a.avatar)+'" alt="'+esc(a.nickname)+'的头像">':esc((a.nickname||'J').slice(0,1))}</span>`;};
+  const button=function(label,action,cls,attrs){return `<button type="button" class="button ${cls||''}" data-action="${action}" ${attrs||''}>${label}</button>`;};
+  const link=function(label,route,cls){return `<a class="${cls||'button'}" href="#/${route}">${label}</a>`;};
+  const field=function(label,name,value,type,extra){return `<label class="field"><span>${label}</span><input name="${name}" aria-label="${esc(label)}" type="${type||'text'}" value="${esc(value==null?'':value)}" ${extra||''}></label>`;};
+  const empty=function(title,text,action){return `<section class="empty">${A.crest(1)}<h2>${title}</h2><p>${text}</p>${action||''}</section>`;};
+  const ui={storeId:sessionStorage.getItem(STORE)||'main',pk:null,hand:[null,null],handSlot:0,merchantUser:sessionStorage.getItem(KEY+':merchant-user')||null,sound:true,drawTimer:null,drawId:null,crop:null,profileAvatar:undefined,dirty:false,externalChange:false};
+  let state,activeId='',toastTimer,returnAfterLogin='events',dialogClose=null,animationTimer;
+  function read() {
+    const raw=localStorage.getItem(KEY);
+    if(!raw)return C.createState();
+    const parsed=JSON.parse(raw);
+    if(parsed.schema!==1||!Array.isArray(parsed.accounts))throw new Error('本地数据格式不兼容');
+    // 保留已有账号与资产，只更新旧版本自动生成的品牌默认值。
+    if(parsed.merchant.name==='RZH')parsed.merchant.name='joker';
+    parsed.merchant.stores.forEach(function(s){
+      if(s.name==='RZH主店 · 演示')s.name='joker主店 · 演示';
+      if(s.name==='RZH分店 · 演示')s.name='joker分店 · 演示';
+    });
+    parsed.accounts.forEach(function(a){if(/^RZH玩家\d+$/.test(a.nickname))a.nickname=a.nickname.replace(/^RZH/,'joker');});
+    return parsed;
+  }
+  function current() {return state.accounts.find(function(a){return a.id===activeId;})||null;}
+  function store() {return state.merchant.stores.find(function(s){return s.id===ui.storeId;})||state.merchant.stores[0];}
+  function toast(message) {
+    const el=$('#toast');el.textContent=message;el.classList.add('visible');
+    clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove('visible');},4200);
+  }
+  async function commit(type,data,accountId,operationId) {
+    // A版只提交到当前来源的本地存储；写入成功后才显示成功，避免内存状态冒充保存结果。
+    const task=function(){
+      const fresh=read();
+      const next=C.applyAction(fresh,{id:operationId||uid(),type:type,data:data||{},accountId:accountId===null?null:(accountId||activeId),at:new Date().toISOString()});
+      localStorage.setItem(KEY,JSON.stringify(next));state=next;ui.externalChange=false;return next;
+    };
+    try{return navigator.locks ? await navigator.locks.request(KEY,task) : task();}
+    catch(error){if(error.name==='QuotaExceededError')throw new Error('浏览器空间不足，数据尚未保存，请缩小头像后重试');throw error;}
+  }
+  async function passwordHash(password,salt) {
+    if(!crypto.subtle)throw new Error('请通过本机预览地址打开，以使用密码注册功能');
+    const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']);
+    const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:120000,hash:'SHA-256'},material,256);
+    return Array.from(new Uint8Array(bits)).map(function(n){return n.toString(16).padStart(2,'0');}).join('');
+  }
+  function remember(id,yes) {
+    const value=JSON.stringify({accountId:id,token:uid(),at:new Date().toISOString()});
+    localStorage.removeItem(SESSION);sessionStorage.removeItem(SESSION);
+    (yes?localStorage:sessionStorage).setItem(SESSION,value);activeId=id;
+  }
+  function navigate(route) {
+    closeDialog();ui.dirty=false;ui.externalChange=false;
+    const target='#/'+route;
+    // 未登录时会在原受保护URL显示登录页；登录后地址相同，不会触发hashchange。
+    if(location.hash===target){
+      state=read();render();requestAnimationFrame(function(){window.scrollTo(0,0);});
+    }else location.hash=target;
+  }
+  function closeDialog() {
+    const d=$('#dialog');
+    if(d.open)d.close();
+    const fn=dialogClose;dialogClose=null;if(fn)fn();
+    if(animationTimer){clearTimeout(animationTimer);animationTimer=null;}
+    if(ui.drawTimer){clearTimeout(ui.drawTimer);ui.drawTimer=null;}
+  }
+  function openDialog(title,body,footer,onClose) {
+    closeDialog();
+    const d=$('#dialog');d.setAttribute('aria-label',title);
+    d.innerHTML=`<header class="dialog-heading"><h2>${esc(title)}</h2><button class="icon-button small" type="button" data-action="close-dialog" aria-label="关闭">${art('close',17)}</button></header><div class="dialog-body">${body}</div>${footer?'<footer class="dialog-actions">'+footer+'</footer>':''}`;
+    dialogClose=onClose||null;d.showModal();
+    setTimeout(function(){const input=$('input:not([type=range]),select,textarea',d);if(input)input.focus();},50);
+  }
+  function routeParts(){return location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);}
+  function route(){return routeParts()[0]||'events';}
+  function header(title,parent) {
+    if(!title)return `<header class="app-header"><a class="header-brand" href="#/events">${A.brand()}<b>joker</b></a><nav class="header-actions" aria-label="首页操作"><a class="header-return" href="#/cashier/home" aria-label="返回小程序首页">${art('back',14)}<span>小程序首页</span></a>${current()?button('退出登录','logout','small ghost'):''}</nav></header>`;
+    return `<header class="app-header"><a class="icon-button" href="#/${parent||'events'}" aria-label="返回">${art('back',20)}</a><span class="header-title">${esc(title)}</span><a class="header-link" href="#/events">赛事首页</a></header>`;
+  }
+  function shell(body,title,parent,merchant) {
+    document.body.classList.toggle('merchant-mode',!!merchant);
+    $('#app').innerHTML=header(title,parent)+(ui.externalChange?`<div class="data-updated">另一页面更新了数据，未提交内容已保留。<button data-action="refresh-view">重新读取</button></div>`:'')+`<main class="page ${merchant?'wide':''}">${body}</main>`;
+    document.title=(title?title+' · ':'')+'joker用户赛事';
+    document.documentElement.dataset.rzhReady='true';
+    ui.dirty=false;
+  }
+  function render() {
+    closeDialog();
+    const parts=routeParts(), name=parts[0]||'events';
+    const publicRoutes=['login','register','cashier','merchant'];
+    if(!current()&&!publicRoutes.includes(name)){returnAfterLogin=parts.join('/')||'events';return renderAuth(false);}
+    if(name==='register')return renderAuth(true);
+    if(name==='login')return current()?navigate('events'):renderAuth(false);
+    if(name==='cashier')return renderCashier(parts[1]);
+    if(name==='merchant')return renderMerchant(parts[1]||'users');
+    if(name==='profile')return renderProfile();
+    if(name==='addresses')return renderAddresses();
+    if(name==='address')return renderAddress(parts[1]||'new');
+    if(name==='radar')return renderRadar();
+    if(name==='levels')return renderLevels(Number(parts[1])||C.membership(state,current()).current.level);
+    if(name==='cards')return renderCards();
+    if(name==='draw')return renderDraw();
+    if(name==='claims')return renderClaims();
+    if(name==='records')return renderGiftHistory();
+    if(name==='tickets')return renderTickets();
+    if(name==='honors')return renderHonors();
+    if(name==='honor-rewards')return renderHonorRewards(parts[1]||'all');
+    if(name==='effects')return renderEffects();
+    if(name==='rankings')return renderRankings(parts[1]||'master',parts[2]||'month');
+    if(name==='attendance')return renderAttendance();
+    if(name==='hands')return renderHands();
+    if(name==='hand-activity')return renderHandActivity();
+    renderHome();
+  }
+  function renderAuth(register) {
+    const body=`<div class="auth-art">${A.crest(1)}</div><div class="auth-title"><span class="eyebrow">joker TOURNAMENT CLUB</span><h1>${register?'开启你的赛事旅程':'回到你的赛事主场'}</h1><p>${register?'创建赛事账号，留住每一个高光时刻。':'登录后查看你的荣誉、手牌与礼遇。'}</p></div><form id="auth-form" class="form-grid" data-register="${register?'yes':'no'}">
+    ${field('手机号','phone','','tel','autocomplete="username" inputmode="numeric" maxlength="11" required placeholder="请输入手机号"')}
+    ${field('密码','password','','password',`autocomplete="${register?'new-password':'current-password'}" minlength="6" required placeholder="至少6位密码"`)}
+    ${register?field('再次输入密码','confirm','','password','autocomplete="new-password" minlength="6" required placeholder="请再次输入密码"'):''}
+    <label class="checkbox"><input type="checkbox" name="remember" checked>记住密码，下次自动登录</label>
+    <button type="submit" class="button primary wide">${register?'注册并进入赛事':'登录用户赛事'}</button>
+    </form><div class="spaced space-top"><span class="hint">${register?'已经有赛事账号？':'第一次来？'}</span>${link(register?'去登录':'注册赛事账号',register?'login':'register','link-button')}</div>
+    <div class="footer-note">赛事账号独立使用 · joker</div>`;
+    shell(body,'',null);
+  }
+  function renderCashier(page) {
+    const home=page==='home';
+    shell(`<span class="eyebrow">joker</span><h1 class="space-top">${home?'小程序首页':'我的'}</h1><p class="page-subtitle">${home?'欢迎回来，继续你的精彩时刻。':'在小程序「我的」页进入用户赛事。'}</p>${home?'':`<section class="card"><div class="identity-top"><span class="avatar">J</span><div class="identity-name"><h2>收银会员</h2><p>现有收银账号区域 · 入口示意</p></div></div></section>`}<h2 class="section-heading">我的服务</h2><a class="cashier-entry" href="#/events">${art('trophy',40)}<span><b>用户赛事</b><small>荣誉、成长与我的专属礼遇</small></span><span>›</span></a><nav class="mini-cashier" aria-label="收银小程序底部导航"><a href="#/cashier/home" class="${home?'selected':''}">首页</a><span>点单</span><span>订单</span><a href="#/cashier" class="${home?'':'selected'}">我的</a></nav><p class="footer-note">${home?'这是返回落点示意；正式接入后进入现有小程序首页。':'点击「用户赛事」进入赛事页面；原收银小程序未被修改。'}</p>`,home?'小程序首页':'收银「我的」入口','events');
+  }
+  function renderHome() {
+    const a=current(),m=C.membership(state,a),st=C.stats(a);
+    const hero=`<div class="hero"><div class="hero-crest">${A.crest(m.current.level)}</div><span class="brand-word">joker</span><span class="eyebrow" style="margin-left:12px">TOURNAMENT CLUB</span><h1>你的赛事主场</h1><p>专注每一局，珍藏每一刻。</p></div>`;
+    const identity=`<section class="card identity"><div class="identity-top">${avatar(a)}<div class="identity-name"><h2>${esc(a.nickname)}</h2><p>赛事会员ID ${a.memberId}</p></div>${link('编辑资料 ›','profile','button small ghost')}</div><div class="identity-bottom"><div class="metric"><b>${pct(st.axes[0].ratio)}</b><span>近5场前三率</span></div><div class="metric"><b>${st.total}</b><span>总上桌场数</span></div><div class="metric"><a href="#/radar"><b>${art('radar',24)}</b><span>能力雷达 ›</span></a></div></div></section>`;
+    const level=`<a href="#/levels/${m.current.level}" class="level-summary">${A.crest(m.current.level)}<span><b>LV${m.current.level} · ${esc(m.current.name)}</b><small>累计成长 ${number(m.growth)} · ${m.next?'距下一级还需 '+number(m.gap):'已达最高等级'}</small></span><span>›</span></a>`;
+    shell(hero+identity+level+`<section class="feature-pair"><a class="feature" href="#/honors"><span class="eyebrow">MY HONORS</span><h2>我的荣誉</h2><p>记录属于你的高光时刻</p><span class="art">${A.crest(3,'trophy')}</span><span class="arrow">↗</span></a><a class="feature" href="#/hands"><span class="eyebrow">MY LUCKY HAND</span><h2>我的手牌</h2><p>${a.hand?'已锁定 '+a.hand.cards.join(' + '):'选定你的两张幸运手牌'}</p><span class="art">${art('cards',95)}</span><span class="arrow">↗</span></a></section><div class="section-heading"><h2>礼遇与服务</h2><small>PLAYER SERVICES</small></div><section class="services"><a class="service" href="#/cards">${art('wallet',28)}<b>礼物卡包</b></a><a class="service" href="#/draw">${art('lottery',28)}<b>猎人卡抽奖</b></a><a class="service" href="#/addresses">${art('address',28)}<b>我的地址</b></a></section><div class="spaced space-top"><a class="link-button" href="#/claims">我的领取单 ›</a><a class="link-button" href="#/tickets">门票 ${number(a.tickets)} 张 ›</a></div><p class="footer-note">热爱相聚，闪耀此刻。<br>joker · YOUR NEXT GREAT MOMENT</p>`);
+  }
+  function renderProfile() {
+    const a=current();ui.profileAvatar=a.avatar;
+    shell(`<span class="eyebrow">PERSONAL PROFILE</span><h1 class="space-top">让大家认识你</h1><p class="page-subtitle">头像和昵称会同步显示在你的赛事页面。</p><form id="profile-form" class="form-grid"><div class="card avatar-editor"><div><h3>头像</h3><p class="hint">点击头像，选择照片或拍照</p></div><button type="button" class="link-button" data-action="choose-avatar" aria-label="更换头像"><span id="profile-avatar">${avatar(a,'large')}</span></button></div><input id="avatar-file" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp,image/heic" aria-label="选择头像文件">${field('昵称','nickname',a.nickname,'text','maxlength="24" required') }${field('注册手机号','phone',a.phone,'tel','readonly')}<p class="hint">手机号用于登录，此处仅供查看。</p><div class="actions">${link('未保存返回','events','button ghost')}<button type="submit" class="button primary">保存资料</button></div></form>`,'编辑资料','events');
+  }
+  function renderAddresses() {
+    const a=current();
+    const rows=a.addresses.slice().sort(function(x,y){return Number(y.isDefault)-Number(x.isDefault);});
+    shell(`<div class="spaced space-bottom"><div><span class="eyebrow">ADDRESS BOOK</span><h1>我的地址</h1></div>${link('添加地址','address/new','button small primary')}</div>`+(rows.length?rows.map(function(r){return `<article class="address-card"><div class="spaced"><h3>${esc(r.name)} ${esc(r.salutation)}</h3>${r.isDefault?'<span class="pill">默认地址</span>':''}</div><p>${esc(r.phone)}</p><p>${esc(r.region)} ${esc(r.detail)}</p><div class="address-actions"><button class="link-button" data-action="default-address" data-id="${esc(r.id)}" ${r.isDefault?'disabled':''}>${r.isDefault?'默认使用此地址':'设为默认'}</button><div class="row">${link('编辑','address/'+r.id,'link-button')}<button class="link-button" data-action="delete-address" data-id="${esc(r.id)}">删除</button></div></div></article>`;}).join(''):empty('还没有收货地址','添加常用地址，领取礼物时更方便。',link('添加地址','address/new','button primary'))),'我的地址','events');
+  }
+  function renderAddress(id) {
+    const a=current(),r=id==='new'?{name:'',salutation:'先生',phone:a.phone,region:'',detail:'',isDefault:!a.addresses.length}:a.addresses.find(function(x){return x.id===id;});
+    if(!r){toast('这条地址已不存在');return navigate('addresses');}
+    shell(`<form id="address-form" class="form-grid" data-id="${id==='new'?'':esc(id)}">${field('联系人','name',r.name,'text','required maxlength="30" placeholder="请填写联系人姓名"')}<label class="field"><span>称呼</span><select name="salutation" aria-label="称呼"><option ${r.salutation==='先生'?'selected':''}>先生</option><option ${r.salutation==='女士'?'selected':''}>女士</option></select></label>${field('收货手机号','phone',r.phone,'tel','required inputmode="numeric" maxlength="11"')}${field('省市','region',r.region,'text','required maxlength="100" placeholder="例如：广东省珠海市香洲区"')}${field('详细地址','detail',r.detail,'text','required maxlength="200" placeholder="街道、门牌号等"')}<label class="checkbox"><input type="checkbox" name="isDefault" ${r.isDefault?'checked':''}>设为默认地址</label><p class="hint">收货手机号可以与注册手机号不同。</p><div class="actions">${link('未保存返回','addresses','button ghost')}<button type="submit" class="button primary">保存地址</button></div></form>`,id==='new'?'添加地址':'编辑地址','addresses');
+  }
+  const AXES=['近5场前三率','累计前三率','夺冠率','SNG前三率','MTT前三率'];
+  function radarSVG(st,op) {
+    const all=st.axes.concat(op?op.axes:[]).map(function(x){return x.ratio||0;});
+    const scale=Math.max(.25,Math.min(1,Math.ceil(Math.max.apply(null,all)*4)/4));
+    const point=function(i,v){const angle=(i*72-90)*Math.PI/180;return [200+136*v*Math.cos(angle),190+136*v*Math.sin(angle)];};
+    const xy=function(p){return p.map(function(n){return n.toFixed(2);}).join(',');};
+    let shapes='';
+    for(let k=1;k<=4;k++)shapes+=`<polygon points="${[0,1,2,3,4].map(function(i){return xy(point(i,k/4));}).join(' ')}" fill="none" stroke="#554047" stroke-width="1"/>`;
+    for(let i=0;i<5;i++){const p=point(i,1),l=point(i,1.21);shapes+=`<line x1="200" y1="190" x2="${p[0]}" y2="${p[1]}" stroke="#554047"/><text x="${l[0]}" y="${l[1]}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-family="sans-serif" fill="#e1b6bb">${AXES[i]}</text>`;}
+    function polygon(data,color) {
+      let str='';const points=data.axes.map(function(x,i){return x.ratio===null?null:point(i,x.ratio/scale);});
+      if(points.every(Boolean))str+=`<polygon points="${points.map(xy).join(' ')}" fill="${color}" fill-opacity=".13" stroke="${color}" stroke-width="2.5"/>`;
+      else for(let i=0;i<5;i++){const p=points[i],q=points[(i+1)%5];if(p&&q)str+=`<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="${color}" stroke-width="2.5"/>`;}
+      points.filter(Boolean).forEach(function(p){str+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${color}" stroke="#100c0e" stroke-width="1.5"/>`;});return str;
+    }
+    shapes+=polygon(st,'#c9ae88');if(op)shapes+=polygon(op,'#6cbbef');
+    return {svg:`<svg class="radar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 390" role="img" aria-label="五维战绩雷达图">${shapes}</svg>`,scale:scale};
+  }
+  function renderRadar() {
+    const a=current(),b=state.accounts.find(function(x){return x.id===ui.pk;}),st=C.stats(a),op=b?C.stats(b):null,r=radarSVG(st,op);
+    shell(`<div class="spaced"><div><span class="eyebrow">PLAYER RECORD</span><h1>能力雷达</h1></div>${button(art('refresh',16)+' 刷新','refresh-view','small ghost')}</div><div class="legend"><span><i></i>${esc(a.nickname)}</span>${b?'<span class="opponent"><i></i>'+esc(b.nickname)+'</span>':''}</div><p class="tiny muted" style="text-align:center">比例刻度 0—${r.scale*100}%</p>${r.svg}<p class="hint" style="text-align:center">${st.total?'前三算赢 · 最近'+st.axes[0].count+'场，'+st.axes[0].wins+'场进入前三':'完成赛事并结算后，这里会显示你的战绩。'}</p><div class="divider"></div><h2>战绩PK</h2><form id="pk-form" class="row space-top"><label class="field" style="flex:1;min-width:140px"><span class="sr-only">对方赛事会员ID</span><input aria-label="对方赛事会员ID" name="memberId" inputmode="numeric" placeholder="输入对方赛事会员ID" value="${b?b.memberId:''}" required></label><button class="button gold" type="submit">开始PK</button></form>${b?button('退出对比','exit-pk','small ghost','style="margin-top:10px"'):''}<div class="table-scroll space-top"><table class="data-table"><caption class="sr-only">战绩比例与参赛样本</caption><thead><tr><th>维度</th><th>${esc(a.nickname)}</th>${b?'<th>'+esc(b.nickname)+'</th>':''}</tr></thead><tbody>${AXES.map(function(name,i){return `<tr><td>${name}</td><td><b>${pct(st.axes[i].ratio)}</b><small>${st.axes[i].count}场样本</small></td>${b?'<td class="opponent"><b>'+pct(op.axes[i].ratio)+'</b><small>'+op.axes[i].count+'场样本</small></td>':''}</tr>`;}).join('')}<tr><td>总上桌场数</td><td><b>${st.total}</b></td>${b?'<td class="opponent"><b>'+op.total+'</b></td>':''}</tr></tbody></table></div><details class="summary-block"><summary>统计说明与最近5场</summary><p>只计已结算的正式SNG／MTT赛事，前三算赢；不足5场按实际场数计算。未结算、取消的赛事不计入比例。没有参赛样本显示“暂无”，对应维度不连线。</p><p>已结算 ${st.total} 场 · 待结算 ${a.matches.filter(function(m){return m.status==='pending';}).length} 场</p>${matchRecords(st.recent)}</details>${button(art('image',18)+' 保存整页为图片','export-radar','wide ghost')}`,'能力雷达','events');
+  }
+  function matchRecords(rows) {
+    if(!rows.length)return '<p class="hint">暂无已结算赛事记录。</p>';
+    return rows.map(function(m){return `<div class="record"><div class="spaced"><b>${m.game} · 第${m.rank}名</b><time>${date(m.at,true)}</time></div><p>赛事积分 ${number(m.points)} · 击杀 ${m.kills} · 已结算</p></div>`;}).join('');
+  }
+  function rewardCard(b,context) {
+    const a=current(),key=context.key,reward=a.rewards[key],locked=!context.unlocked&&!reward;
+    const total=reward?reward.total:b.quantity,claimed=reward?reward.claimed:0,left=total-claimed;
+    if(b.type==='access')return `<article class="reward-card ${locked?'locked':''}"><span class="reward-icon">${art('shield',25)}</span><div><div class="spaced"><h3>${esc(b.title)}</h3><span class="pill ${locked?'locked':'success'}">${locked?'未解锁':'已解锁'}</span></div><p>${esc(b.detail||'达到对应等级后解锁本项资格。')}</p><button class="link-button" data-action="info" data-title="${esc(b.title)}" data-text="${esc(b.detail||'达到对应等级后解锁本项资格。')}">查看资格说明 ›</button></div></article>`;
+    return `<article class="reward-card ${locked?'locked':''}"><span class="reward-icon">${art(b.type==='ticket'?'ticket':'gift',25)}</span><div><div class="spaced"><h3>${esc(reward?reward.title:b.title)}</h3><span class="pill ${locked?'locked':left?'pending':'success'}">${locked?'未解锁':left?'可领取':'已领完'}</span></div>${b.detail?'<p>'+esc(b.detail)+'</p>':''}<div class="quota"><span>共<b>${total}</b>${b.type==='ticket'?'张':'份'}</span><span>已领<b>${claimed}</b></span><span>剩余<b>${left}</b></span></div>${button(locked?'达到条件后领取':left?'领取奖励':'已领完','claim-reward','small '+(left&&!locked?'gold':'ghost'),`data-key="${esc(key)}" ${locked||!left?'disabled':''}`)}</div></article>`;
+  }
+  function renderLevels(selected) {
+    const a=current(),m=C.membership(state,a),l=state.settings.levels[Math.max(1,Math.min(10,selected))-1],next=state.settings.levels[l.level],unlocked=l.level<=m.current.level;
+    let card=`<section class="level-card"><span class="pill">${l.level===m.current.level?'当前等级':unlocked?'已达到':'未解锁'}</span><span class="crest">${A.crest(l.level)}</span><h2 class="level-title"><span>LV${l.level}</span><span class="level-name">${esc(l.name)}</span></h2><p class="muted">我的累计成长值</p><div class="level-value">${number(m.growth)}</div><p>达到本级累计需 <span class="metal">${number(l.threshold)}</span> 成长值</p><p class="hint">${next?'升至LV'+next.level+' '+esc(next.name)+'，累计目标 '+number(next.threshold):'最高等级 · 传奇之境'}</p>`;
+    if(l.level===m.current.level)card+=`<div class="progress" role="progressbar" aria-label="当前等级成长进度" aria-valuenow="${Math.round(m.progress*100)}" aria-valuemin="0" aria-valuemax="100"><span style="width:${m.progress*100}%"></span></div><p class="tiny metal">${m.next?'再成长 '+number(m.gap)+' 即可升级':'已满级，感谢一路同行'}</p>`;
+    else card+=`<p class="tiny metal space-top">${unlocked?'本级成长门槛已达成':'距离解锁还需 '+number(Math.max(0,l.threshold-m.growth))+' 成长值'}</p>`;
+    card+='</section>';
+    const picker=`<nav class="level-picker" aria-label="切换查看等级">${state.settings.levels.map(function(x){return `<a href="#/levels/${x.level}" class="${x.level===l.level?'selected':''}" aria-current="${x.level===l.level?'page':'false'}">LV${x.level}<span>${esc(x.name)}</span></a>`;}).join('')}</nav>`;
+    const rewards=l.rewards.map(function(b){return rewardCard(b,{key:'level:'+l.level+':'+b.id,unlocked:unlocked&&(b.id!=='podium'||C.settled(a).some(function(m){return m.rank<=3;}))});}).join('');
+    shell(card+picker+`<div class="section-heading"><h2>LV${l.level} 等级权益</h2><small>LEVEL PRIVILEGES</small></div><p class="hint space-bottom">升级奖励按固定总份数领取，可一次领完或分次领取，领完不重置。</p><section class="reward-grid">${rewards}</section><div class="spaced space-top"><a class="link-button" href="#/claims">查看我的领取单 ›</a><a class="link-button" href="#/tickets">门票余额 ${a.tickets}张 ›</a></div><details class="summary-block" open><summary>成长说明</summary><p>实际消费每1元获得1成长值；余额支付中的充值赠送部分不计。退款扣回对应成长值，朋友买单只计付款人。</p><p>LV2累计门槛为700，后续累计门槛逐级翻倍。升级不会扣除累计成长值，每一级均可预览门槛与对应权益。</p><p>A版的消费成长由商家演示端登记；权益内容可在商家共享模板中修改。</p></details>`,'等级一览','events');
+    let startX=null;const el=$('.level-card');el.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;},{passive:true});el.addEventListener('touchend',function(e){if(startX!==null){const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>50)navigate('levels/'+Math.max(1,Math.min(10,l.level+(dx<0?1:-1))));startX=null;}},{passive:true});
+  }
+  function renderCards() {
+    const a=current(),pending=state.claims.filter(function(c){return c.accountId===a.id&&c.kind==='card'&&c.status==='pending';}).reduce(function(n,c){return n+c.count;},0);
+    shell(`<div class="spaced"><div><span class="eyebrow">joker LUCKY CARDS</span><h1>礼物卡包</h1></div>${button(art('refresh',18),'refresh-view','small ghost','aria-label="刷新卡包"')}</div><p class="page-subtitle">点选卡片，开启属于你的礼遇。</p><a class="balance-strip" href="#/draw"><span><small>抽奖机会</small><b>${a.drawCredits}</b>次</span><span class="metal">去抽奖 ›</span></a><div class="card-grid space-top">${C.CARDS.map(function(c,i){return `<button class="gift-tile ${a.gifts[c]?'':'zero'}" type="button" data-action="card-detail" data-card="${c}" aria-label="${c}卡，可用${a.gifts[c]}张">${A.card(c)}<span class="card-count">${a.gifts[c]}</span><span class="card-caption">第${i+1}阶 · ${c}卡</span></button>`;}).join('')}</div><p class="hint space-top">可用数量不含已申请领取、正在冻结的卡片。${pending?'当前冻结 '+pending+' 张。':''}</p><div class="divider"></div><div class="stack">${link('我的领取单 ›','claims','button wide ghost')}${link('最近记录 ›','records','button wide ghost')}${link('门票余额 '+number(a.tickets)+' 张 ›','tickets','button wide ghost')}</div><details class="summary-block"><summary>八阶合成与兑换规则</summary><table class="data-table"><thead><tr><th>卡牌</th><th>合成下一级</th><th>每张可兑门票</th></tr></thead><tbody>${C.CARDS.map(function(c,i){return `<tr><td>${c}</td><td>${C.MERGE[i]?C.MERGE[i]+'张 → 1张'+C.CARDS[i+1]:'最高档'}</td><td>${C.TICKETS[i]?C.TICKETS[i]+'张':'—'}</td></tr>`;}).join('')}</tbody></table></details>`,'礼物卡包','events');
+  }
+  function cardDetail(card) {
+    const a=current(),i=C.CARDS.indexOf(card);if(i<0)return;
+    const canMerge=C.MERGE[i]&&a.gifts[card]>=C.MERGE[i],canUse=a.gifts[card]>0;
+    openDialog(card+'卡',`<div class="card-detail-art">${A.card(card)}</div><p style="text-align:center" class="space-top"><strong class="metal">${a.gifts[card]}</strong> 张可用</p><div class="operation-list">${i<7?`<button data-action="merge-card" data-card="${card}" ${canMerge?'':'disabled'}><span>合成${C.CARDS[i+1]}卡<small>${C.MERGE[i]}张${card}卡 → 1张${C.CARDS[i+1]}卡</small></span><span>›</span></button>`:''}${i>0?`<button data-action="claim-gift" data-card="${card}" ${canUse?'':'disabled'}><span>领取礼物<small>${esc(state.settings.giftPrizes[i]||'礼物待商家设置')} · 每份使用1张卡</small></span><span>›</span></button>`:''}${i>=4?`<button data-action="exchange-card" data-card="${card}" ${canUse?'':'disabled'}><span>兑换门票<small>每张兑换${C.TICKETS[i]}张门票</small></span><span>›</span></button>`:''}</div><p class="hint space-top">${i===0?'9卡用于合成10卡。':canUse?'申请礼物后，卡片进入冻结状态。取消尚未核销的领取单，可恢复卡片。':'暂未持有可用卡片，可以先去抽奖或查看领取单。'}</p>`,link('查看领取单','claims','button ghost'));
+  }
+  function assetOperation(kind,card) {
+    const a=current(),i=C.CARDS.indexOf(card),isMerge=kind==='merge',isExchange=kind==='exchange';
+    const max=isMerge?Math.floor(a.gifts[card]/C.MERGE[i]):a.gifts[card];
+    const title=isMerge?'合成'+C.CARDS[i+1]+'卡':isExchange?'兑换门票':'申请领取礼物';
+    openDialog(title,`<p class="hint space-bottom">${isMerge?'每合成1张，消耗'+C.MERGE[i]+'张'+card+'卡。':isExchange?'每张'+card+'卡兑换'+C.TICKETS[i]+'张门票，确认后立即到账。':'礼物：'+esc(state.settings.giftPrizes[i])+'。每份冻结1张'+card+'卡，待到店核销。'}</p><form id="asset-operation-form" class="form-grid" data-kind="${kind}" data-card="${card}">${field(isMerge?'合成目标卡数量':'使用卡片数量','count',1,'number',`min="1" max="${max}" step="1" required`)}<p class="hint">本次最多可操作 ${max} ${isMerge?'次':'张'}。</p><button type="submit" class="button primary wide">确认${isMerge?'合成':isExchange?'兑换':'申请'}</button></form>`);
+  }
+  function wheelSVG() {
+    const cx=180,cy=180,r=162;
+    const p=function(angle,radius){const rad=angle*Math.PI/180;return [cx+radius*Math.cos(rad),cy+radius*Math.sin(rad)];};
+    let sectors='';
+    C.CARDS.forEach(function(card,i){
+      const from=-112.5+i*45,to=from+45,p1=p(from,r),p2=p(to,r),text=p(from+22.5,118);
+      sectors+=`<path d="M180 180 L${p1.join(' ')} A162 162 0 0 1 ${p2.join(' ')} Z" fill="${i%2?'#2d1720':'#191115'}" stroke="#826444" stroke-width="1"/><text x="${text[0]}" y="${text[1]}" fill="#dfc39c" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="${card.length>1?19:25}">${card}</text>`;
+    });
+    return `<svg class="wheel" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="八阶礼遇卡抽奖转盘"><circle cx="180" cy="180" r="174" fill="#1b1014" stroke="#c9ae88" stroke-width="2"/><circle cx="180" cy="180" r="169" fill="none" stroke="#855c40" stroke-width="2" stroke-dasharray="2 8"/>${sectors}<circle cx="180" cy="180" r="163" fill="none" stroke="#c9ae88" stroke-width="3"/></svg>`;
+  }
+  function renderDraw() {
+    const a=current(),pending=a.draws.find(function(d){return !d.revealed;});
+    shell(`<div class="spaced"><div><span class="eyebrow">joker LUCKY MOMENT</span><h1>幸运转盘</h1></div>${button(art(ui.sound?'volume':'volume-off',20),'toggle-sound','small ghost',`aria-label="${ui.sound?'关闭音效':'开启音效'}" aria-pressed="${ui.sound}"`)}</div><p class="page-subtitle">每一次期待，都有一份礼遇。</p><div class="wheel-wrap"><span class="wheel-pointer">▼</span>${wheelSVG()}<button class="wheel-center" data-action="draw" data-count="1" aria-label="点击转盘抽奖" ${a.drawCredits<1?'disabled':''}>抽奖</button></div><div class="balance-strip"><span>剩余 <b>${a.drawCredits}</b> 次</span><small>长期有效，可累计</small></div>${pending?`<div class="notice space-top">上次抽奖结果已保存，卡片已进入卡包。${button('查看并收下卡片','recover-draw','small gold',`data-id="${pending.id}"`)}</div>`:''}<div class="actions space-top">${button('抽一次','draw','primary','data-count="1" '+(a.drawCredits<1?'disabled':''))}${button('十连抽 · 消耗10次','draw','gold','data-count="10" '+(a.drawCredits<10?'disabled':''))}</div><p class="hint space-top">${a.drawCredits?'每抽一次消耗1次机会，获得1张礼遇卡。':'暂无可用机会，荷官登记新增猎人卡后即可获得。'}</p><details class="summary-block"><summary>概率与规则 · 模板v${state.settings.probabilityVersion}</summary><p>每新增1张猎人卡获得1次机会。转盘用于展示，结果按当前公示概率抽取。修改概率只影响之后的新抽奖，已保存的结果不变。</p><div class="probabilities">${C.CARDS.map(function(c,i){return `<div><b>${c}卡</b><small>${number(state.settings.probabilities[i])}%</small></div>`;}).join('')}</div><p>本商家旗下门店共用一套概率模板。</p></details><div class="stack">${link('查看最近记录 ›','records','button ghost wide')}${link('返回礼物卡包 ›','cards','button ghost wide')}</div>`,'猎人卡抽奖','cards');
+  }
+  function drawResult(draw) {
+    openDialog(draw.results.length===10?'十连抽结果':'这次的幸运礼遇',`<p class="hint">卡片已经保存到你的卡包，重复查看不会再次扣除机会。</p><div class="draw-results ${draw.results.length===1?'single':''}">${draw.results.map(function(c){return `<div>${A.card(c)}<p>${c}卡</p></div>`;}).join('')}</div><p class="tiny muted">抽奖时间 ${date(draw.at)} · 概率模板v${draw.version}</p>`,button('收下并查看卡包','ack-draw','primary',`data-id="${draw.id}" data-target="cards"`)+button('继续抽奖','ack-draw','ghost',`data-id="${draw.id}" data-target="draw"`));
+  }
+  function drawAnimation(draw) {
+    const index=C.CARDS.indexOf(draw.results[draw.results.length-1]),spin=1800+(8-index)*45;
+    openDialog('幸运正在揭晓',`<div class="wheel-wrap"><span class="wheel-pointer">▼</span>${wheelSVG()}<span class="wheel-center">joker</span></div><p class="hint" style="text-align:center">本次结果已保存，请稍候…</p>`,button('直接查看结果','recover-draw','ghost',`data-id="${draw.id}"`));
+    requestAnimationFrame(function(){const w=$('.wheel',$('#dialog'));if(w){w.style.setProperty('--spin',spin+'deg');w.classList.add('is-spinning');}});
+    ui.drawTimer=setTimeout(function(){ui.drawTimer=null;drawResult(draw);playTone(true);},window.matchMedia('(prefers-reduced-motion: reduce)').matches?150:2700);
+  }
+  function renderGiftHistory() {
+    const a=current(),rows=a.giftHistory;
+    shell(`<div class="spaced space-bottom"><div><span class="eyebrow">CARD JOURNAL</span><h1>最近记录</h1></div>${button('刷新','refresh-view','small ghost')}</div>`+(rows.length?'<section class="card flat">'+rows.map(function(r){return `<article class="record"><b>${esc(r.text)}</b><p>${date(r.at)}</p></article>`;}).join('')+'</section>':empty('还没有礼物卡记录','抽奖、合成、兑换或申请领取之后，可在这里查看。',link('回到卡包','cards','button primary'))),'最近记录','cards');
+  }
+  function renderClaims() {
+    const a=current(),rows=state.claims.filter(function(c){return c.accountId===a.id;});
+    const labels={pending:'待到店核销',used:'已使用',cancelled:'已取消',credited:'门票已到账'};
+    shell(`<span class="eyebrow">MY PRIVILEGES</span><h1>我的领取单</h1><p class="page-subtitle">到店出示领取码。尚未核销的领取单可取消，恢复对应额度或卡片。</p>`+(rows.length?rows.map(function(c){return `<article class="claim-card"><div class="spaced"><h3>${esc(c.title)} × ${c.count}</h3><span class="pill ${c.status==='pending'?'pending':c.status==='cancelled'?'locked':'success'}">${labels[c.status]}</span></div><p>${date(c.at)} · ${c.kind==='card'?c.card+'卡礼物':'等级权益'}</p>${c.status==='pending'?'<div class="claim-code">'+esc(c.code)+'</div><p>领取时由门店核对本人及领取记录。</p>'+button('取消领取','cancel-claim','small ghost',`data-id="${c.id}" style="margin-top:12px"`):'<p class="tiny">记录编号 '+esc(c.code)+'</p>'}</article>`;}).join(''):empty('还没有领取单','在等级权益或礼物卡包中申请领取后，会显示在这里。',link('查看礼物卡包','cards','button primary'))),'我的领取单','events');
+  }
+  function renderTickets() {
+    const a=current();
+    shell(`<span class="eyebrow">MY TICKETS</span><h1>我的门票</h1><div class="balance-strip space-top"><span><small>可用门票</small><b>${number(a.tickets)}</b>张</span>${art('ticket',38)}</div><p class="hint space-top">卡片兑换及等级奖励到账后，余额同步更新。A版仅演示资产与领取流程。</p><div class="section-heading"><h2>到账记录</h2><small>TICKET JOURNAL</small></div>`+(a.ticketLedger.length?'<section class="card flat">'+a.ticketLedger.map(function(r){return `<div class="record"><div class="spaced"><b>${esc(r.text)}</b><strong class="metal">${r.amount>=0?'+':''}${r.amount}张</strong></div><p>${date(r.at)}</p></div>`;}).join('')+'</section>':empty('暂无门票记录','兑换礼遇卡或领取门票奖励后，可在这里查看。',link('前往卡包','cards','button ghost'))),'我的门票','cards');
+  }
+  function renderHonors() {
+    const a=current(),counts=C.honorCounts(a),unlocked=C.HONORS.filter(function(h){return counts[h.id]>0;}).length+C.SPECIAL.filter(function(h){return a.specials[h.id];}).length;
+    const total=Object.values(counts).reduce(function(n,x){return n+x;},0)+C.SPECIAL.filter(function(h){return a.specials[h.id];}).length;
+    const rank=function(kind){const row=C.rankings(state,kind,'month').find(function(x){return x.id===a.id;});return row?'第'+row.rank+'名':'未上榜';};
+    const tiles=function(list){return list.map(function(h){
+      const p=h.special?null:C.honorProgress(state,a,h.id),lit=h.special?!!a.specials[h.id]:counts[h.id]>0;
+      return `<button class="honor-tile ${lit?'unlocked':'locked'}" data-action="honor-detail" data-id="${h.id}" aria-label="${esc(h.name)}详情">${A.honor(h.name,lit?Math.max(1,p?p.level:1):0)}<b>${esc(h.name)}</b>${p?'<small>累计 '+p.count+'次 · '+(p.level?'LV'+p.level:'待进阶')+'</small><div class="progress"><span style="width:'+Math.round(p.progress*100)+'%"></span></div><small>'+(p.target?'再'+p.gap+'次升LV'+(p.level+1):'已达最高荣誉等级')+'</small>':'<small>'+(lit?'已点亮':'未点亮')+'</small>'}</button>`;
+    }).join('');};
+    shell(`<span class="eyebrow">HONOR ARCHIVE</span><h1>我的荣誉</h1><p class="page-subtitle">在这里，记录你的扑克人生。</p><section class="card honor-summary">${avatar(a)}<h2>${esc(a.nickname)}</h2><p class="tiny muted">会员ID ${a.memberId}</p><strong class="achievement">${total}</strong><p class="hint">累计荣誉次数 · 已点亮 ${unlocked}／${C.HONORS.length+C.SPECIAL.length} 枚</p><div class="progress"><span style="width:${unlocked/29*100}%"></span></div><div class="actions space-top">${link('本月大师榜<br><strong>'+rank('master')+'</strong>','rankings/master/month','button small ghost')}${link('本月猎人榜<br><strong>'+rank('hunter')+'</strong>','rankings/hunter/month','button small ghost')}</div>${link('连续上桌 '+attendanceInfo(a).count+' 天 ›','attendance','link-button')}</section><div class="actions space-top">${link('荣誉等级奖励 ›','honor-rewards/all','button gold')}${link('选择出场特效 ›','effects','button ghost')}</div><div class="section-heading"><h2>最强荣誉</h2><small>STRONGEST HONORS</small></div><section class="honor-grid">${tiles(C.SPECIAL)}</section><div class="section-heading"><h2>荣誉徽章</h2><small>THE COLLECTION</small></div><section class="honor-grid">${tiles(C.HONORS)}</section><p class="footer-note">每一枚，都有故事。<br>joker · YOUR HONOR, YOUR STORY</p>`,'我的荣誉','events');
+  }
+  function honorDetail(id) {
+    const h=C.HONORS.concat(C.SPECIAL).find(function(x){return x.id===id;});if(!h)return;
+    const a=current(),p=h.special?null:C.honorProgress(state,a,id),lit=h.special?!!a.specials[id]:(p.count>0);
+    openDialog(h.name+'详情',`<div class="honor-detail-title">${A.honor(h.name,lit?Math.max(1,p?p.level:1):0)}<h2>${esc(h.name)}</h2><span class="pill ${lit?'success':'locked'}">${lit?'已点亮':'尚未点亮'}</span></div><div class="divider"></div><div class="spaced"><h3>荣誉动画预览</h3>${button('播放动画','play-honor','small gold',`data-id="${id}"`)}</div><div class="award-stage space-top" id="honor-animation">${A.honor(h.name,Math.max(1,p?p.level:1))}<h3>${esc(h.name)}</h3><p>joker · HONOR MOMENT</p></div>${p?`<div class="section-heading"><h3>五级荣誉图鉴</h3></div><div class="badge-gallery">${[1,2,3,4,5].map(function(l){return `<figure>${A.honor(h.name,l)}<figcaption>LV${l}</figcaption></figure>`;}).join('')}</div><p class="hint">累计 ${p.count} 次 · ${p.target?'再获得'+p.gap+'次，升至LV'+(p.level+1):'已达最高等级'}</p>${link('查看本项等级奖励 ›','honor-rewards/'+id,'button wide ghost space-top')}`:''}<div class="divider"></div><h3>点亮方式</h3><p class="hint space-top">${esc(h.description)}</p><p class="hint space-top">${h.special?'最强荣誉由门店核对条件后登记。':'荣誉次数来自已结算赛事或荷官登记，奖励门槛按本商家共享模板执行。'}</p>`);
+  }
+  function renderHonorRewards(filter) {
+    const a=current(),list=C.HONORS.filter(function(h){return filter==='all'||h.id===filter;});
+    shell(`<span class="eyebrow">HONOR MILESTONES</span><h1>荣耀进阶</h1><p class="page-subtitle">每一份积累，都有新的回响。</p><div class="notice">各项荣誉按次数成长，与消费成长段位分别计算。奖励按固定总额度领取，领取记录会持续保留。</div><nav class="tabs-scroll space-top" aria-label="按荣誉筛选">${link('全部','honor-rewards/all',filter==='all'?'selected':'')}${C.HONORS.map(function(h){return link(esc(h.name),'honor-rewards/'+h.id,filter===h.id?'selected':'');}).join('')}</nav>${list.map(function(h){
+      const p=C.honorProgress(state,a,h.id),rule=state.settings.honorRules[h.id];
+      return `<section class="card space-top"><div class="spaced"><div><h2>${esc(h.name)}</h2><p class="hint">已累计 ${p.count} 次 · ${p.target?'再'+p.gap+'次升LV'+(p.level+1):'已达最高等级'}</p></div><span style="width:66px;color:var(--metal)">${A.honor(h.name,Math.max(1,p.level))}</span></div><div class="progress"><span style="width:${p.progress*100}%"></span></div><details class="summary-block" ${filter!=='all'?'open':''}><summary>五级奖励与领取记录</summary><div class="reward-grid space-top">${rule.thresholds.map(function(t,i){return rewardCard({title:h.name+' LV'+(i+1)+'门票',quantity:rule.rewards[i],type:'ticket',detail:'累计达成'+t+'次'}, {key:'honor:'+h.id+':'+(i+1),unlocked:p.count>=t});}).join('')}</div></details></section>`;
+    }).join('')}<p class="hint space-top">商家可修改荣誉门槛及奖励；已解锁额度保留发放时的快照，避免修改后重复发奖。</p>`,'荣誉等级奖励','honors');
+  }
+  function renderEffects() {
+    const a=current(),list=C.HONORS.concat(C.SPECIAL);
+    shell(`<span class="eyebrow">ENTRANCE EFFECT</span><h1>选择出场特效</h1><p class="page-subtitle">点亮荣誉，选择属于你的入场时刻。</p><div class="card flat spaced"><span>当前：${esc((list.find(function(h){return h.id===a.entranceEffect;})||{name:'不使用特效'}).name)}</span>${button('清除选择','select-effect','small ghost','data-id=""')}</div>${list.map(function(h){const unlocked=C.effectUnlocked(state,a,h.id);return `<article class="effect-row ${a.entranceEffect===h.id?'selected':''}">${A.honor(h.name,unlocked?1:0)}<div><b>${esc(h.name)}</b><small>${unlocked?'已解锁，可设为出场特效':'未点亮，可预览'}</small></div><div class="stack">${button('预览','preview-effect','small ghost',`data-id="${h.id}"`)}${button(a.entranceEffect===h.id?'已选择':'选择','select-effect','small '+(unlocked?'gold':'ghost'),`data-id="${h.id}" ${unlocked?'':'disabled'}`)}</div></article>`;}).join('')}`,'出场特效','honors');
+  }
+  function renderHands() {
+    const a=current(),cards=a.hand?a.hand.cards:ui.hand;
+    const pair=`<div class="hand-pair">${[0,1].map(function(i){return `<button class="hand-slot ${!a.hand&&ui.handSlot===i?'selected':''}" data-action="hand-slot" data-index="${i}" ${a.hand?'disabled':''} aria-label="第${i+1}张手牌，${cards[i]||'未选择'}">${A.card(cards[i]||'9',{back:!cards[i]})}<span>第${i+1}张 · ${cards[i]||'待选择'}</span></button>`;}).join('')}</div>`;
+    shell(`<span class="eyebrow">MY LUCKY HAND</span><h1>我的手牌</h1><p class="page-subtitle">${a.hand?'这是属于你的两张幸运手牌。':'选择两张2—10的幸运点数，确认后将锁定。'}</p>${pair}`+(a.hand?`<div class="card" style="text-align:center"><span class="pill success">已设置 · 不可修改</span><h2 class="space-top">你的手牌：${cards.join(' + ')}</h2><p class="hint space-top">设置于 ${date(a.hand.at)}</p></div>${link('查看我的活动记录 ›','hand-activity','button wide ghost space-top')}`:`<h2>为第${ui.handSlot+1}张牌选择点数</h2><div class="number-grid">${[2,3,4,5,6,7,8,9,10].map(function(n){return `<button data-action="hand-number" data-number="${n}" class="${ui.hand[ui.handSlot]===n?'selected':''}">${n}</button>`;}).join('')}</div><p class="hint space-bottom">确认前可以点击任意牌位重新选择；保存后不能自行修改。</p>${button('确定设置两张手牌','confirm-hand','wide primary',ui.hand.some(function(n){return !n;})?'disabled':'')}`),'我的手牌','events');
+  }
+  function renderHandActivity() {
+    const a=current();
+    shell(`<span class="eyebrow">MY HAND JOURNAL</span><h1>我的活动记录</h1><p class="page-subtitle">幸运手牌与它的每一次高光。</p>`+(a.handActivity.length?'<section class="card flat">'+a.handActivity.map(function(r){return `<div class="record"><b>${esc(r.text)}</b><p>${date(r.at)}</p></div>`;}).join('')+'</section>':empty('还没有活动记录','设置幸运手牌后，可在这里查看后续记录。',link('前往我的手牌','hands','button primary'))),'活动记录','hands');
+  }
+  function attendanceInfo(a) {
+    const day=function(t){return new Date(new Date(t).getTime()+2*3600000).toISOString().slice(0,10);};
+    const days=Array.from(new Set(a.matches.filter(function(m){return m.status!=='cancelled';}).map(function(m){return day(m.at);}))).sort().reverse();
+    let cursor=day(Date.now()),count=0;
+    const previous=function(d){return new Date(new Date(d+'T00:00:00Z').getTime()-86400000).toISOString().slice(0,10);};
+    if(!days.includes(cursor))cursor=previous(cursor);
+    while(days.includes(cursor)){count++;cursor=previous(cursor);}
+    return {days:days,count:count};
+  }
+  function renderAttendance() {
+    const info=attendanceInfo(current());
+    shell(`<span class="eyebrow">DAYS AT THE TABLE</span><h1>连续上桌</h1><div class="card honor-summary space-top"><strong class="achievement">${info.count}</strong><p class="metal">连续上桌天数</p><p class="hint space-top">按门店营业日记录，同一天多场赛事只计一天。营业日于北京时间06:00切换。</p></div><div class="section-heading"><h2>上桌日期</h2></div>`+(info.days.length?'<section class="card flat">'+info.days.map(function(d){return '<div class="record"><b>'+d+'</b><p>该营业日存在有效上桌记录</p></div>';}).join('')+'</section>':empty('暂无上桌记录','商家登记赛事后，这里会显示对应日期。')),'连续上桌','honors');
+  }
+  function renderRankings(kind,period) {
+    const rows=C.rankings(state,kind,period),me=rows.find(function(r){return r.id===activeId;});
+    shell(`<span class="eyebrow">joker LEADERBOARD</span><h1>${kind==='hunter'?'猎人榜':'大师榜'}</h1><p class="page-subtitle">${period==='month'?'本月':'累计'} · ${kind==='hunter'?'按新增猎人卡累计排名':'按已结算赛事积分排名'} · 同值并列</p><nav class="segmented space-bottom" aria-label="切换排行榜">${link('大师榜','rankings/master/'+period,kind==='master'?'selected':'')}${link('猎人榜','rankings/hunter/'+period,kind==='hunter'?'selected':'')}</nav><nav class="tabs-scroll">${link('本月','rankings/'+kind+'/month',period==='month'?'selected':'')}${link('累计','rankings/'+kind+'/all',period==='all'?'selected':'')}</nav><div class="notice space-bottom">我的位置：${me?'第'+me.rank+'名 · '+number(me.value)+(kind==='hunter'?'张':'分'):'尚未上榜'}</div>`+(rows.length?'<section class="card flat">'+rows.map(function(r){return `<article class="rank-row ${r.id===activeId?'me':''}"><span class="rank-number">${r.rank}</span>${avatar(r,'small')}<div><b>${esc(r.nickname)}</b><small>会员ID ${r.memberId}</small></div><strong class="value">${number(r.value)}</strong></article>`;}).join('')+'</section>':empty('暂无排名记录','有效赛事积分或新增猎人卡登记后，会显示在这里。')),'赛事排行榜','honors');
+  }
+  const merchantTabs=[['users','演示用户'],['growth','成长与战绩'],['assets','资产与荣誉'],['probabilities','抽奖模板'],['levels','成长权益模板'],['honors','荣誉模板'],['gifts','礼物设置'],['claims','领取核销'],['log','操作记录']];
+  function selectedMerchantUser() {
+    return state.accounts.find(function(a){return a.id===ui.merchantUser;})||current()||state.accounts[0]||null;
+  }
+  function userSelector() {
+    const a=selectedMerchantUser();
+    return `<label class="field"><span>选择演示用户</span><select id="merchant-user" aria-label="选择演示用户">${state.accounts.map(function(x){return `<option value="${x.id}" ${a&&a.id===x.id?'selected':''}>${x.memberId} · ${esc(x.nickname)} · ${x.phone}</option>`;}).join('')}</select></label>`;
+  }
+  function renderMerchant(tab) {
+    const a=selectedMerchantUser();if(a)ui.merchantUser=a.id;
+    let content='';
+    if(tab==='users')content=merchantUsers(a);
+    else if(tab==='growth')content=a?merchantGrowth(a):merchantNoUsers();
+    else if(tab==='assets')content=a?merchantAssets(a):merchantNoUsers();
+    else if(tab==='probabilities')content=merchantProbabilities();
+    else if(tab==='levels')content=merchantLevels();
+    else if(tab==='honors')content=merchantHonors();
+    else if(tab==='gifts')content=merchantGifts();
+    else if(tab==='claims')content=merchantClaims();
+    else content=merchantLog();
+    shell(`<div class="merchant-heading"><div><span class="eyebrow">MERCHANT DEMO WORKSPACE</span><h1>商家演示端</h1><p class="page-subtitle">在这里编辑A版数据，再回到用户端验收。所有改动仅保存在当前浏览器。</p></div><div class="actions">${link('预览用户端','events','button gold')}${button('载入两位演示用户','load-demo','ghost')}</div></div><div class="notice space-bottom spaced"><span>商家共用一套模板，主店与分店同步读取。</span><select id="store-context" aria-label="当前演示门店" style="max-width:210px;padding:8px;border:1px solid var(--line);background:var(--well);color:var(--ink);border-radius:7px">${state.merchant.stores.map(function(s){return `<option value="${s.id}" ${store().id===s.id?'selected':''}>${esc(s.name)}</option>`;}).join('')}</select></div><nav class="merchant-tabs" aria-label="商家演示功能">${merchantTabs.map(function(t){return link(t[1],'merchant/'+t[0],t[0]===tab?'selected':'');}).join('')}</nav>${content}`,'商家演示端','events',true);
+  }
+  function merchantNoUsers() {
+    return empty('先准备一位赛事用户','可以从用户端注册，也可以载入两位演示用户。示例数据只会新增账号，不覆盖已有资料。',button('载入演示用户','load-demo','primary')+link('前往注册','register','button ghost'));
+  }
+  function merchantUsers(a) {
+    return `<div class="merchant-grid"><section class="card"><h2>赛事用户</h2>${state.accounts.length?userSelector():'<p class="hint">当前还没有赛事用户。</p>'}<p class="hint space-top">示例账号：13800000001、13800000002<br>示例密码：Rzh2026!</p><p class="hint space-top">“用此用户预览”仅用于A版切换演示身份。</p>${a?button('用此用户预览','preview-user','wide gold space-top',`data-id="${a.id}"`):''}</section><div class="merchant-column">${a?`<section class="card"><div class="identity-top">${avatar(a)}<div class="identity-name"><h2>${esc(a.nickname)}</h2><p>会员ID ${a.memberId} · ${a.phone}</p></div></div><div class="mini-stats space-top"><div><b>${number(a.growthCents/100)}</b><span>累计成长值</span></div><div><b>${C.stats(a).total}</b><span>已结算场数</span></div><div><b>${a.drawCredits}</b><span>剩余抽奖机会</span></div><div><b>${a.tickets}</b><span>门票余额</span></div></div><form id="merchant-profile-form" data-account="${a.id}" class="form-grid space-top">${field('演示昵称','nickname',a.nickname,'text','required maxlength="24"')}<button class="button primary" type="submit">保存用户昵称</button></form></section>`:merchantNoUsers()}<section class="card"><h2>商家与门店</h2><form id="merchant-name-form" class="form-grid">${field('商家名称','name',state.merchant.name,'text','required maxlength="30"')}${state.merchant.stores.map(function(s,i){return field(i===0?'主店名称':'分店名称','store'+i,s.name,'text','required maxlength="40"');}).join('')}<button type="submit" class="button ghost">保存门店名称</button></form></section></div></div>`;
+  }
+  function merchantGrowth(a) {
+    return `<div class="merchant-grid"><div class="merchant-column"><section class="card">${userSelector()}<div class="mini-stats space-top"><div><b>${number(a.growthCents/100)}</b><span>累计成长值</span></div><div><b>LV${C.membership(state,a).current.level}</b><span>${esc(C.membership(state,a).current.name)}</span></div></div></section><section class="card"><h2>登记消费成长</h2><form id="growth-form" class="form-grid" data-account="${a.id}"><label class="field"><span>变动类型</span><select name="kind" aria-label="成长变动类型"><option value="consume">实际消费</option><option value="refund">退款扣回</option></select></label>${field('实付金额（元）','amount','','number','step="0.01" min="0.01" required placeholder="不包含充值赠送部分"')}${field('登记说明','note','','text','maxlength="80" placeholder="例如：今日到店实际消费"')}<button type="submit" class="button primary">保存成长登记</button></form><p class="hint space-top">实际消费1元=1成长值。退款不能超过现有累计成长值。</p></section><section class="card"><h2>成长流水</h2>${a.growthLedger.length?a.growthLedger.slice(0,12).map(function(e){return `<div class="record"><div class="spaced"><b>${esc(e.note)}</b><strong class="metal">${e.deltaCents>0?'+':''}${number(e.deltaCents/100)}</strong></div><p>${date(e.at)}</p></div>`;}).join(''):'<p class="hint">暂无登记记录。</p>'}</section></div><div class="merchant-column"><section class="card"><h2>添加赛事记录</h2><form id="match-form" class="form-grid" data-account="${a.id}"><div class="form-row"><label class="field"><span>赛事类型</span><select name="game" aria-label="赛事类型"><option>SNG</option><option>MTT</option></select></label><label class="field"><span>赛事状态</span><select name="status" aria-label="赛事状态"><option value="settled">已结算</option><option value="pending">待结算</option><option value="cancelled">已取消</option></select></label></div><div class="form-row">${field('最终名次','rank',1,'number','min="1" max="10000" step="1" required') }${field('赛事积分','points',10,'number','min="0" step="0.01" required')}</div><div class="form-row">${field('击杀数','kills',0,'number','min="0" step="1" required')}${field('赛事时间（北京时间）','at',new Date(Date.now()+8*3600000).toISOString().slice(0,16),'datetime-local','required')}</div><button type="submit" class="button primary">保存赛事记录</button></form><p class="hint space-top">已结算赛事会更新能力雷达、排行榜及冠军／亚军／季军次数。待结算和取消赛事不计胜率。</p></section><section class="card"><h2>赛事记录</h2>${a.matches.length?a.matches.slice().sort(function(x,y){return new Date(y.at)-new Date(x.at);}).map(function(m){return `<article class="record"><div class="spaced"><b>${m.game} · 第${m.rank}名 · ${{settled:'已结算',pending:'待结算',cancelled:'已取消'}[m.status]}</b><div class="row">${button('编辑','edit-match','small ghost',`data-id="${m.id}" data-account="${a.id}"`)}${button('删除','delete-match','small danger',`data-id="${m.id}" data-account="${a.id}"`)}</div></div><p>${date(m.at)} · 赛事积分 ${number(m.points)} · 击杀 ${m.kills}</p></article>`;}).join(''):'<p class="hint">暂无赛事记录。</p>'}</section></div></div>`;
+  }
+  function merchantAssets(a) {
+    const counts=C.honorCounts(a);
+    return `<section class="card space-bottom">${userSelector()}</section><div class="merchant-grid"><div class="merchant-column"><section class="card"><h2>荷官登记猎人卡</h2><p class="hint space-bottom">累计获得 ${a.hunterTotal} 张 · 剩余抽奖机会 ${a.drawCredits} 次</p><form id="hunter-form" class="form-grid" data-account="${a.id}">${field('新增猎人卡数量','count',1,'number','min="1" max="100000" step="1" required')}<button type="submit" class="button primary">登记并增加抽奖机会</button></form><p class="hint space-top">每新增1张，增加1次抽奖机会；抽奖不会扣减猎人榜的历史累计值。</p></section><section class="card"><h2>演示资产调整</h2><form id="assets-form" class="form-grid" data-account="${a.id}"><div class="form-row">${field('门票余额','tickets',a.tickets,'number','min="0" step="1" required')}${field('抽奖机会','drawCredits',a.drawCredits,'number','min="0" step="1" required')}</div><div class="template-grid">${C.CARDS.map(function(c,i){return field(c+'卡可用数量','card'+i,a.gifts[c],'number','min="0" max="100000000" step="1" required');}).join('')}</div><button type="submit" class="button ghost">保存演示资产</button></form><p class="hint space-top">此处用于A版演示准备，会留下调整记录。已冻结卡片仍保留在领取单中。</p></section><section class="card"><h2>幸运手牌活动</h2><p class="hint">${a.hand?'当前手牌 '+a.hand.cards.join(' + '):'用户尚未设置幸运手牌'}</p>${button('登记一次幸运手牌获胜','hand-win','gold space-top',`data-account="${a.id}" ${a.hand?'':'disabled'}`)}</section></div><section class="card"><h2>荣誉事件登记</h2><p class="hint space-bottom">下方为人工补录次数，不包含赛事名次自动累计的次数。保存后，荣誉墙和奖励进度同步更新。</p><form id="honor-count-form" class="form-grid" data-account="${a.id}"><div class="stats-form">${C.HONORS.map(function(h){return `<label class="field"><span>${esc(h.name)} <small>共${counts[h.id]}次</small></span><input type="number" name="honor-${h.id}" aria-label="${esc(h.name)}补录次数" value="${a.honorAdjustments[h.id]||0}" min="0" max="1000000" step="1" required></label>`;}).join('')}</div><div class="divider"></div><h3>最强荣誉确认</h3><div class="stats-form">${C.SPECIAL.map(function(h){return `<label class="checkbox"><input type="checkbox" name="special-${h.id}" ${a.specials[h.id]?'checked':''}>${esc(h.name)}</label>`;}).join('')}</div><button type="submit" class="button primary">保存荣誉登记</button></form></section></div>`;
+  }
+  function merchantProbabilities() {
+    return `<div class="merchant-grid"><section class="card"><h2>商家共享抽奖模板</h2><p class="hint">本商家所有门店共用一套概率。每档可以设为0，合计必须为100%。</p><p class="hint space-top">当前生效：v${state.settings.probabilityVersion}</p><p class="hint space-top">保存后只影响后续抽奖；已保存的结果和历史记录保持不变。</p><div class="divider"></div><h3>模板变更记录</h3>${state.settings.probabilityHistory.length?state.settings.probabilityHistory.slice(0,8).map(function(v){return '<p class="hint space-top">v'+v.version+' · '+date(v.at)+'</p>';}).join(''):'<p class="hint space-top">尚未修改默认演示值。</p>'}</section><section class="card"><form id="probability-form"><div class="spaced space-bottom"><h2>八档中奖概率</h2><span id="prob-total" class="prob-total">100.00%</span></div>${C.CARDS.map(function(c,i){return `<div class="template-row prob-row"><span class="tier-icon">${A.card(c,{small:true})}</span><span>${c}卡</span><label class="field"><span class="sr-only">${c}卡中奖概率</span><input type="number" aria-label="${c}卡中奖概率" name="prob${i}" value="${state.settings.probabilities[i]}" min="0" max="100" step="0.01" required></label></div>`;}).join('')}<p class="hint space-top" id="prob-hint">当前合计100%，可保存生效。</p><div class="actions space-top"><button type="submit" class="button primary" id="save-probabilities">保存并应用到全部门店</button>${button('恢复当前生效值','refresh-view','ghost')}</div></form></section></div>`;
+  }
+  function merchantLevels() {
+    return `<div class="notice space-bottom">10级成长门槛及各级奖励由商家统一设置。已有用户已解锁的额度保留原快照，修改用于之后新解锁的权益。</div><form id="level-template-form">${state.settings.levels.map(function(l){return `<details class="merchant-details" ${l.level===1?'open':''}><summary>LV${l.level} · ${esc(l.name)} · 累计 ${number(l.threshold)}</summary><div class="form-row space-top">${field('LV'+l.level+'段位名称','level-name-'+l.level,l.name,'text','required maxlength="20"')}${field('LV'+l.level+'累计门槛','level-threshold-'+l.level,l.threshold,'number','min="0" step="0.01" required '+(l.level===1?'readonly':''))}</div><h3 class="space-top">本级权益</h3>${l.rewards.map(function(b){return `<div class="benefit-edit">${field('权益名称','benefit-title-'+l.level+'-'+b.id,b.title,'text','required maxlength="60"')}${field('总份数','benefit-qty-'+l.level+'-'+b.id,b.quantity,'number','min="0" max="100000" step="1" required')}</div>${field('权益说明','benefit-detail-'+l.level+'-'+b.id,b.detail,'text','maxlength="160"')}`;}).join('')}</details>`;}).join('')}<div class="actions space-top"><button class="button primary" type="submit">保存成长权益模板</button>${button('取消未保存修改','refresh-view','ghost')}</div></form>`;
+  }
+  function merchantHonors() {
+    return `<div class="notice space-bottom">商家设置一套五级荣誉门槛和奖励，全部门店共用。初始数值是可编辑的A版演示模板，不代表竞品完整后台规则。</div><form id="honor-template-form">${C.HONORS.map(function(h){const r=state.settings.honorRules[h.id];return `<details class="merchant-details"><summary>${esc(h.name)} · ${r.thresholds.join('／')}次</summary><div class="table-scroll"><table class="data-table"><thead><tr><th>荣誉等级</th><th>累计达成次数</th><th>奖励门票</th></tr></thead><tbody>${[0,1,2,3,4].map(function(i){return `<tr><td>LV${i+1}</td><td><label class="field"><span class="sr-only">${h.name} LV${i+1}达成次数</span><input type="number" name="threshold-${h.id}-${i}" aria-label="${h.name} LV${i+1}达成次数" value="${r.thresholds[i]}" min="1" step="1" required></label></td><td><label class="field"><span class="sr-only">${h.name} LV${i+1}奖励门票</span><input type="number" name="reward-${h.id}-${i}" aria-label="${h.name} LV${i+1}奖励门票" value="${r.rewards[i]}" min="0" step="1" required></label></td></tr>`;}).join('')}</tbody></table></div></details>`;}).join('')}<div class="actions space-top"><button type="submit" class="button primary">保存荣誉共享模板</button>${button('取消未保存修改','refresh-view','ghost')}</div></form>`;
+  }
+  function merchantGifts() {
+    return `<section class="card"><h2>各档卡片对应礼物</h2><p class="hint space-bottom">卡片的合成与兑票比例采用已确认规则。领取礼物每份冻结1张对应卡，取消未核销领取单可恢复。</p><form id="gift-template-form" class="form-grid">${C.CARDS.slice(1).map(function(c,j){return field(c+'卡对应礼物','prize'+(j+1),state.settings.giftPrizes[j+1],'text','required maxlength="60"');}).join('')}<button class="button primary" type="submit">保存卡片礼物设置</button></form></section>`;
+  }
+  function merchantClaims() {
+    const rows=state.claims,labels={pending:'待到店核销',used:'已使用',cancelled:'已取消',credited:'门票已到账'};
+    return `<div class="notice space-bottom">这是A版核销演示。核销后用户领取单同步为“已使用”，同一单不能重复核销；已取消单不能核销。</div>`+(rows.length?'<section class="card"><div class="table-scroll"><table class="data-table record-table"><thead><tr><th>用户／领取码</th><th>权益</th><th>数量</th><th>状态</th><th>操作</th></tr></thead><tbody>'+rows.map(function(c){const a=state.accounts.find(function(x){return x.id===c.accountId;});return `<tr><td style="text-align:left">${esc(a?a.nickname:'用户')}<small>${esc(c.code)}</small></td><td>${esc(c.title)}</td><td>${c.count}</td><td>${labels[c.status]}</td><td>${c.status==='pending'?button('核销此单','redeem-claim','small gold',`data-id="${c.id}"`):'—'}</td></tr>`;}).join('')+'</tbody></table></div></section>':empty('暂无领取单','用户申请领取礼物或等级奖励后，可在这里核销。'));
+  }
+  function merchantLog() {
+    return state.log.length?'<section class="card flat">'+state.log.slice(0,100).map(function(e){const a=state.accounts.find(function(x){return x.id===e.accountId;});return `<div class="record"><div class="spaced"><b>${esc(e.text)}</b><time>${date(e.at)}</time></div><p>${a?esc(a.nickname)+' · 会员ID '+a.memberId:'商家共享设置'}</p></div>`;}).join('')+'</section>':empty('暂无操作记录','注册、登记、领取和模板修改后，会留下记录。');
+  }
+  function editMatch(id,accountId) {
+    const a=C.account(state,accountId),m=a.matches.find(function(x){return x.id===id;});if(!m)return toast('赛事记录已不存在');
+    openDialog('编辑赛事记录',`<form id="edit-match-form" data-id="${id}" data-account="${accountId}" class="form-grid"><div class="form-row"><label class="field"><span>赛事类型</span><select name="game" aria-label="赛事类型"><option ${m.game==='SNG'?'selected':''}>SNG</option><option ${m.game==='MTT'?'selected':''}>MTT</option></select></label><label class="field"><span>赛事状态</span><select name="status" aria-label="赛事状态">${[['settled','已结算'],['pending','待结算'],['cancelled','已取消']].map(function(x){return '<option value="'+x[0]+'" '+(m.status===x[0]?'selected':'')+'>'+x[1]+'</option>';}).join('')}</select></label></div><div class="form-row">${field('最终名次','rank',m.rank,'number','min="1" step="1" required')}${field('赛事积分','points',m.points,'number','min="0" step="0.01" required')}</div><div class="form-row">${field('击杀数','kills',m.kills,'number','min="0" step="1" required')}${field('赛事时间（北京时间）','at',new Date(new Date(m.at).getTime()+8*3600000).toISOString().slice(0,16),'datetime-local','required')}</div><button type="submit" class="button primary">保存赛事修改</button></form>`);
+  }
+  function ask(title,text,action,attrs,label) {
+    openDialog(title,`<p class="hint">${text}</p>`,button('返回','close-dialog','ghost')+button(label||'确认',''+action,'primary',attrs||''));
+  }
+  function updateProbabilityTotal() {
+    const form=$('#probability-form');if(!form)return;
+    const values=C.CARDS.map(function(c,i){return Number(form.elements['prob'+i].value);});
+    const sum=values.reduce(function(n,x){return n+(Number.isFinite(x)?x:0);},0);
+    let valid=true;try{C.probabilityUnits(values);}catch{valid=false;}
+    $('#prob-total').textContent=sum.toFixed(2)+'%';$('#prob-total').classList.toggle('invalid',!valid);
+    $('#prob-hint').textContent=valid?'当前合计100%，可保存生效。':'当前合计'+sum.toFixed(2)+'%，调整到100%后才能保存。';
+    $('#save-probabilities').disabled=!valid;
+  }
+  function playTone(success) {
+    if(!ui.sound)return;
+    try {
+      const AudioContext=window.AudioContext||window.webkitAudioContext;
+      if(!AudioContext)return;
+      const audio=new AudioContext(),gain=audio.createGain();gain.gain.value=.05;gain.connect(audio.destination);
+      [success?523:392,success?659:494,success?784:587].forEach(function(freq,i){
+        const osc=audio.createOscillator();osc.type='sine';osc.frequency.value=freq;osc.connect(gain);
+        osc.start(audio.currentTime+i*.12);osc.stop(audio.currentTime+i*.12+.16);
+      });setTimeout(function(){audio.close();},800);
+    } catch {}
+  }
+  function randomRoll() {
+    const value=new Uint32Array(1);
+    do {crypto.getRandomValues(value);}while(value[0]>=4294960000);
+    return value[0]%10000;
+  }
+  async function startDraw(count) {
+    const pending=current().draws.find(function(d){return !d.revealed;});
+    if(pending)return drawResult(pending);
+    const id=uid();await commit('draw',{count:count,rolls:Array.from({length:count},randomRoll)},undefined,id);
+    const draw=current().draws.find(function(d){return d.id===id;});
+    renderDraw();drawAnimation(draw);
+  }
+  function claimRewardDialog(key) {
+    const r=current().rewards[key];if(!r)return toast('本项奖励尚未解锁');
+    const left=r.total-r.claimed;if(left<1)return toast('本项额度已经领完');
+    openDialog('领取'+r.title,`<div class="quota"><span>共<b>${r.total}</b></span><span>已领<b>${r.claimed}</b></span><span>剩余<b>${left}</b></span></div><p class="hint space-bottom">${r.type==='ticket'?'领取的门票立即进入门票余额。':'领取后生成到店核销码；尚未核销时可以取消，恢复对应额度。'}</p><form id="reward-claim-form" class="form-grid" data-key="${esc(key)}">${field('本次领取份数','count',1,'number',`min="1" max="${left}" step="1" required`)}<button type="submit" class="button primary wide">确认领取</button></form>`);
+  }
+  async function loadDemo() {
+    const fixtures=[
+      {phone:'13800000001',name:'林一',growth:100000,gifts:[22,8,3,3,4,4,3,1],credits:32,ranks:[1,2,5,3,8,2]},
+      {phone:'13800000002',name:'周晓',growth:500000,gifts:[8,4,2,1,1,1,0,0],credits:12,ranks:[2,4,1,5,3,6,2,8]}
+    ];
+    let added=0;
+    for(const f of fixtures){
+      state=read();if(state.accounts.some(function(a){return a.phone===f.phone;}))continue;
+      const id=uid(),salt=uid(),hash=await passwordHash('Rzh2026!',salt);
+      await commit('register',{id:id,phone:f.phone,salt:salt,passwordHash:hash,nickname:f.name,storeId:'main'},null);
+      await commit('growth',{deltaCents:f.growth,note:'A版示例消费成长'},id);
+      await commit('hunter',{count:f.credits},id);
+      await commit('setAssets',{tickets:5,drawCredits:f.credits,gifts:Object.fromEntries(C.CARDS.map(function(c,i){return [c,f.gifts[i]];}))},id);
+      for(let i=0;i<f.ranks.length;i++){
+        const time=new Date(Date.now()-i*86400000);
+        await commit('saveMatch',{game:i%3===0?'MTT':'SNG',status:'settled',rank:f.ranks[i],points:Math.max(0,24-f.ranks[i]*2),kills:i%3,at:time.toISOString(),storeId:i%2?'branch':'main'},id);
+      }
+      await commit('saveMatch',{game:'SNG',status:'pending',rank:1,points:99,kills:0,at:new Date().toISOString()},id);
+      const counts=Object.fromEntries(C.HONORS.map(function(h){return [h.id,0];}));
+      counts.champion=4;counts.kill27=3;counts.straightFlush=1;counts.royalFlush=1;counts.luckyWin=2;
+      await commit('setHonors',{counts:counts,specials:{hunterKing:true,master:true}},id);
+      added++;if(!ui.merchantUser)ui.merchantUser=id;
+    }
+    render();toast(added?'已新增'+added+'位演示用户；现有账号资料保持不变':'演示账号已存在，未重复增加资料');
+  }
+  async function clickAction(action,b) {
+    const d=b.dataset,a=current();
+    if(action==='close-dialog'){closeDialog();return;}
+    if(action==='refresh-view'){state=read();ui.externalChange=false;render();toast('已重新读取本地数据');return;}
+    if(action==='logout'){activeId='';localStorage.removeItem(SESSION);sessionStorage.removeItem(SESSION);ui.pk=null;ui.hand=[null,null];navigate('login');return;}
+    if(action==='choose-avatar'){$('#avatar-file').value='';$('#avatar-file').click();return;}
+    if(action==='save-crop'){saveCrop();return;}
+    if(action==='default-address'){await commit('defaultAddress',{id:d.id});renderAddresses();toast('已设置默认地址');return;}
+    if(action==='delete-address'){const r=a.addresses.find(function(x){return x.id===d.id;});return ask('删除地址','确认删除'+esc(r?r.name:'这位联系人')+'的收货地址？','delete-address-confirm',`data-id="${d.id}"`,'确认删除');}
+    if(action==='delete-address-confirm'){await commit('deleteAddress',{id:d.id});closeDialog();renderAddresses();toast('地址已删除');return;}
+    if(action==='exit-pk'){ui.pk=null;renderRadar();return;}
+    if(action==='export-radar'){await exportRadar();return;}
+    if(action==='claim-reward'){claimRewardDialog(d.key);return;}
+    if(action==='card-detail'){cardDetail(d.card);return;}
+    if(action==='merge-card'){assetOperation('merge',d.card);return;}
+    if(action==='exchange-card'){assetOperation('exchange',d.card);return;}
+    if(action==='claim-gift'){assetOperation('claimGift',d.card);return;}
+    if(action==='cancel-claim'){const claim=state.claims.find(function(x){return x.id===d.id&&x.accountId===activeId;});if(!claim)return toast('未找到领取单');return ask('取消领取','取消后，将恢复对应的卡片或奖励额度。已使用的领取单不能取消。','cancel-claim-confirm',`data-id="${d.id}"`,'确认取消领取');}
+    if(action==='cancel-claim-confirm'){await commit('cancelClaim',{id:d.id});closeDialog();render();toast('已取消领取，数量已恢复');return;}
+    if(action==='draw'){await startDraw(Number(d.count));return;}
+    if(action==='recover-draw'){if(ui.drawTimer){clearTimeout(ui.drawTimer);ui.drawTimer=null;}const result=current().draws.find(function(x){return x.id===d.id;});if(result)drawResult(result);return;}
+    if(action==='ack-draw'){await commit('ackDraw',{id:d.id});closeDialog();navigate(d.target||'cards');return;}
+    if(action==='toggle-sound'){ui.sound=!ui.sound;localStorage.setItem(KEY+':sound',ui.sound?'on':'off');if(ui.sound)playTone(false);renderDraw();return;}
+    if(action==='info'){openDialog(d.title,'<p class="hint">'+esc(d.text)+'</p>',button('知道了','close-dialog','gold'));return;}
+    if(action==='honor-detail'){honorDetail(d.id);return;}
+    if(action==='play-honor'){const stage=$('#honor-animation');if(stage){stage.classList.remove('playing');requestAnimationFrame(function(){stage.classList.add('playing');});playTone(true);b.textContent='重播动画';}return;}
+    if(action==='preview-effect'){honorDetail(d.id);setTimeout(function(){const stage=$('#honor-animation');if(stage)stage.classList.add('playing');},60);playTone(true);return;}
+    if(action==='select-effect'){await commit('effect',{id:d.id||null});renderEffects();toast(d.id?'已保存出场特效':'已清除出场特效');return;}
+    if(action==='hand-slot'){if(a.hand)return;ui.handSlot=Number(d.index);renderHands();return;}
+    if(action==='hand-number'){if(a.hand)return;ui.hand[ui.handSlot]=Number(d.number);renderHands();return;}
+    if(action==='confirm-hand'){return ask('确认你的幸运手牌',`你选择了 <strong class="metal">${ui.hand.join(' + ')}</strong>。确认保存后将锁定，之后不能自行修改。`,'save-hand',`data-cards="${ui.hand.join(',')}"`,'确认保存并锁定');}
+    if(action==='save-hand'){await commit('setHand',{cards:d.cards.split(',').map(Number)});closeDialog();renderHands();toast('手牌已保存并锁定');return;}
+    if(action==='load-demo'){return ask('准备演示资料','将新增林一和周晓两位演示用户及示例战绩、成长、卡片。已有同手机号账号会跳过，不覆盖已有资料。','load-demo-confirm','','确认载入演示资料');}
+    if(action==='load-demo-confirm'){closeDialog();toast('正在准备演示资料…');await loadDemo();return;}
+    if(action==='preview-user'){const user=state.accounts.find(function(x){return x.id===d.id;});if(!user)return;remember(user.id,false);ui.pk=null;ui.hand=[null,null];navigate('events');toast('已切换为'+user.nickname+'的演示视角');return;}
+    if(action==='edit-match'){editMatch(d.id,d.account);return;}
+    if(action==='delete-match'){return ask('删除演示战绩','删除后，雷达、排名及名次荣誉会按剩余赛事重算。','delete-match-confirm',`data-id="${d.id}" data-account="${d.account}"`,'确认删除');}
+    if(action==='delete-match-confirm'){await commit('deleteMatch',{id:d.id},d.account);closeDialog();render();toast('战绩已删除并重新统计');return;}
+    if(action==='hand-win'){await commit('handWin',{},d.account);render();toast('已登记幸运手牌获胜，荣誉与活动记录同步更新');return;}
+    if(action==='redeem-claim'){const claim=state.claims.find(function(x){return x.id===d.id;});if(!claim)return;return ask('核对到店领取',`确认已向用户交付 <strong>${esc(claim.title)} × ${claim.count}</strong>？核销后不能再取消领取单。`,'redeem-claim-confirm',`data-id="${d.id}"`,'确认核销');}
+    if(action==='redeem-claim-confirm'){await commit('redeemClaim',{id:d.id},null);closeDialog();render();toast('领取单已核销');return;}
+  }
+  async function submitForm(form) {
+    const data=new FormData(form),get=function(k){return String(data.get(k)||'');},num=function(k){return Number(get(k));};
+    if(ui.externalChange&&!['auth-form','pk-form'].includes(form.id))throw new Error('另一页面已更新数据，请先点击“重新读取”，再核对保存');
+    if(form.id==='auth-form'){
+      const phone=get('phone').trim(),password=get('password'),register=form.dataset.register==='yes';
+      if(!/^1\d{10}$/.test(phone))throw new Error('请填写11位手机号');
+      if(password.length<6)throw new Error('密码至少需要6位');
+      let id;
+      if(register){
+        if(password!==get('confirm'))throw new Error('两次输入的密码不一致');
+        const salt=uid();id=uid();
+        const hash=await passwordHash(password,salt);
+        await commit('register',{id:id,phone:phone,salt:salt,passwordHash:hash,storeId:store().id},null);
+      }else{
+        state=read();const user=state.accounts.find(function(a){return a.phone===phone;});
+        if(!user||await passwordHash(password,user.salt)!==user.passwordHash)throw new Error('手机号或密码不正确');
+        id=user.id;
+      }
+      remember(id,data.has('remember'));ui.pk=null;ui.hand=[null,null];navigate(returnAfterLogin||'events');toast(register?'注册成功，欢迎来到joker':'登录成功');return;
+    }
+    if(form.id==='profile-form'){await commit('profile',{nickname:get('nickname'),avatar:ui.profileAvatar});navigate('events');toast('资料已保存');return;}
+    if(form.id==='address-form'){await commit('saveAddress',{id:form.dataset.id||undefined,name:get('name'),salutation:get('salutation'),phone:get('phone'),region:get('region'),detail:get('detail'),isDefault:data.has('isDefault')});navigate('addresses');toast('地址已保存');return;}
+    if(form.id==='pk-form'){
+      const id=num('memberId');state=read();
+      const other=state.accounts.find(function(a){return a.memberId===id;});
+      if(!other)throw new Error('没有找到这个赛事会员ID');
+      if(other.id===activeId)throw new Error('请输入其他会员的ID进行对比');
+      ui.pk=other.id;renderRadar();toast('已显示双方战绩');return;
+    }
+    if(form.id==='asset-operation-form'){
+      await commit(form.dataset.kind,{card:form.dataset.card,count:num('count'),storeId:store().id});
+      const kind=form.dataset.kind;closeDialog();
+      if(kind==='claimGift'){navigate('claims');toast('领取单已生成，对应卡片已冻结');}
+      else{renderCards();toast(kind==='merge'?'合成成功':'门票已到账');}return;
+    }
+    if(form.id==='reward-claim-form'){
+      const reward=current().rewards[form.dataset.key];await commit('claimReward',{key:form.dataset.key,count:num('count'),storeId:store().id});
+      closeDialog();render();toast(reward.type==='ticket'?'门票已到账，领取记录已保存':'领取单已生成，剩余额度已更新');return;
+    }
+    if(form.id==='merchant-profile-form'){await commit('profile',{nickname:get('nickname')},form.dataset.account);render();toast('昵称已保存');return;}
+    if(form.id==='merchant-name-form'){await commit('merchant',{name:get('name'),stores:state.merchant.stores.map(function(s,i){return {id:s.id,name:get('store'+i)};})},null);render();toast('商家与门店名称已保存');return;}
+    if(form.id==='growth-form'){
+      const amount=num('amount');if(!Number.isFinite(amount)||amount<=0||Math.abs(amount*100-Math.round(amount*100))>.000001)throw new Error('金额必须大于0，最多保留两位小数');
+      await commit('growth',{deltaCents:Math.round(amount*100)*(get('kind')==='refund'?-1:1),note:get('note')||(get('kind')==='refund'?'消费退款':'实际消费'),storeId:store().id},form.dataset.account);render();toast('成长登记已保存');return;
+    }
+    if(form.id==='match-form'||form.id==='edit-match-form'){
+      await commit('saveMatch',{id:form.dataset.id||undefined,game:get('game'),status:get('status'),rank:num('rank'),points:num('points'),kills:num('kills'),at:new Date(get('at')+':00+08:00').toISOString(),storeId:store().id},form.dataset.account);
+      closeDialog();render();toast('赛事已保存，战绩及荣誉已同步');return;
+    }
+    if(form.id==='hunter-form'){await commit('hunter',{count:num('count')},form.dataset.account);render();toast('猎人卡已登记，抽奖机会已增加');return;}
+    if(form.id==='assets-form'){await commit('setAssets',{tickets:num('tickets'),drawCredits:num('drawCredits'),gifts:Object.fromEntries(C.CARDS.map(function(c,i){return [c,num('card'+i)];}))},form.dataset.account);render();toast('演示资产已保存');return;}
+    if(form.id==='honor-count-form'){await commit('setHonors',{counts:Object.fromEntries(C.HONORS.map(function(h){return [h.id,num('honor-'+h.id)];})),specials:Object.fromEntries(C.SPECIAL.map(function(h){return [h.id,data.has('special-'+h.id)];}))},form.dataset.account);render();toast('荣誉登记已保存');return;}
+    if(form.id==='probability-form'){await commit('probabilities',{values:C.CARDS.map(function(c,i){return num('prob'+i);})},null);render();toast('概率模板已保存，全部门店共用');return;}
+    if(form.id==='level-template-form'){
+      const levels=C.copy(state.settings.levels);levels.forEach(function(l){l.name=get('level-name-'+l.level).trim();l.threshold=num('level-threshold-'+l.level);l.rewards.forEach(function(b){b.title=get('benefit-title-'+l.level+'-'+b.id).trim();b.quantity=num('benefit-qty-'+l.level+'-'+b.id);b.detail=get('benefit-detail-'+l.level+'-'+b.id).trim();});});
+      await commit('levelTemplate',{levels:levels},null);render();toast('成长权益模板已保存');return;
+    }
+    if(form.id==='honor-template-form'){
+      const rules={};C.HONORS.forEach(function(h){rules[h.id]={thresholds:[0,1,2,3,4].map(function(i){return num('threshold-'+h.id+'-'+i);}),rewards:[0,1,2,3,4].map(function(i){return num('reward-'+h.id+'-'+i);})};});
+      await commit('honorTemplate',{rules:rules},null);render();toast('荣誉共享模板已保存');return;
+    }
+    if(form.id==='gift-template-form'){await commit('giftTemplate',{prizes:[''].concat(C.CARDS.slice(1).map(function(c,i){return get('prize'+(i+1));}))},null);render();toast('礼物内容已保存');return;}
+  }
+  async function openCrop(file) {
+    if(!file)return;
+    if(file.size>15*1024*1024)throw new Error('照片超过15MB，请选择较小的照片');
+    const url=URL.createObjectURL(file),image=new Image();
+    await new Promise(function(resolve,reject){image.onload=resolve;image.onerror=function(){reject(new Error('照片格式无法读取，请选择JPG、PNG或WebP'));};image.src=url;});
+    ui.crop={image:image,url:url,zoom:1,x:0,y:0,pointer:null,start:null};
+    openDialog('圆形头像裁剪',`<p class="hint">拖动照片调整位置，缩放后保留圆形范围内的内容。</p><div class="crop-area" id="crop-area"><canvas id="crop-canvas" width="400" height="400" aria-label="圆形头像裁剪预览"></canvas><div class="crop-overlay"></div></div><label class="crop-controls"><span class="hint">缩放照片</span><input id="crop-zoom" aria-label="头像缩放" type="range" min="1" max="3" value="1" step="0.01"></label>`,button('取消裁剪','close-dialog','ghost')+button('使用圆形头像','save-crop','primary'),function(){if(ui.crop){URL.revokeObjectURL(ui.crop.url);ui.crop=null;}});
+    const canvas=$('#crop-canvas'),area=$('#crop-area');
+    canvas.addEventListener('pointerdown',function(e){if(!ui.crop)return;ui.crop.pointer=e.pointerId;ui.crop.start={clientX:e.clientX,clientY:e.clientY,x:ui.crop.x,y:ui.crop.y};canvas.setPointerCapture(e.pointerId);area.classList.add('dragging');});
+    canvas.addEventListener('pointermove',function(e){if(!ui.crop||ui.crop.pointer!==e.pointerId)return;const ratio=400/canvas.getBoundingClientRect().width;ui.crop.x=ui.crop.start.x+(e.clientX-ui.crop.start.clientX)*ratio;ui.crop.y=ui.crop.start.y+(e.clientY-ui.crop.start.clientY)*ratio;paintCrop();});
+    canvas.addEventListener('pointerup',function(){if(ui.crop)ui.crop.pointer=null;area.classList.remove('dragging');});
+    $('#crop-zoom').addEventListener('input',function(e){if(ui.crop){ui.crop.zoom=Number(e.target.value);paintCrop();}});
+    paintCrop();
+  }
+  function paintCrop() {
+    const c=ui.crop;if(!c)return;
+    const canvas=$('#crop-canvas'),ctx=canvas.getContext('2d'),scale=Math.max(400/c.image.width,400/c.image.height)*c.zoom,w=c.image.width*scale,h=c.image.height*scale;
+    c.x=Math.max(-(w-400)/2,Math.min((w-400)/2,c.x));c.y=Math.max(-(h-400)/2,Math.min((h-400)/2,c.y));
+    ctx.clearRect(0,0,400,400);ctx.drawImage(c.image,(400-w)/2+c.x,(400-h)/2+c.y,w,h);
+  }
+  function saveCrop() {
+    const c=ui.crop;if(!c)return;
+    const canvas=document.createElement('canvas');canvas.width=400;canvas.height=400;
+    const ctx=canvas.getContext('2d'),scale=Math.max(400/c.image.width,400/c.image.height)*c.zoom,w=c.image.width*scale,h=c.image.height*scale;
+    ctx.beginPath();ctx.arc(200,200,200,0,Math.PI*2);ctx.clip();ctx.drawImage(c.image,(400-w)/2+c.x,(400-h)/2+c.y,w,h);
+    ui.profileAvatar=canvas.toDataURL('image/webp',.92);closeDialog();
+    const target=$('#profile-avatar');if(target)target.innerHTML=`<span class="avatar large"><img src="${ui.profileAvatar}" alt="新的圆形头像预览"></span>`;
+    ui.dirty=true;toast('头像预览已更新，点击“保存资料”后生效');
+  }
+  async function exportRadar() {
+    const a=current(),b=state.accounts.find(function(x){return x.id===ui.pk;}),st=C.stats(a),op=b?C.stats(b):null,r=radarSVG(st,op);
+    const canvas=document.createElement('canvas');canvas.width=1000;canvas.height=1840+st.recent.length*90;
+    const ctx=canvas.getContext('2d');ctx.fillStyle='#080808';ctx.fillRect(0,0,canvas.width,canvas.height);
+    const drawText=function(text,x,y,size,color){ctx.font=(size>=36?'600 ':'')+size+'px "PingFang SC",sans-serif';ctx.fillStyle=color||'#fff4f2';ctx.fillText(text,x,y);};
+    const line=function(y){ctx.strokeStyle='#69303a';ctx.beginPath();ctx.moveTo(60,y);ctx.lineTo(940,y);ctx.stroke();};
+    drawText('joker · 能力雷达',60,80,40,'#c9ae88');drawText(date(new Date()),60,125,22,'#a99c9b');line(155);
+    drawText(a.nickname+' · ID '+a.memberId,60,205,27,'#c9ae88');
+    if(b)drawText('对比：'+b.nickname+' · ID '+b.memberId,60,250,27,'#6cbbef');
+    const image=new Image(),url=URL.createObjectURL(new Blob([r.svg],{type:'image/svg+xml'}));
+    await new Promise(function(resolve,reject){image.onload=resolve;image.onerror=reject;image.src=url;});
+    ctx.drawImage(image,100,280,800,780);URL.revokeObjectURL(url);
+    drawText('比例刻度 0—'+(r.scale*100)+'%',60,1100,23,'#a99c9b');line(1130);
+    drawText('维度',60,1170,22,'#a99c9b');drawText(a.nickname,440,1170,22,'#c9ae88');if(b)drawText(b.nickname,740,1170,22,'#6cbbef');
+    AXES.forEach(function(name,i){const y=1235+i*80;drawText(name,60,y,26);drawText(pct(st.axes[i].ratio)+' / '+st.axes[i].count+'场',440,y,26,'#c9ae88');if(op)drawText(pct(op.axes[i].ratio)+' / '+op.axes[i].count+'场',740,y,26,'#6cbbef');line(y+25);});
+    drawText('总上桌场数',60,1640,26);drawText(String(st.total),440,1640,30,'#c9ae88');if(op)drawText(String(op.total),740,1640,30,'#6cbbef');
+    drawText('只统计已结算正式赛事，前三算赢；不足5场按实际场数计算。',60,1710,21,'#a99c9b');
+    drawText('最近5场',60,1770,28,'#c9ae88');
+    st.recent.forEach(function(m,i){drawText(m.game+' · 第'+m.rank+'名 · '+date(m.at,true)+' · '+m.points+'分',60,1820+i*90,25);});
+    const blob=await new Promise(function(resolve){canvas.toBlob(resolve,'image/png');});
+    if(!blob)throw new Error('图片生成失败，请重试');
+    const output=URL.createObjectURL(blob),linkEl=document.createElement('a');linkEl.href=output;linkEl.download='joker-能力雷达-'+a.memberId+(b?'-PK-'+b.memberId:'')+'.png';document.body.append(linkEl);linkEl.click();linkEl.remove();setTimeout(function(){URL.revokeObjectURL(output);},5000);toast('战绩图片已生成，请查看浏览器下载');
+  }
+  document.addEventListener('click',async function(e){
+    const b=e.target.closest('[data-action]');if(!b||b.disabled||b.dataset.busy==='true')return;
+    e.preventDefault();b.dataset.busy='true';b.disabled=true;
+    try{await clickAction(b.dataset.action,b);}catch(error){toast(error.message||'操作未完成，请重试');}
+    finally{if(b.isConnected){b.dataset.busy='false';b.disabled=false;}}
+  });
+  document.addEventListener('submit',async function(e){
+    const form=e.target;if(!(form instanceof HTMLFormElement))return;e.preventDefault();
+    if(form.dataset.busy==='true'||!form.reportValidity())return;
+    const submit=e.submitter||$('button[type=submit]',form);form.dataset.busy='true';if(submit)submit.disabled=true;
+    try{await submitForm(form);}catch(error){toast(error.message||'数据尚未保存，请核对后重试');}
+    finally{if(form.isConnected){form.dataset.busy='false';if(submit)submit.disabled=false;if(form.id==='probability-form')updateProbabilityTotal();}}
+  });
+  document.addEventListener('input',function(e){if(e.target.closest('form'))ui.dirty=true;if(e.target.closest('#probability-form'))updateProbabilityTotal();});
+  document.addEventListener('change',function(e){
+    if(e.target.id==='merchant-user'){ui.merchantUser=e.target.value;sessionStorage.setItem(KEY+':merchant-user',ui.merchantUser);ui.dirty=false;render();}
+    if(e.target.id==='store-context'){ui.storeId=e.target.value;sessionStorage.setItem(STORE,ui.storeId);render();toast('已切换门店，共享模板保持一致');}
+    if(e.target.id==='avatar-file')openCrop(e.target.files[0]).catch(function(error){toast(error.message);});
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key!==KEY)return;
+    try {
+      state=read();
+      if(ui.dirty){ui.externalChange=true;if(!$('.data-updated'))$('.app-header').insertAdjacentHTML('afterend','<div class="data-updated">另一页面更新了数据，当前输入已保留。<button data-action="refresh-view">重新读取并放弃未保存修改</button></div>');}
+      else render();
+    }catch{toast('另一页面的数据暂时无法读取，请保留当前页面后重试');}
+  });
+  let lastRoute='',scrollPositions={};
+  window.addEventListener('hashchange',function(){
+    if(lastRoute)scrollPositions[lastRoute]=window.scrollY;
+    lastRoute=location.hash;ui.dirty=false;ui.externalChange=false;state=read();render();
+    requestAnimationFrame(function(){window.scrollTo(0,scrollPositions[lastRoute]||0);});
+  });
+  function start() {
+    try {
+      state=read();const raw=localStorage.getItem(SESSION)||sessionStorage.getItem(SESSION);
+      if(raw){try{const saved=JSON.parse(raw);if(state.accounts.some(function(a){return a.id===saved.accountId;}))activeId=saved.accountId;}catch{}}
+      const queryStore=new URLSearchParams(location.search).get('store');
+      if(state.merchant.stores.some(function(s){return s.id===queryStore;}))ui.storeId=queryStore;
+      ui.sound=localStorage.getItem(KEY+':sound')!=='off';
+      if(!location.hash)history.replaceState(null,'',location.pathname+location.search+'#/events');
+      lastRoute=location.hash;
+      $('#dialog').addEventListener('cancel',function(e){e.preventDefault();closeDialog();});
+      render();
+    }catch(error){
+      $('#app').innerHTML='<main class="page"><h1>本地资料暂时无法读取</h1><p class="hint space-top">为保留现有资料，原型没有覆盖或清空数据。请重新打开预览后重试。</p><button class="button primary space-top" id="retry-load">重新读取</button></main>';
+      $('#retry-load').onclick=function(){location.reload();};
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+  /* MORE_HANDLERS */
+  /* MORE_HANDLERS */
+})();
+</script>
+</body>
+</html>
