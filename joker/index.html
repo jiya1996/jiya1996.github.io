@@ -868,7 +868,7 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     ${register?field('再次输入密码','confirm','','password','autocomplete="new-password" minlength="6" required placeholder="请再次输入密码"'):''}
     <label class="checkbox"><input type="checkbox" name="remember" checked>记住密码，下次自动登录</label>
     <button type="submit" class="button primary wide">${register?'注册并进入赛事':'登录用户赛事'}</button>
-    </form>${register?'':'<div class="space-top">'+button('忘记密码？','forgot-password','link-button')+'</div>'}<div class="spaced space-top"><span class="hint">${register?'已经有赛事账号？':'第一次来？'}</span>${link(register?'去登录':'注册赛事账号',register?'login':'register','link-button')}</div>
+    </form><div class="spaced space-top">${register?'<span class="hint">已经有赛事账号？</span>'+link('去登录','login','link-button'):button('忘记密码？','forgot-password','link-button')+link('注册账号','register','link-button')}</div>
     <div class="footer-note">赛事账号独立使用 · joker</div>`;
     shell(body,'',null);
   }
