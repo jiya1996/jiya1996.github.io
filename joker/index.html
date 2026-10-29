@@ -119,6 +119,7 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     return {
       id:data.id, memberId:memberId, phone:data.phone, salt:data.salt, passwordHash:data.passwordHash,
       nickname:data.nickname || ('joker玩家'+memberId), avatar:'', createdAt:at, storeId:data.storeId || 'main',
+      authVersion:0, mustChangePassword:false,
       addresses:[], growthCents:0, growthLedger:[], tickets:0, ticketLedger:[],
       gifts:Object.fromEntries(CARDS.map(function(c){return [c,0];})), drawCredits:0, hunterTotal:0, hunterLedger:[],
       draws:[], giftHistory:[], matches:[], honorAdjustments:{}, specials:{}, rewards:{},
@@ -129,6 +130,9 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     const a = state.accounts.find(function(x){return x.id===id;});
     assert(a, '请先登录赛事账号');
     return a;
+  }
+  function sessionValid(a, session) {
+    return !!(a && session && session.accountId===a.id && (session.authVersion||0)===(a.authVersion||0));
   }
   function levelFor(state, cents) {
     return state.settings.levels.filter(function(l){return Math.round(l.threshold*100)<=cents;}).slice(-1)[0];
@@ -229,6 +233,10 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     if(input.processed.includes(action.id))return copy(input);
     const s=copy(input), at=action.at || new Date().toISOString(), d=action.data || {};
     let a=action.accountId ? account(s,action.accountId) : null;
+    if(action.actor==='player'){
+      assert(a && action.authVersion===(a.authVersion||0),'登录状态已失效，请重新登录');
+      assert(!a.mustChangePassword || action.type==='changePassword','请先设置新密码，再使用赛事功能');
+    }
     if(a)syncRewards(s,a,at);
     switch(action.type) {
       case 'register':
@@ -243,6 +251,20 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
         if(d.avatar!==undefined)assert(typeof d.avatar==='string'&&d.avatar.length<900000&&(!d.avatar||/^data:image\/(png|jpeg|webp);base64,/.test(d.avatar)),'头像格式不支持或文件过大');
         a.nickname=d.nickname.trim();if(d.avatar!==undefined)a.avatar=d.avatar;
         log(s,a,'更新个人资料',at);
+        break;
+      case 'resetPassword':
+        assert(d.salt && d.passwordHash,'临时密码信息不完整');
+        a.salt=d.salt;a.passwordHash=d.passwordHash;
+        a.authVersion=(a.authVersion||0)+1;a.mustChangePassword=true;a.passwordResetAt=at;
+        log(s,a,'商家为会员ID '+a.memberId+'重置临时密码',at,{operator:'商家演示操作者'});
+        break;
+      case 'changePassword':
+        assert(a.mustChangePassword,'当前账号无需使用临时密码改密');
+        assert(d.expectedAuthVersion===(a.authVersion||0),'密码已被重新重置，请使用最新临时密码登录');
+        assert(d.salt && d.passwordHash,'新密码信息不完整');
+        a.salt=d.salt;a.passwordHash=d.passwordHash;
+        a.authVersion=(a.authVersion||0)+1;a.mustChangePassword=false;a.passwordChangedAt=at;
+        log(s,a,'用户设置新密码，临时密码已失效',at);
         break;
       case 'saveAddress': {
         const row={id:d.id || action.id,name:String(d.name||'').trim(),salutation:d.salutation==='女士'?'女士':'先生',phone:String(d.phone||'').trim(),region:String(d.region||'').trim(),detail:String(d.detail||'').trim(),isDefault:!!d.isDefault};
@@ -407,7 +429,7 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     s.revision++;s.updatedAt=at;
     return s;
   }
-  const api={CARDS:CARDS,MERGE:MERGE,TICKETS:TICKETS,LEVEL_NAMES:LEVEL_NAMES,HONORS:HONORS,SPECIAL:SPECIAL,copy:copy,createState:createState,newAccount:newAccount,account:account,levelFor:levelFor,membership:membership,stats:stats,settled:settled,honorCounts:honorCounts,honorProgress:honorProgress,effectUnlocked:effectUnlocked,probabilityUnits:probabilityUnits,pickCard:pickCard,rankings:rankings,validateLevels:validateLevels,applyAction:applyAction};
+  const api={CARDS:CARDS,MERGE:MERGE,TICKETS:TICKETS,LEVEL_NAMES:LEVEL_NAMES,HONORS:HONORS,SPECIAL:SPECIAL,copy:copy,createState:createState,newAccount:newAccount,account:account,sessionValid:sessionValid,levelFor:levelFor,membership:membership,stats:stats,settled:settled,honorCounts:honorCounts,honorProgress:honorProgress,effectUnlocked:effectUnlocked,probabilityUnits:probabilityUnits,pickCard:pickCard,rankings:rankings,validateLevels:validateLevels,applyAction:applyAction};
   root.RZHCore=api;
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
@@ -712,7 +734,8 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
   const field=function(label,name,value,type,extra){return `<label class="field"><span>${label}</span><input name="${name}" aria-label="${esc(label)}" type="${type||'text'}" value="${esc(value==null?'':value)}" ${extra||''}></label>`;};
   const empty=function(title,text,action){return `<section class="empty">${A.crest(1)}<h2>${title}</h2><p>${text}</p>${action||''}</section>`;};
   const ui={storeId:sessionStorage.getItem(STORE)||'main',pk:null,hand:[null,null],handSlot:0,merchantUser:sessionStorage.getItem(KEY+':merchant-user')||null,sound:true,drawTimer:null,drawId:null,crop:null,profileAvatar:undefined,dirty:false,externalChange:false};
-  let state,activeId='',toastTimer,returnAfterLogin='events',dialogClose=null,animationTimer;
+  let state,activeId='',activeSession=null,toastTimer,returnAfterLogin='events',dialogClose=null,animationTimer;
+  let profileOriginal=null,pendingProfileLeave=null;
   function read() {
     const raw=localStorage.getItem(KEY);
     if(!raw)return C.createState();
@@ -727,7 +750,10 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     parsed.accounts.forEach(function(a){if(/^RZH玩家\d+$/.test(a.nickname))a.nickname=a.nickname.replace(/^RZH/,'joker');});
     return parsed;
   }
-  function current() {return state.accounts.find(function(a){return a.id===activeId;})||null;}
+  function current() {
+    const a=state.accounts.find(function(a){return a.id===activeId;});
+    return C.sessionValid(a,activeSession)?a:null;
+  }
   function store() {return state.merchant.stores.find(function(s){return s.id===ui.storeId;})||state.merchant.stores[0];}
   function toast(message) {
     const el=$('#toast');el.textContent=message;el.classList.add('visible');
@@ -737,7 +763,8 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     // A版只提交到当前来源的本地存储；写入成功后才显示成功，避免内存状态冒充保存结果。
     const task=function(){
       const fresh=read();
-      const next=C.applyAction(fresh,{id:operationId||uid(),type:type,data:data||{},accountId:accountId===null?null:(accountId||activeId),at:new Date().toISOString()});
+      const player=accountId===undefined;
+      const next=C.applyAction(fresh,{id:operationId||uid(),type:type,data:data||{},accountId:accountId===null?null:(accountId||activeId),actor:player?'player':'merchant',authVersion:activeSession ? (activeSession.authVersion||0) : -1,at:new Date().toISOString()});
       localStorage.setItem(KEY,JSON.stringify(next));state=next;ui.externalChange=false;return next;
     };
     try{return navigator.locks ? await navigator.locks.request(KEY,task) : task();}
@@ -749,13 +776,27 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:120000,hash:'SHA-256'},material,256);
     return Array.from(new Uint8Array(bits)).map(function(n){return n.toString(16).padStart(2,'0');}).join('');
   }
-  function remember(id,yes) {
-    const value=JSON.stringify({accountId:id,token:uid(),at:new Date().toISOString()});
+  function remember(id,yes,target) {
+    const a=C.account(state,id);
+    activeSession={accountId:id,authVersion:a.authVersion||0,token:uid(),at:new Date().toISOString(),remember:yes,returnTo:target||returnAfterLogin||'events'};
+    const value=JSON.stringify(activeSession);
     localStorage.removeItem(SESSION);sessionStorage.removeItem(SESSION);
     (yes?localStorage:sessionStorage).setItem(SESSION,value);activeId=id;
   }
-  function navigate(route) {
+  function profileChanged() {
+    const form=$('#profile-form');
+    if(!form || !profileOriginal)return false;
+    const input=$('input[name="nickname"]',form);
+    return !!input && (input.value.trim()!==profileOriginal.nickname || ui.profileAvatar!==profileOriginal.avatar);
+  }
+  function confirmProfileLeave(proceed) {
+    openDialog('资料尚未保存','<p>你修改的头像或昵称尚未保存，是否放弃修改？</p>',button('继续编辑','close-dialog','ghost')+button('放弃修改','discard-profile','primary'),function(){pendingProfileLeave=null;});
+    pendingProfileLeave=proceed;
+  }
+  function navigate(route,confirmed) {
+    if(!confirmed && '#/'+route!==location.hash && profileChanged())return confirmProfileLeave(function(){navigate(route,true);});
     closeDialog();ui.dirty=false;ui.externalChange=false;
+    profileOriginal=null;
     const target='#/'+route;
     // 未登录时会在原受保护URL显示登录页；登录后地址相同，不会触发hashchange。
     if(location.hash===target){
@@ -779,6 +820,7 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
   function routeParts(){return location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);}
   function route(){return routeParts()[0]||'events';}
   function header(title,parent) {
+    if(title==='设置新密码')return `<header class="app-header"><span class="header-title">设置新密码</span>${button('退出登录','logout','small ghost')}</header>`;
     if(!title)return `<header class="app-header"><a class="header-brand" href="#/events">${A.brand()}<b>joker</b></a><nav class="header-actions" aria-label="首页操作"><a class="header-return" href="#/cashier/home" aria-label="返回小程序首页">${art('back',14)}<span>小程序首页</span></a>${current()?button('退出登录','logout','small ghost'):''}</nav></header>`;
     return `<header class="app-header"><a class="icon-button" href="#/${parent||'events'}" aria-label="返回">${art('back',20)}</a><span class="header-title">${esc(title)}</span><a class="header-link" href="#/events">赛事首页</a></header>`;
   }
@@ -794,11 +836,13 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     const parts=routeParts(), name=parts[0]||'events';
     const publicRoutes=['login','register','cashier','merchant'];
     if(!current()&&!publicRoutes.includes(name)){returnAfterLogin=parts.join('/')||'events';return renderAuth(false);}
+    if(current() && current().mustChangePassword && name!=='merchant' && name!=='cashier')return renderChangePassword();
     if(name==='register')return renderAuth(true);
     if(name==='login')return current()?navigate('events'):renderAuth(false);
     if(name==='cashier')return renderCashier(parts[1]);
     if(name==='merchant')return renderMerchant(parts[1]||'users');
     if(name==='profile')return renderProfile();
+    if(name==='change-password')return navigate('events');
     if(name==='addresses')return renderAddresses();
     if(name==='address')return renderAddress(parts[1]||'new');
     if(name==='radar')return renderRadar();
@@ -824,9 +868,12 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     ${register?field('再次输入密码','confirm','','password','autocomplete="new-password" minlength="6" required placeholder="请再次输入密码"'):''}
     <label class="checkbox"><input type="checkbox" name="remember" checked>记住密码，下次自动登录</label>
     <button type="submit" class="button primary wide">${register?'注册并进入赛事':'登录用户赛事'}</button>
-    </form><div class="spaced space-top"><span class="hint">${register?'已经有赛事账号？':'第一次来？'}</span>${link(register?'去登录':'注册赛事账号',register?'login':'register','link-button')}</div>
+    </form>${register?'':'<div class="space-top">'+button('忘记密码？','forgot-password','link-button')+'</div>'}<div class="spaced space-top"><span class="hint">${register?'已经有赛事账号？':'第一次来？'}</span>${link(register?'去登录':'注册赛事账号',register?'login':'register','link-button')}</div>
     <div class="footer-note">赛事账号独立使用 · joker</div>`;
     shell(body,'',null);
+  }
+  function renderChangePassword() {
+    shell(`<span class="eyebrow">ACCOUNT SECURITY</span><h1 class="space-top">请先设置新密码</h1><p class="page-subtitle">你正在使用临时密码。设置自己的新密码后，才能进入赛事功能。</p><form id="change-password-form" class="form-grid">${field('新密码','password','','password','autocomplete="new-password" minlength="6" required placeholder="至少6位，不能与临时密码相同"')}${field('再次输入新密码','confirm','','password','autocomplete="new-password" minlength="6" required placeholder="请再次输入新密码"')}<button type="submit" class="button primary wide">保存新密码并进入赛事</button></form><p class="hint space-top">保存成功后，临时密码立即失效。若暂时离开，下次登录仍需完成此步骤。</p>`,'设置新密码');
   }
   function renderCashier(page) {
     const home=page==='home';
@@ -841,7 +888,8 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
   }
   function renderProfile() {
     const a=current();ui.profileAvatar=a.avatar;
-    shell(`<span class="eyebrow">PERSONAL PROFILE</span><h1 class="space-top">让大家认识你</h1><p class="page-subtitle">头像和昵称会同步显示在你的赛事页面。</p><form id="profile-form" class="form-grid"><div class="card avatar-editor"><div><h3>头像</h3><p class="hint">点击头像，选择照片或拍照</p></div><button type="button" class="link-button" data-action="choose-avatar" aria-label="更换头像"><span id="profile-avatar">${avatar(a,'large')}</span></button></div><input id="avatar-file" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp,image/heic" aria-label="选择头像文件">${field('昵称','nickname',a.nickname,'text','maxlength="24" required') }${field('注册手机号','phone',a.phone,'tel','readonly')}<p class="hint">手机号用于登录，此处仅供查看。</p><div class="actions">${link('未保存返回','events','button ghost')}<button type="submit" class="button primary">保存资料</button></div></form>`,'编辑资料','events');
+    profileOriginal={nickname:a.nickname,avatar:a.avatar};
+    shell(`<span class="eyebrow">PERSONAL PROFILE</span><h1 class="space-top">让大家认识你</h1><p class="page-subtitle">头像和昵称会同步显示在你的赛事页面。</p><form id="profile-form" class="form-grid"><div class="card avatar-editor"><div><h3>头像</h3><p class="hint">点击头像，选择照片或拍照</p></div><button type="button" class="link-button" data-action="choose-avatar" aria-label="更换头像"><span id="profile-avatar">${avatar(a,'large')}</span></button></div><input id="avatar-file" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp,image/heic" aria-label="选择头像文件">${field('昵称','nickname',a.nickname,'text','maxlength="24" required') }${field('注册手机号','phone',a.phone,'tel','readonly')}<p class="hint">手机号用于登录，此处仅供查看。</p><div class="actions">${link('返回','events','button ghost')}<button type="submit" class="button primary">保存资料</button></div></form>`,'编辑资料','events');
   }
   function renderAddresses() {
     const a=current();
@@ -1019,6 +1067,7 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     else if(tab==='gifts')content=merchantGifts();
     else if(tab==='claims')content=merchantClaims();
     else content=merchantLog();
+    if(tab==='users' && a)content+=`<section class="card space-top"><h2>重置用户密码</h2><p class="hint space-top">当前用户：${esc(a.nickname)} · 会员ID ${a.memberId} · ${esc(a.phone)}</p><p class="hint space-top">请先核对本人身份。重置后原密码及原登录状态失效，系统生成临时密码，用户登录后必须先设置新密码。</p>${a.mustChangePassword?'<p class="metal space-top">此账号等待设置新密码，可重新生成临时密码。</p>':''}${button('重置密码并生成临时密码','reset-password','gold space-top',`data-account="${a.id}"`)}</section>`;
     shell(`<div class="merchant-heading"><div><span class="eyebrow">MERCHANT DEMO WORKSPACE</span><h1>商家演示端</h1><p class="page-subtitle">在这里编辑A版数据，再回到用户端验收。所有改动仅保存在当前浏览器。</p></div><div class="actions">${link('预览用户端','events','button gold')}${button('载入两位演示用户','load-demo','ghost')}</div></div><div class="notice space-bottom spaced"><span>商家共用一套模板，主店与分店同步读取。</span><select id="store-context" aria-label="当前演示门店" style="max-width:210px;padding:8px;border:1px solid var(--line);background:var(--well);color:var(--ink);border-radius:7px">${state.merchant.stores.map(function(s){return `<option value="${s.id}" ${store().id===s.id?'selected':''}>${esc(s.name)}</option>`;}).join('')}</select></div><nav class="merchant-tabs" aria-label="商家演示功能">${merchantTabs.map(function(t){return link(t[1],'merchant/'+t[0],t[0]===tab?'selected':'');}).join('')}</nav>${content}`,'商家演示端','events',true);
   }
   function merchantNoUsers() {
@@ -1126,8 +1175,27 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
   async function clickAction(action,b) {
     const d=b.dataset,a=current();
     if(action==='close-dialog'){closeDialog();return;}
+    if(action==='forgot-password'){openDialog('忘记密码','<p>请联系商家核对账号并重置密码。取得临时密码后，使用原手机号登录。</p><p class="hint space-top">临时密码登录后，必须先设置自己的新密码，才能进入赛事功能。原账号资料和资产会保留。</p>',button('知道了','close-dialog','gold'));return;}
+    if(action==='discard-profile'){const proceed=pendingProfileLeave;profileOriginal=null;closeDialog();if(proceed)proceed();return;}
+    if(action==='reset-password'){
+      const user=C.account(state,d.account);
+      return ask('确认重置用户密码',`请确认已核对本人身份：<strong>${esc(user.nickname)}</strong>，会员ID ${user.memberId}，手机号 ${esc(user.phone)}。重置后，原密码和此前临时密码均失效，原登录状态也需重新验证。`,'confirm-reset-password',`data-account="${user.id}"`,'确认并生成临时密码');
+    }
+    if(action==='confirm-reset-password'){
+      const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      const temporary=Array.from(crypto.getRandomValues(new Uint8Array(12))).map(function(n){return alphabet[n%32];}).join('');
+      const salt=uid(),hash=await passwordHash(temporary,salt);
+      await commit('resetPassword',{salt:salt,passwordHash:hash},d.account);
+      const user=C.account(state,d.account);render();
+      openDialog('临时密码已生成',`<p>${esc(user.nickname)} · 会员ID ${user.memberId}</p><div class="claim-code"><output id="temporary-password">${temporary}</output></div><p class="hint">临时密码仅本次显示，请交给本人。用户以原手机号登录后必须先改密码。重新生成后，此密码将失效。</p>`,button('复制临时密码','copy-temporary-password','gold')+button('完成','close-dialog','ghost'));
+      return;
+    }
+    if(action==='copy-temporary-password'){
+      try{await navigator.clipboard.writeText($('#temporary-password').textContent);toast('临时密码已复制，请交给本人');}
+      catch{toast('当前浏览器无法复制，请选中临时密码后手动复制');}return;
+    }
     if(action==='refresh-view'){state=read();ui.externalChange=false;render();toast('已重新读取本地数据');return;}
-    if(action==='logout'){activeId='';localStorage.removeItem(SESSION);sessionStorage.removeItem(SESSION);ui.pk=null;ui.hand=[null,null];navigate('login');return;}
+    if(action==='logout'){activeId='';activeSession=null;localStorage.removeItem(SESSION);sessionStorage.removeItem(SESSION);ui.pk=null;ui.hand=[null,null];navigate('login');return;}
     if(action==='choose-avatar'){$('#avatar-file').value='';$('#avatar-file').click();return;}
     if(action==='save-crop'){saveCrop();return;}
     if(action==='default-address'){await commit('defaultAddress',{id:d.id});renderAddresses();toast('已设置默认地址');return;}
@@ -1157,7 +1225,7 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     if(action==='save-hand'){await commit('setHand',{cards:d.cards.split(',').map(Number)});closeDialog();renderHands();toast('手牌已保存并锁定');return;}
     if(action==='load-demo'){return ask('准备演示资料','将新增林一和周晓两位演示用户及示例战绩、成长、卡片。已有同手机号账号会跳过，不覆盖已有资料。','load-demo-confirm','','确认载入演示资料');}
     if(action==='load-demo-confirm'){closeDialog();toast('正在准备演示资料…');await loadDemo();return;}
-    if(action==='preview-user'){const user=state.accounts.find(function(x){return x.id===d.id;});if(!user)return;remember(user.id,false);ui.pk=null;ui.hand=[null,null];navigate('events');toast('已切换为'+user.nickname+'的演示视角');return;}
+    if(action==='preview-user'){const user=state.accounts.find(function(x){return x.id===d.id;});if(!user)return;if(user.mustChangePassword)throw new Error('该账号需先使用临时密码登录并设置新密码');remember(user.id,false);ui.pk=null;ui.hand=[null,null];navigate('events');toast('已切换为'+user.nickname+'的演示视角');return;}
     if(action==='edit-match'){editMatch(d.id,d.account);return;}
     if(action==='delete-match'){return ask('删除演示战绩','删除后，雷达、排名及名次荣誉会按剩余赛事重算。','delete-match-confirm',`data-id="${d.id}" data-account="${d.account}"`,'确认删除');}
     if(action==='delete-match-confirm'){await commit('deleteMatch',{id:d.id},d.account);closeDialog();render();toast('战绩已删除并重新统计');return;}
@@ -1182,10 +1250,26 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
         state=read();const user=state.accounts.find(function(a){return a.phone===phone;});
         if(!user||await passwordHash(password,user.salt)!==user.passwordHash)throw new Error('手机号或密码不正确');
         id=user.id;
+        const fresh=read();
+        if((C.account(fresh,id).authVersion||0)!==(user.authVersion||0))throw new Error('密码已被重置，请使用最新密码重新登录');
+        state=fresh;
       }
-      remember(id,data.has('remember'));ui.pk=null;ui.hand=[null,null];navigate(returnAfterLogin||'events');toast(register?'注册成功，欢迎来到joker':'登录成功');return;
+      remember(id,data.has('remember'));ui.pk=null;ui.hand=[null,null];
+      if(current().mustChangePassword){navigate('change-password');toast('临时密码验证成功，请先设置新密码');}
+      else{navigate(returnAfterLogin||'events');toast(register?'注册成功，欢迎来到joker':'登录成功');}return;
     }
-    if(form.id==='profile-form'){await commit('profile',{nickname:get('nickname'),avatar:ui.profileAvatar});navigate('events');toast('资料已保存');return;}
+    if(form.id==='change-password-form'){
+      const user=current();if(!user)throw new Error('登录状态已失效，请重新登录');
+      const password=get('password');if(password.length<6)throw new Error('新密码至少需要6位');
+      if(password!==get('confirm'))throw new Error('两次输入的新密码不一致');
+      if(await passwordHash(password,user.salt)===user.passwordHash)throw new Error('新密码不能与临时密码相同');
+      const salt=uid(),hash=await passwordHash(password,salt),savedSession=activeSession;
+      await commit('changePassword',{salt:salt,passwordHash:hash,expectedAuthVersion:user.authVersion||0});
+      try{remember(user.id,!!savedSession.remember,savedSession.returnTo);}
+      catch{activeId='';activeSession=null;navigate('login');toast('新密码已保存，请使用新密码重新登录');return;}
+      navigate(savedSession.returnTo && savedSession.returnTo!=='change-password'?savedSession.returnTo:'events');toast('新密码已保存，临时密码已失效');return;
+    }
+    if(form.id==='profile-form'){await commit('profile',{nickname:get('nickname'),avatar:ui.profileAvatar});profileOriginal=null;navigate('events');toast('资料已保存');return;}
     if(form.id==='address-form'){await commit('saveAddress',{id:form.dataset.id||undefined,name:get('name'),salutation:get('salutation'),phone:get('phone'),region:get('region'),detail:get('detail'),isDefault:data.has('isDefault')});navigate('addresses');toast('地址已保存');return;}
     if(form.id==='pk-form'){
       const id=num('memberId');state=read();
@@ -1281,6 +1365,10 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     const output=URL.createObjectURL(blob),linkEl=document.createElement('a');linkEl.href=output;linkEl.download='joker-能力雷达-'+a.memberId+(b?'-PK-'+b.memberId:'')+'.png';document.body.append(linkEl);linkEl.click();linkEl.remove();setTimeout(function(){URL.revokeObjectURL(output);},5000);toast('战绩图片已生成，请查看浏览器下载');
   }
   document.addEventListener('click',async function(e){
+    const anchor=e.target.closest('a[href^="#/"]');
+    if(anchor && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && anchor.getAttribute('href')!==location.hash && profileChanged()){
+      e.preventDefault();navigate(anchor.getAttribute('href').slice(2));return;
+    }
     const b=e.target.closest('[data-action]');if(!b||b.disabled||b.dataset.busy==='true')return;
     e.preventDefault();b.dataset.busy='true';b.disabled=true;
     try{await clickAction(b.dataset.action,b);}catch(error){toast(error.message||'操作未完成，请重试');}
@@ -1303,20 +1391,33 @@ dialog{width:min(92vw,470px);max-height:88dvh;padding:0;border:1px solid #7d4a4e
     if(e.key!==KEY)return;
     try {
       state=read();
-      if(ui.dirty){ui.externalChange=true;if(!$('.data-updated'))$('.app-header').insertAdjacentHTML('afterend','<div class="data-updated">另一页面更新了数据，当前输入已保留。<button data-action="refresh-view">重新读取并放弃未保存修改</button></div>');}
+      if(activeId && !current()){activeId='';activeSession=null;profileOriginal=null;ui.dirty=false;render();toast('账号密码已重置，请使用最新密码重新登录');return;}
+      if(ui.dirty || profileChanged()){ui.externalChange=true;if(!$('.data-updated'))$('.app-header').insertAdjacentHTML('afterend','<div class="data-updated">另一页面更新了数据，当前输入已保留。<button data-action="refresh-view">重新读取并放弃未保存修改</button></div>');}
       else render();
     }catch{toast('另一页面的数据暂时无法读取，请保留当前页面后重试');}
   });
   let lastRoute='',scrollPositions={};
-  window.addEventListener('hashchange',function(){
+  function finishRouteChange(){
     if(lastRoute)scrollPositions[lastRoute]=window.scrollY;
+    profileOriginal=null;
     lastRoute=location.hash;ui.dirty=false;ui.externalChange=false;state=read();render();
     requestAnimationFrame(function(){window.scrollTo(0,scrollPositions[lastRoute]||0);});
+  }
+  window.addEventListener('hashchange',function(){
+    if(location.hash!==lastRoute && profileChanged()){
+      const destination=location.hash;
+      // 后退先改变URL；先恢复资料地址并保留DOM，确认放弃后才执行原目的跳转。
+      history.replaceState(history.state,'',location.pathname+location.search+lastRoute);
+      confirmProfileLeave(function(){history.replaceState(history.state,'',location.pathname+location.search+destination);finishRouteChange();});
+      return;
+    }
+    finishRouteChange();
   });
+  window.addEventListener('beforeunload',function(e){if(profileChanged()){e.preventDefault();e.returnValue='';}});
   function start() {
     try {
       state=read();const raw=localStorage.getItem(SESSION)||sessionStorage.getItem(SESSION);
-      if(raw){try{const saved=JSON.parse(raw);if(state.accounts.some(function(a){return a.id===saved.accountId;}))activeId=saved.accountId;}catch{}}
+      if(raw){try{const saved=JSON.parse(raw),a=state.accounts.find(function(a){return a.id===saved.accountId;});if(C.sessionValid(a,saved)){activeId=saved.accountId;activeSession=saved;if(saved.returnTo)returnAfterLogin=saved.returnTo;}}catch{}}
       const queryStore=new URLSearchParams(location.search).get('store');
       if(state.merchant.stores.some(function(s){return s.id===queryStore;}))ui.storeId=queryStore;
       ui.sound=localStorage.getItem(KEY+':sound')!=='off';
