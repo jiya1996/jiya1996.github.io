@@ -4,20 +4,20 @@
     "sha256": "26ddacc37b29baef47f3897e99cb1bb184d3792c7f2de6b5a51da5b98dcd0a7d"
   },
   "animation.html": {
-    "bytes": 2223492,
-    "sha256": "60d44a295219cc9b04fe64c7b157cf03df1dae8cae5b54e85fd3b429e9c632fe"
+    "bytes": 2223528,
+    "sha256": "3047b12c4a4ebadbe56a2d9a15230ca7d898ba6a78dad4740e49d9642fe732a2"
   },
   "dealer.html": {
-    "bytes": 338325,
-    "sha256": "ab3244f6663e7ce86554ae380b54ea79de8427a4fafdde815679daad75875cbc"
+    "bytes": 338361,
+    "sha256": "70cc77388c7ec913d9b1267cdf303f6a9d891decd301a50b282a02c000202125"
   },
   "favicon.ico": {
     "bytes": 90,
     "sha256": "91d5fc46a86883779ee6223ec2481e1c7b9cb4dbdb9fe7f0da7bd8c49cfd00c0"
   },
   "index.html": {
-    "bytes": 3689,
-    "sha256": "8b6b194abd42375c16a5bb5e76ac95f14cff28848e491ea76278f20b412f90b1"
+    "bytes": 3725,
+    "sha256": "9181c4745951b7ef1c8f1e48422c029dd2b15a61dd3c713b07b3277f0bbae504"
   },
   "player-core.js": {
     "bytes": 27889,
@@ -48,8 +48,8 @@
     "sha256": "4fdef7a9f9bdd3d0815b631e46fae564b789fb3bee103f74dad7d02ad6aa204f"
   },
   "screen.html": {
-    "bytes": 805,
-    "sha256": "0a258ab7101ef6946ac4fa7f653b7b5e69718b792b673a51547ad22cb2d30708"
+    "bytes": 841,
+    "sha256": "7a4fcd47db7c79679748c6a316f1ae90759b96cda443b7215b622d3a1b8931ec"
   },
   "screen.js": {
     "bytes": 8649,
@@ -68,8 +68,8 @@
     "sha256": "459fff436107e35f4901730122028723b2675e3d03b9cd18c54e826ce4d3b310"
   },
   "timer.html": {
-    "bytes": 69547,
-    "sha256": "916257145d7cf19ebaf372fa2e1a22a94aa38eb35f0e806f1fca51e54d40ee55"
+    "bytes": 69583,
+    "sha256": "de880c922d1c0d9073dd8bf169f7c19dfb22ef5050b4418448212067e474466b"
   },
   "version.json": {
     "bytes": 616,
