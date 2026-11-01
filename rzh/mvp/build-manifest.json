@@ -8,8 +8,8 @@
     "sha256": "3047b12c4a4ebadbe56a2d9a15230ca7d898ba6a78dad4740e49d9642fe732a2"
   },
   "dealer.html": {
-    "bytes": 338361,
-    "sha256": "70cc77388c7ec913d9b1267cdf303f6a9d891decd301a50b282a02c000202125"
+    "bytes": 338286,
+    "sha256": "e15104f461b48e6bd70185c6b3348cc269e5c77ded9a0ae6235fba63c2dea242"
   },
   "favicon.ico": {
     "bytes": 90,
@@ -72,7 +72,7 @@
     "sha256": "de880c922d1c0d9073dd8bf169f7c19dfb22ef5050b4418448212067e474466b"
   },
   "version.json": {
-    "bytes": 616,
-    "sha256": "a1e5a0677fc2684f6cfd291fa50b40897523b0e8f9f8be61fad9acd9817be75f"
+    "bytes": 749,
+    "sha256": "949e39ab627d31f0c5f6aeca04103c4ee555ba0cafc66a5181001ca4df4a8397"
   }
 }
