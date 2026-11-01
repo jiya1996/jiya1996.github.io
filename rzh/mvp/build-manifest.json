@@ -1,0 +1,78 @@
+{
+  "animation-receiver.js": {
+    "bytes": 3530,
+    "sha256": "26ddacc37b29baef47f3897e99cb1bb184d3792c7f2de6b5a51da5b98dcd0a7d"
+  },
+  "animation.html": {
+    "bytes": 2223492,
+    "sha256": "60d44a295219cc9b04fe64c7b157cf03df1dae8cae5b54e85fd3b429e9c632fe"
+  },
+  "dealer.html": {
+    "bytes": 338325,
+    "sha256": "ab3244f6663e7ce86554ae380b54ea79de8427a4fafdde815679daad75875cbc"
+  },
+  "favicon.ico": {
+    "bytes": 90,
+    "sha256": "91d5fc46a86883779ee6223ec2481e1c7b9cb4dbdb9fe7f0da7bd8c49cfd00c0"
+  },
+  "index.html": {
+    "bytes": 3689,
+    "sha256": "8b6b194abd42375c16a5bb5e76ac95f14cff28848e491ea76278f20b412f90b1"
+  },
+  "player-core.js": {
+    "bytes": 27889,
+    "sha256": "7a211cb6e15061e1b34bb488a41c04d3af74e27c99f82bfa7e074f86cedb006f"
+  },
+  "player-link.js": {
+    "bytes": 2904,
+    "sha256": "44dd58d15c9c387406e089fc3b0220fd00ade14297fd18e8d8065ba4751d7fc1"
+  },
+  "player-theme.css": {
+    "bytes": 1434,
+    "sha256": "1f8a660afc482db81efdb790c09be2a88fb1ed00705ac497f281379175dad2d6"
+  },
+  "player.html": {
+    "bytes": 2077943,
+    "sha256": "b07ee17eb87b8b4e3c7b67cccf97c0eca9b490644a2f97fc07cef57f270f76fb"
+  },
+  "review.css": {
+    "bytes": 1806,
+    "sha256": "7e68c3c7794d177052f03bc69c8be7afcfcb9718088510d19baa5e9115786073"
+  },
+  "review.js": {
+    "bytes": 2338,
+    "sha256": "27505e084d543cd2dfb0dfdf374cebd66829b981362a15d0232aef4bfc2545c1"
+  },
+  "screen.css": {
+    "bytes": 3153,
+    "sha256": "4fdef7a9f9bdd3d0815b631e46fae564b789fb3bee103f74dad7d02ad6aa204f"
+  },
+  "screen.html": {
+    "bytes": 805,
+    "sha256": "0a258ab7101ef6946ac4fa7f653b7b5e69718b792b673a51547ad22cb2d30708"
+  },
+  "screen.js": {
+    "bytes": 8649,
+    "sha256": "0641dfaf5d42d988c82ac8fabe0ae9b39756ee6b3ad60da3d779b214e7f1d556"
+  },
+  "shared.js": {
+    "bytes": 2249,
+    "sha256": "89e7706224948792399c2e92019efa4c6fac6b49bd1dd9af7842135a9530caf2"
+  },
+  "themes.json": {
+    "bytes": 2754,
+    "sha256": "06ef59461db86351eeaeb905aed280daa9f670af551c07c7cb28c3bd226d7ccd"
+  },
+  "timer-receiver.js": {
+    "bytes": 1415,
+    "sha256": "459fff436107e35f4901730122028723b2675e3d03b9cd18c54e826ce4d3b310"
+  },
+  "timer.html": {
+    "bytes": 69547,
+    "sha256": "916257145d7cf19ebaf372fa2e1a22a94aa38eb35f0e806f1fca51e54d40ee55"
+  },
+  "version.json": {
+    "bytes": 616,
+    "sha256": "a1e5a0677fc2684f6cfd291fa50b40897523b0e8f9f8be61fad9acd9817be75f"
+  }
+}

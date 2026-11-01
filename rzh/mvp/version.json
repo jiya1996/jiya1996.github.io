@@ -1,0 +1,22 @@
+{
+  "version": "FE-20261101-01",
+  "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
+  "sources": [
+    {
+      "sha256": "97ce826e3e76571cdd58cf6fc7fe67a89e0d81aaa4eab6572c9fd7131f015e6d",
+      "bytes": 2077892
+    },
+    {
+      "sha256": "79e35e370cb62e176e807da7a49934d3b75d842e07275929b3960a41d6148d46",
+      "bytes": 337852
+    },
+    {
+      "sha256": "03cc038d916f3713554b055f3a201b49b536daa3fc72a16b65892cc18951806f",
+      "bytes": 2223449
+    },
+    {
+      "sha256": "7ede3667e34c58da75ca712c2dc14e9fd06c2ca9f4d8e6369ea85f214930ed99",
+      "bytes": 69530
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "checks": [
+    "320像素玩家和荷官页面无横向溢出",
+    "通过荷官发布四条，30秒后真实动画和设备朗读完成并回写完成状态"
+  ],
+  "complete": true,
+  "physicalSpeaker": "未验证",
+  "narration": [
+    {
+      "event": "start",
+      "text": "小满联调，打出四条！",
+      "id": "broadcast:44cec4d9-fcdb-4cfa-a813-a33fb0b5c90e:0"
+    },
+    {
+      "event": "end",
+      "text": "小满联调，打出四条！",
+      "id": "broadcast:44cec4d9-fcdb-4cfa-a813-a33fb0b5c90e:0"
+    }
+  ],
+  "audioContext": "running",
+  "broadcastStatus": "completed"
+}

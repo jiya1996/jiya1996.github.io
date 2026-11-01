@@ -1,0 +1,7 @@
+/* 赤焰保持玩家端已审阅图稿；其余七套使用共同色板，图稿保持原形和原始材质。 */
+html:not([data-theme=flame]) body .card,html:not([data-theme=flame]) .identity,html:not([data-theme=flame]) .feature,html:not([data-theme=flame]) .services,html:not([data-theme=flame]) .level-card,html:not([data-theme=flame]) .level-summary{background:linear-gradient(145deg,var(--raised),var(--card))!important;border-color:var(--border)!important;color:var(--ink)}
+html:not([data-theme=flame]) .app-header,html:not([data-theme=flame]) dialog,html:not([data-theme=flame]) .dialog-heading,html:not([data-theme=flame]) .notice,html:not([data-theme=flame]) .empty,html:not([data-theme=flame]) input,html:not([data-theme=flame]) textarea,html:not([data-theme=flame]) select{background:var(--card)!important;color:var(--ink)!important;border-color:var(--border)!important}
+html:not([data-theme=flame]) .button.primary{background:var(--accent)!important;border-color:var(--accent)!important;color:var(--on)!important}
+html:not([data-theme=flame]) .service b,html:not([data-theme=flame]) .metric b,html:not([data-theme=flame]) .level-summary b,html:not([data-theme=flame]) .level-summary small{color:var(--ink)}
+html:not([data-theme=flame]) .rzh-crest.grok-art,html:not([data-theme=flame]) .rzh-honor.grok-art{mix-blend-mode:normal}
+html:not([data-theme=flame]) .honor-tile{background:var(--well);border-color:var(--border)}
