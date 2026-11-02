@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261102-01",
+  "version": "FE-20261102-02",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
@@ -19,6 +19,28 @@
       "bytes": 69530
     }
   ],
-  "base_version": "FE-20261101-02",
-  "change": "同步用户选定兔子荷官、贴沿摆位、独立座位及双箭头"
+  "base_version": "FE-20261102-01",
+  "change": "同步显示器准备页的小兔子荷官、九人座位卡片与八套皮肤；修正浅色文字和桌面对比",
+  "display_assets": [
+    {
+      "path": "screen.html",
+      "sha256": "ad51d6eda6443f53a24b30c73f242e0ce0b39ced3a36032828a1a4bb4d7b6afe",
+      "bytes": 891
+    },
+    {
+      "path": "screen.js",
+      "sha256": "41c9f3b26c22a167294d9118c5f7c8a8c4ee03a185288a8200ce82665119ace0",
+      "bytes": 10884
+    },
+    {
+      "path": "screen.css",
+      "sha256": "16c924906872635e3a190c6c54b52992225e4d3901b4dd1593e311891e14a27c",
+      "bytes": 4562
+    },
+    {
+      "path": "assets/dealer-figure.png",
+      "sha256": "a399d550a6922333d107dab55aa7e417000093c06e017a9215771458179c4507",
+      "bytes": 124872
+    }
+  ]
 }
