@@ -8,15 +8,21 @@
  const time=overlay.querySelector('.intermission-time'),state=overlay.querySelector('.intermission-state'),note=overlay.querySelector('.intermission-note');
  const text=(el,value)=>{if(el.textContent!==value)el.textContent=value};
  function sync(){
-  const badge=document.getElementById('statusBadge')?.textContent||'',value=document.getElementById('countdown')?.textContent||'';
-  const rest=clock.dataset.rest==='true',paused=clock.dataset.paused==='true';
-  // 接收端在原render之后补写等待／赛终／末级状态，须在整个调用栈结束后读取。
-  const excluded=clock.dataset.done==='true'||/等待|结束|持续/.test(badge)||!/^\d+:\d{2}$/.test(value);
-  overlay.hidden=excluded||(!rest&&!paused);if(overlay.hidden)return;
-  overlay.dataset.paused=String(paused);overlay.dataset.kind=rest?'break':'pause';text(time,value);
+  // 直接读取赛事钟的语义状态，不再由瞬时DOM文案推断是否暂停。
+  const s=project(readState()),phase=STAGES[s.index];
+  const excluded=!!(s.waiting||s.finished||s.sustain||s.done);
+  const rest=!!phase?.rest,paused=!s.running&&!excluded;
+  const hidden=excluded||(!rest&&!paused);
+  if(overlay.hidden!==hidden)overlay.hidden=hidden;
+  if(hidden)return;
+  const pausedValue=String(paused),kind=rest?'break':'pause';
+  if(overlay.dataset.paused!==pausedValue)overlay.dataset.paused=pausedValue;
+  if(overlay.dataset.kind!==kind)overlay.dataset.kind=kind;
+  text(time,format(s.remaining));
   text(state,rest?(paused?'休息已暂停':'赛事休息倒计时'):'比赛已暂停');
-  let next='';if(rest&&!paused){const el=document.getElementById('nextMain'),level=el?.querySelector('.nm-lv')?.textContent?.trim(),raw=el?.textContent?.trim();const title=level?level+' · '+raw.slice(level.length).trim():raw;next=title?'休息结束后进入 '+title:'休息结束后自动进入下一盲注级'}
-  text(note,paused?'剩余时间已冻结，等待荷官继续':next);
+  const next=STAGES[s.index+1];
+  const title=next&&!next.rest?'LV'+next.level+' · '+zh(next.small)+' / '+zh(next.big):'';
+  text(note,paused?'剩余时间已冻结，等待荷官继续':title?'休息结束后进入 '+title:'休息结束后自动进入下一盲注级');
  }
  let scheduled=false;const schedule=()=>{if(scheduled)return;scheduled=true;queueMicrotask(()=>{scheduled=false;sync()})};
  // 原稿的周期回调保存了旧render引用；同时监听原时钟节点，独立页也能逐秒更新。

@@ -87,7 +87,7 @@ $('#full').onclick=()=>document.documentElement.requestFullscreen?.();
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('#frame').contentWindow)return;if(e.data.type==='frame-ready'){ready=true;check()}});
 addEventListener('storage',e=>{if([B.dealerKey,B.playerKey].includes(e.key))check()});addEventListener('rzh-theme',()=>{lastSkin='';check()});
 addEventListener('resize',fitSeats);
-fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=rest-display-20261102-2':'animation.html';render()});
+fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=stable-timer-20261102':'animation.html';render()});
 if(role==='live'){
  if(navigator.locks)navigator.locks.request(B.prefix+':live:'+table,async()=>{owner=true;$('#status').textContent='本桌播放页已就绪';await new Promise(()=>{})});
  else{owner=true;$('#status').textContent='此浏览器不支持播放页互斥，请只打开一块直播屏'}

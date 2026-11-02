@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261102-05",
+  "version": "FE-20261102-06",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
@@ -15,22 +15,22 @@
       "bytes": 2223449
     },
     {
-      "sha256": "395a8d6cc852ac01eb825986b943d6ea194a147660fa299f5a0c18e76dc50208",
-      "bytes": 69664
+      "sha256": "ab1abaf8d047e92e40c577662a6d3c16cc2d189098cb152ba8d072dfebc7330f",
+      "bytes": 70163
     }
   ],
-  "base_version": "FE-20261102-04",
-  "change": "确认到店默认近7营业日推荐，次数优先再按昵称拼音A-Z；手机号检索全部玩家；手机兔子去掉荷官标签",
+  "base_version": "FE-20261102-05",
+  "change": "显示器计时状态统一：修复等待、结赛、末级持续误判暂停引起的沙漏闪烁；保留原计时规则及其他端逻辑",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "3fd3bdb2ee024f6149d7334de41ae0d2a0f46d381ef2449c222161c9a055e2b9",
-      "bytes": 893
+      "sha256": "b0e0ebf813a11d4a0f38b30aeb08c5e5d32bcceeec76708a5f1a999fb712f656",
+      "bytes": 889
     },
     {
       "path": "screen.js",
-      "sha256": "2bc7621b40d059c7c81c92332cf737ef842e35c57ba8d94a936a78bd2deeceb5",
-      "bytes": 12188
+      "sha256": "9f2b7a228ff6dc7dba4945b1cf58fcf4cfc1d4496d48cfbb5ad2183bc5c2ad43",
+      "bytes": 12186
     },
     {
       "path": "screen.css",
@@ -41,33 +41,58 @@
       "path": "assets/dealer-figure.png",
       "sha256": "a399d550a6922333d107dab55aa7e417000093c06e017a9215771458179c4507",
       "bytes": 124872
-    }
-  ],
-  "display_revision_assets": [
-    {
-      "path": "screen.html",
-      "sha256": "3fd3bdb2ee024f6149d7334de41ae0d2a0f46d381ef2449c222161c9a055e2b9",
-      "bytes": 893
-    },
-    {
-      "path": "screen.js",
-      "sha256": "2bc7621b40d059c7c81c92332cf737ef842e35c57ba8d94a936a78bd2deeceb5",
-      "bytes": 12188
     },
     {
       "path": "timer.html",
-      "sha256": "a96f9c4d8a711db756287c170b8568784d2159547a54ed623c24a9712651d9cd",
-      "bytes": 69717
+      "sha256": "081f686cd2f8a2d20aa697127c073037af9443607357cb13e64ad196f3ba4e08",
+      "bytes": 70240
+    },
+    {
+      "path": "timer-receiver.js",
+      "sha256": "bf7985c6078a28e7f55d5be84ea4d7cb64f632b909699f7158aaebdbfd6cc59e",
+      "bytes": 923
     },
     {
       "path": "timer-intermission.js",
-      "sha256": "6371025cf1ff01a83016f5482037a48ab4028cede473c3dbebb6b03413ececa0",
-      "bytes": 4462
+      "sha256": "ef7fdebdc9ea7af45468d22fc01ffa23e6e1601b17f3192847f354ad277c5cb9",
+      "bytes": 4361
     },
     {
       "path": "timer-intermission.css",
       "sha256": "3baf29879d2d5098fc6a8d2033712e80636dbb2a448a65465a1ce98ab13aba75",
       "bytes": 1838
+    }
+  ],
+  "display_revision_assets": [
+    {
+      "path": "screen.html",
+      "sha256": "b0e0ebf813a11d4a0f38b30aeb08c5e5d32bcceeec76708a5f1a999fb712f656",
+      "bytes": 889
+    },
+    {
+      "path": "screen.js",
+      "sha256": "9f2b7a228ff6dc7dba4945b1cf58fcf4cfc1d4496d48cfbb5ad2183bc5c2ad43",
+      "bytes": 12186
+    },
+    {
+      "path": "timer.html",
+      "sha256": "081f686cd2f8a2d20aa697127c073037af9443607357cb13e64ad196f3ba4e08",
+      "bytes": 70240
+    },
+    {
+      "path": "timer-intermission.js",
+      "sha256": "ef7fdebdc9ea7af45468d22fc01ffa23e6e1601b17f3192847f354ad277c5cb9",
+      "bytes": 4361
+    },
+    {
+      "path": "timer-intermission.css",
+      "sha256": "3baf29879d2d5098fc6a8d2033712e80636dbb2a448a65465a1ce98ab13aba75",
+      "bytes": 1838
+    },
+    {
+      "path": "timer-receiver.js",
+      "sha256": "bf7985c6078a28e7f55d5be84ea4d7cb64f632b909699f7158aaebdbfd6cc59e",
+      "bytes": 923
     }
   ]
 }

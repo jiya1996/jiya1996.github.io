@@ -301,13 +301,15 @@ let lastStage='',lastSkin='',lastLevel='';
 function applySkin(key){if(key===lastSkin)return;const t=SKINS[key]||SKINS.flame,root=document.documentElement.style;for(const k in t)root.setProperty('--'+k,t[k]);root.setProperty('--shell-accent',COLORS[key]);lastSkin=key;}
 function render(){
  const s=project(readState()),phase=STAGES[s.index],next=STAGES[s.index+1];
- const paused=!s.running&&!s.done,rest=!!phase.rest;
- const status=s.done?'演示结束':rest?(paused?'休息已暂停':'休息中'):(paused?'比赛已暂停':'比赛进行中');
+ // 等待、结赛和末级持续均不等于暂停；周期刷新与接收更新共用这一判断。
+ const inactive=!!(s.waiting||s.finished||s.sustain||s.done);
+ const paused=!s.running&&!inactive,rest=!!phase.rest;
+ const status=s.waiting?'等待开局':s.finished?'本场已结束':s.sustain?'最后级持续':s.done?'演示结束':rest?(paused?'休息已暂停':'休息中'):(paused?'比赛已暂停':'比赛进行中');
  $('#phoneState').textContent=status;$('#phoneDot').style.background=paused?'#ca8a04':rest?'#0284c7':s.done?'#94a3b8':'#16a34a';
  $('#phoneLevel').textContent=s.done?'—':rest?'休息':'LV'+phase.level;
- $('#pauseButton').textContent=paused?'继续':'暂停';$('#pauseButton').disabled=s.done;
- $('#prevButton').disabled=rest||s.done||adjacent(s.index,-1)<0;
- $('#nextButton').disabled=rest||s.done||adjacent(s.index,1)<0;
+ $('#pauseButton').textContent=paused?'继续':'暂停';$('#pauseButton').disabled=inactive;
+ $('#prevButton').disabled=rest||inactive||adjacent(s.index,-1)<0;
+ $('#nextButton').disabled=rest||inactive||adjacent(s.index,1)<0;
  const screen=$('#clockScreen');screen.dataset.paused=String(paused);screen.dataset.rest=String(rest);screen.dataset.done=String(!!s.done);
  // 等级写法统一 LV1–LV10 / LEVEL 1–10，不补零（与八套皮肤规范一致）。
  const lvKey=s.done?'done':rest?'rest':'lv'+phase.level;
@@ -315,9 +317,9 @@ function render(){
   if(s.done||rest){el.className='gold text';el.textContent=s.done?'本次演示已结束':'赛事休息';}
   else{el.className='gold';el.innerHTML='<span class="lv-word">LEVEL</span> <span class="lv-num">'+phase.level+'</span>';}
   lastLevel=lvKey;}
- $('#statusBadge').textContent=s.done?'示例结束':paused?'已暂停':rest?'休息中':'进行中';
- $('#countdown').textContent=format(s.remaining);
- $('#clockNote').textContent=s.done?'等待载入新的演示场景':paused?(rest?'休息剩余已冻结，等待继续':'比赛已暂停，剩余时间已冻结'):rest?'休息结束后自动进入下一盲注级':'本级剩余时间';
+ $('#statusBadge').textContent=s.waiting?'等待开局':s.finished?'本场已结束':s.sustain?'最后级持续':s.done?'示例结束':paused?'已暂停':rest?'休息中':'进行中';
+ $('#countdown').textContent=s.sustain?'持续进行':format(s.remaining);
+ $('#clockNote').textContent=s.waiting?'等待荷官正式确认开局':s.finished?'正式结果已保存':s.sustain?'保持本级盲注，等待正式结赛':s.done?'等待载入新的演示场景':paused?(rest?'休息剩余已冻结，等待继续':'比赛已暂停，剩余时间已冻结'):rest?'休息结束后自动进入下一盲注级':'本级剩余时间';
  $('#progressBar').style.width=Math.min(100,s.remaining/duration(s.index)*100)+'%';
  $('#smallBlind').textContent=rest?'—':zh(phase.small);$('#bigBlind').textContent=rest?'—':zh(phase.big);
  $('#nextTitle').textContent=next?(next.rest?'接下来':'下一级'):'演示结构末级';
@@ -366,5 +368,5 @@ if(!screenOnly){
 }
 window.addEventListener('storage',e=>{if(e.key===KEY)render();});document.addEventListener('visibilitychange',render);setInterval(render,200);render();
 </script>
-<script src="timer-receiver.js"></script><script src="timer-intermission.js?v=20261102-rest-2"></script></body>
+<script src="timer-receiver.js?v=stable-timer-20261102"></script><script src="timer-intermission.js?v=stable-timer-20261102"></script></body>
 </html>
