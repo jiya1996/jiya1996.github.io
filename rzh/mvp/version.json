@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261102-08",
+  "version": "FE-20261102-09",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
@@ -7,8 +7,8 @@
       "bytes": 2077627
     },
     {
-      "sha256": "6a1c77917b3689a4f621fafcb60db469c256e7b34ebdb50ef59a6d4a940d9f5b",
-      "bytes": 838481
+      "sha256": "65cebe64ba56ebefe248cf0e345418980ccad788c190a8b4bbdcf22fc1b463a7",
+      "bytes": 838490
     },
     {
       "sha256": "03cc038d916f3713554b055f3a201b49b536daa3fc72a16b65892cc18951806f",
@@ -19,8 +19,8 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261102-07",
-  "change": "精简登录；玩家和荷官只读门店统一风格；播报提交后常驻30秒倒计时与撤销，复核开始状态",
+  "base_version": "FE-20261102-08",
+  "change": "补齐手机播报皇家同花顺选项，保留原默认牌型与30秒缓冲；简化牌型字段标签",
   "display_assets": [
     {
       "path": "screen.html",
@@ -96,12 +96,12 @@
     }
   ],
   "store_config": "store-config.json",
-  "source_scope_note": "本轮仅采用荷官源稿的登录、风格读取和播报撤销片段，未合并另行确认中的桌台业务规则。",
+  "source_scope_note": "仅采用荷官源稿的界面片段（含皇家同花顺选项），未合并另行确认中的桌台业务规则。",
   "ui_assets": [
     {
       "path": "dealer.html",
-      "sha256": "0346b4024d1372472ddb2eec15a36f9fc7f53be05dcb5a6034b9ecb5ad09b3a0",
-      "bytes": 835352
+      "sha256": "96fc5a3178cbf44ee2dd23f176fc5afac163e492ae2bc33e93de2b6170087312",
+      "bytes": 835361
     },
     {
       "path": "player.html",
