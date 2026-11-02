@@ -18,6 +18,11 @@
   let next='';if(rest&&!paused){const el=document.getElementById('nextMain'),level=el?.querySelector('.nm-lv')?.textContent?.trim(),raw=el?.textContent?.trim();const title=level?level+' · '+raw.slice(level.length).trim():raw;next=title?'休息结束后进入 '+title:'休息结束后自动进入下一盲注级'}
   text(note,paused?'剩余时间已冻结，等待荷官继续':next);
  }
- const original=window.render;if(typeof original==='function')window.render=function(...args){const result=original.apply(this,args);queueMicrotask(sync);return result};
- window.TimerIntermission={sync};queueMicrotask(sync);
+ let scheduled=false;const schedule=()=>{if(scheduled)return;scheduled=true;queueMicrotask(()=>{scheduled=false;sync()})};
+ // 原稿的周期回调保存了旧render引用；同时监听原时钟节点，独立页也能逐秒更新。
+ const observer=new MutationObserver(schedule);
+ for(const id of ['countdown','statusBadge']){const el=document.getElementById(id);if(el)observer.observe(el,{childList:true,characterData:true,subtree:true})}
+ observer.observe(clock,{attributes:true,attributeFilter:['data-rest','data-paused','data-done']});
+ const original=window.render;if(typeof original==='function')window.render=function(...args){const result=original.apply(this,args);schedule();return result};
+ window.TimerIntermission={sync};schedule();
 })();
