@@ -1,14 +1,14 @@
 {
-  "version": "FE-20261102-07",
+  "version": "FE-20261102-08",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
-      "sha256": "97ce826e3e76571cdd58cf6fc7fe67a89e0d81aaa4eab6572c9fd7131f015e6d",
-      "bytes": 2077892
+      "sha256": "d5610a24cf1a52ed86d4b1436cddb60977d0d82e349739babbe71b881252ae3e",
+      "bytes": 2077627
     },
     {
-      "sha256": "c1db156a14244b4d01c3000be376a3200da511947d0a5f58a5694ff8351e9b85",
-      "bytes": 833457
+      "sha256": "6a1c77917b3689a4f621fafcb60db469c256e7b34ebdb50ef59a6d4a940d9f5b",
+      "bytes": 838481
     },
     {
       "sha256": "03cc038d916f3713554b055f3a201b49b536daa3fc72a16b65892cc18951806f",
@@ -19,8 +19,8 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261102-06",
-  "change": "修正倒计时末级持续的数字／文字排版；明确比赛仍进行、待开局与结赛；移除接收画面中的示例文案；八皮肤与横屏适配",
+  "base_version": "FE-20261102-07",
+  "change": "精简登录；玩家和荷官只读门店统一风格；播报提交后常驻30秒倒计时与撤销，复核开始状态",
   "display_assets": [
     {
       "path": "screen.html",
@@ -93,6 +93,45 @@
       "path": "timer-receiver.js",
       "sha256": "d1d903481ec8b5fa58ff8265bc2c5f6171d48b4a66fb0494b41109b8bddb89bf",
       "bytes": 951
+    }
+  ],
+  "store_config": "store-config.json",
+  "source_scope_note": "本轮仅采用荷官源稿的登录、风格读取和播报撤销片段，未合并另行确认中的桌台业务规则。",
+  "ui_assets": [
+    {
+      "path": "dealer.html",
+      "sha256": "0346b4024d1372472ddb2eec15a36f9fc7f53be05dcb5a6034b9ecb5ad09b3a0",
+      "bytes": 835352
+    },
+    {
+      "path": "player.html",
+      "sha256": "eadef082cb8fb51f058976a2fa406c3be519736f5e908aa222bad803c1e91836",
+      "bytes": 2077700
+    },
+    {
+      "path": "shared.js",
+      "sha256": "1291c1d06a16c85c0f58c9e3678723a2ed4e07e3787be384857e3d96039529e9",
+      "bytes": 1959
+    },
+    {
+      "path": "review.js",
+      "sha256": "e2c7bb0761eb2de22ccb05c0427f9fe5831bf6b0a41be1e1d6247d5d596457a9",
+      "bytes": 2025
+    },
+    {
+      "path": "index.html",
+      "sha256": "33652dfbdc1824cc170f40cb430603cccadc361d017386b96535851f9ae010cd",
+      "bytes": 3676
+    },
+    {
+      "path": "store-config.json",
+      "sha256": "78dd1fbb5b29c10f9cec03d824f011d8336f554df2f4d26d7af241d61a26929e",
+      "bytes": 22
+    },
+    {
+      "path": "screen.html",
+      "sha256": "fcd4d1f37cc03ae1fe670531c2accbea824e43078ee6a9c1673c7ca70e1b01a9",
+      "bytes": 911
     }
   ]
 }
