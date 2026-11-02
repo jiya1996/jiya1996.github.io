@@ -46,13 +46,13 @@
   "display_revision_assets": [
     {
       "path": "screen.html",
-      "sha256": "7d59eb37f84f6dbc2de5f6c9606d3e773178863afdc5380209d55b1d828ac03f",
-      "bytes": 889
+      "sha256": "ca5658ab15a1f2307fb39851ce12953ff7d6a58caf2e1a5033f09aab0a18a3f7",
+      "bytes": 893
     },
     {
       "path": "screen.js",
-      "sha256": "e78cedc41c5dc17d7a01248484d59e0d4b97f8610761c42086638ebeacca0dff",
-      "bytes": 12162
+      "sha256": "6ca3e2717f164b2c90409bd0dc4562ee32122c9a07dfeb3803eafa75e0860127",
+      "bytes": 12186
     },
     {
       "path": "timer.html",
