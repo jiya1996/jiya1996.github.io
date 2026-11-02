@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261102-02",
+  "version": "FE-20261102-03",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
@@ -7,8 +7,8 @@
       "bytes": 2077892
     },
     {
-      "sha256": "3569314bdb1cbbb8972053314ece93568f6f04b8a025fa7f1a42dc1f6330a7f1",
-      "bytes": 504944
+      "sha256": "ed700f7794e4c66f0c8903e3cabfbfbd8512481b84b2a752a15287f5c0f7588d",
+      "bytes": 506436
     },
     {
       "sha256": "03cc038d916f3713554b055f3a201b49b536daa3fc72a16b65892cc18951806f",
@@ -19,23 +19,23 @@
       "bytes": 69530
     }
   ],
-  "base_version": "FE-20261102-01",
-  "change": "同步显示器准备页的小兔子荷官、九人座位卡片与八套皮肤；修正浅色文字和桌面对比",
+  "base_version": "FE-20261102-02",
+  "change": "显示器入座画面适配16:9横屏并放大；人物与头像等比，保留九个座位和八套风格",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "ad51d6eda6443f53a24b30c73f242e0ce0b39ced3a36032828a1a4bb4d7b6afe",
-      "bytes": 891
+      "sha256": "ba106592eb7c5cc9085ac2a9873a00abb950471fd7664b74550068fc5bd6c486",
+      "bytes": 883
     },
     {
       "path": "screen.js",
-      "sha256": "41c9f3b26c22a167294d9118c5f7c8a8c4ee03a185288a8200ce82665119ace0",
-      "bytes": 10884
+      "sha256": "59cc61db82286a8fbd620b919fa305dbfafb1282b356d849ab4261d7aa8c7f87",
+      "bytes": 12204
     },
     {
       "path": "screen.css",
-      "sha256": "16c924906872635e3a190c6c54b52992225e4d3901b4dd1593e311891e14a27c",
-      "bytes": 4562
+      "sha256": "2a189f3a50bbda09309c01c804b6716d0a7219bf3fcc4cae6f9ca98b3d048a0e",
+      "bytes": 6072
     },
     {
       "path": "assets/dealer-figure.png",

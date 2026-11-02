@@ -3,6 +3,7 @@ const B=RZHBridge,Q=new URLSearchParams(location.search),table=Number(Q.get('tab
 const $=s=>document.querySelector(s),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // 与已确认的荷官座位图共用布局：本人左手1号位在画面右上，右手9号位在左上。
 const POS={1:[74,9],2:[89,33],3:[89,63],4:[76,88],5:[50,96],6:[24,88],7:[11,63],8:[11,33],9:[26,9]};
+const WIDE_POS={1:[76,21],2:[91,40],3:[91,66],4:[75,84],5:[50,90],6:[25,84],7:[9,66],8:[9,40],9:[24,21]};
 let themes={},ready=false,enabled=false,owner=false,boot=true,current=null,run=0,busy=false,lastPresentation='',lastResult='',lastSignature='',lastSkin='';
 const receiver=()=>$('#frame').contentWindow?.Receiver;
 function read(){return B.read(B.dealerKey,null)}
@@ -15,13 +16,26 @@ function contrast(a,b){return(Math.max(luminance(a),luminance(b))+.05)/(Math.min
 function readable(fg,bg){if(contrast(fg,bg)>=4.5)return fg;const target=luminance(bg)>.35?'#0f172a':'#f8fafc';for(let i=1;i<=20;i++){const next=mixColor(fg,target,i/20);if(contrast(next,bg)>=4.5)return next}return target}
 function skin(){const key=B.theme(),t=themes[key];if(!t)return;if(lastSkin!==key){lastSkin=key;let canvas=t.bg;for(let i=1;i<=20&&contrast(t.text,canvas)<7;i++)canvas=mixColor(t.bg,t.card,i/20);const values={bg:canvas,card:t.card,ink:t.text,metal:t.materials.metal,'metal-text':readable(t.materials.metal,canvas),muted:readable(readable(t.materials.muted,canvas),t.card),border:key==='flame'?'#48242b':mixColor(t.text,canvas,.82),well:key==='flame'?'#0a0809':t.materials.well,raised:key==='flame'?'#1c1517':t.materials.raised,accent:t.accent};for(const[k,v]of Object.entries(values))document.documentElement.style.setProperty('--'+k,v);document.documentElement.dataset.theme=key;document.documentElement.style.colorScheme=luminance(t.text)>.5?'dark':'light';$('#themeName').textContent=t.name}if(ready)receiver()?.skin?.(key)}
 function seatMap(d,seats){return `<div class="seat-view"><div class="table-map"><div class="seat-ring"><div class="felt"></div><div class="felt-label"><small>TABLE ${String(table).padStart(2,'0')}</small><strong>joker</strong><small>TOURNAMENT CLUB</small></div>${Object.entries(POS).map(([n,[x,y]])=>{const p=d?.players.find(p=>p.id===seats[n]);return `<div class="seat ${p?'filled':''}" style="left:${x}%;top:${y}%" role="group" aria-label="${n}号位 ${p?esc(p.name):'待入座'}"><span class="circle">${p?.avatar?`<img src="${esc(p.avatar)}" alt="${esc(p.name)}的头像">`:p?esc(p.name.slice(-1)):'＋'}</span><b>${p?esc(p.name):'待入座'}</b><small>${n}号位</small></div>`}).join('')}</div><div class="dealer-guide" role="img" aria-label="荷官位于牌桌上方长边中间，面向桌内；本人左手为1号位，右手为9号位"><svg class="dealer-arrows" viewBox="0 0 360 88" preserveAspectRatio="none" aria-hidden="true"><path d="M128 66Q110 74 96 62m0 0 3 6m-3-6 7 1M232 66Q250 74 264 62m0 0-3 6m3-6-7 1" fill="none" stroke="var(--metal-text)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="dealer-portrait"><img class="dealer-figure" src="assets/dealer-figure.png" width="450" height="338" alt="兔子荷官" draggable="false"><span class="dealer-caption">荷官</span></div></div></div></div>`}
-function fitSeats(){const view=$('.seat-view');if(view)view.style.setProperty('--seat-scale',String(view.clientWidth/360))}
+function fitSeats(){
+ const view=$('.seat-view');if(!view)return;
+ // 横屏重新排布到16:9画布；人物、头像和文字仍等比缩放，避免把手机图直接拉宽。
+ const wide=matchMedia('(min-width:700px) and (min-aspect-ratio:4/3)').matches,layer=$('#layer');
+ view.dataset.layout=wide?'wide':'portrait';layer.dataset.layout=view.dataset.layout;
+ const width=wide?1600:360,height=wide?900:386,heading=layer.querySelector(':scope > h1');
+ const spacing=wide?12:40,availableHeight=Math.max(0,layer.clientHeight-(heading?.getBoundingClientRect().height||0)-spacing);
+ const scale=Math.min(Math.max(0,layer.clientWidth-8)/width,availableHeight/height);
+ view.style.width=width*scale+'px';view.style.height=height*scale+'px';view.style.setProperty('--seat-scale',String(scale));
+ const positions=wide?WIDE_POS:POS;
+ view.querySelectorAll('.seat').forEach((seat,i)=>{const[x,y]=positions[i+1];seat.style.left=x+'%';seat.style.top=y+'%'});
+ const arrows=view.querySelector('.dealer-arrows');arrows.setAttribute('viewBox',wide?'0 0 1600 330':'0 0 360 88');
+ arrows.querySelector('path').setAttribute('d',wide?'M650 286Q570 320 500 280m0 0 7 18m-7-18 20 4M950 286Q1030 320 1100 280m0 0-7 18m7-18-20 4':'M128 66Q110 74 96 62m0 0 3 6m-3-6 7 1M232 66Q250 74 264 62m0 0-3 6m3-6-7 1');
+}
 function render(){
  const d=read(),pres=d?.presentations[table],g=projected(d?.games.find(g=>g.id===pres?.game));skin();$('#title').textContent=`· ${table}号桌 · ${role==='timer'?'倒计时':'直播与播报'}`;
  $('#sound').hidden=role==='timer'||enabled;$('#silent').hidden=role==='timer'||enabled;
  if(role==='timer'){if(ready)receiver()?.update(g,B.theme());$('#frame').hidden=false;$('#layer').hidden=true;return}
  const nextSignature=JSON.stringify([pres,d?.drafts[pres?.account]?.seats,d?.players.map(p=>[p.id,p.name,p.avatar]),g?.result,g?.status,lastResult]);
- if(nextSignature!==lastSignature){lastSignature=nextSignature;const seating=!g||pres?.mode==='seating';
+ if(nextSignature!==lastSignature){lastSignature=nextSignature;const seating=!g||pres?.mode==='seating';if(!seating)delete $('#layer').dataset.layout;
   if(seating){$('#frame').hidden=true;$('#layer').hidden=false;$('#layer').innerHTML=`<h1>${table}号桌 · 等待开局</h1>${seatMap(d,d?.drafts[pres?.account]?.seats||{})}`;fitSeats()}
   else if(g.result&&['done','failed'].includes(g.resultPlayback?.status)&&lastResult!==g.resultPlayback.id&&!current){$('#frame').hidden=true;$('#layer').hidden=false;$('#layer').innerHTML=`<h1>本场正式前三名</h1><div class="podium">${[2,0,1].map(i=>{const p=player(d,g.result.pids[i]);return `<div class="rank"><strong>${['冠军','亚军','季军'][i]}</strong>${p.avatar?`<p><img src="${esc(p.avatar)}" alt=""></p>`:''}<b>${esc(p.name)}</b></div>`}).join('')}</div><p>结果版本 ${g.result.version} · 等待下一场准备</p>`}
   else{$('#frame').hidden=false;$('#layer').hidden=true}
