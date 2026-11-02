@@ -18,5 +18,3 @@ document.getElementById('prepare').onclick=async function(){
     feedback.textContent='三位测试玩家已准备；已有账号不覆盖、已发次数不重复增加。请打开荷官端继续。';
   }catch(e){feedback.textContent='准备未完成：'+e.message}finally{this.disabled=false}
 };
-fetch('themes.json').then(r=>r.json()).then(themes=>{document.getElementById('theme').innerHTML=Object.entries(themes).map(([key,t])=>`<option value="${key}">${t.name}</option>`).join('');document.getElementById('theme').value=B.theme()});
-document.getElementById('theme').onchange=e=>B.setTheme(e.target.value);

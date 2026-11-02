@@ -1,13 +1,16 @@
-/* 仅连接隔离的前端验收数据；门票、成长、参赛次数各自保留，不自动换算或发奖。 */
+/* 各端只读门店统一配置；参赛次数、门票和成长仍各自记录。 */
 (function () {
   'use strict';
   const prefix='rzh-triad-20261101-v1';
-  const playerKey=prefix+':player',dealerKey=prefix+':dealer',themeKey=prefix+':theme';
+  const playerKey=prefix+':player',dealerKey=prefix+':dealer';
+  const validThemes=['flame','neon','grass','warm','cute','pop','energy','star'];
+  let storeTheme='flame';
   function read(key,fallback){const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback}
-  function theme(){return localStorage.getItem(themeKey)||'flame'}
+  function theme(){return storeTheme}
+  // 此文件是门店后台下发配置的静态演示，不读取玩家或荷官自己的旧换肤设置。
+  const themeReady=fetch('store-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('无法读取门店配置');return r.json()}).then(config=>{if(validThemes.includes(config.theme))storeTheme=config.theme;dispatchEvent(new CustomEvent('rzh-theme'))}).catch(()=>null);
   function businessCutoff(){return read(dealerKey,null)?.store?.close||'03:00'}
   function businessDay(t){const [h,m]=businessCutoff().split(':').map(Number);return new Date(new Date(t).getTime()+8*3600000-(h*60+m)*60000).toISOString().slice(0,10)}
-  function setTheme(key){if(!['flame','neon','grass','warm','cute','pop','energy','star'].includes(key))return;localStorage.setItem(themeKey,key);dispatchEvent(new CustomEvent('rzh-theme'))}
   function mergeProfiles(d){
     const s=read(playerKey,null);if(!s)return d;
     for(const a of s.accounts){
@@ -19,13 +22,6 @@
     }
     return d;
   }
-  function mountNavigation(){
-    if(document.getElementById('reviewNav'))return;
-    const n=document.createElement('div');n.id='reviewNav';
-    n.style.cssText='padding:7px 12px;text-align:center;font:12px/1.6 sans-serif;background:var(--card,#fff);color:var(--ink,var(--text,#0f172a));border-bottom:1px solid var(--border,#e2e8f0)';
-    n.innerHTML='<a href="index.html">← 三端验收导航</a><span style="margin-left:12px">隔离演示数据</span>';
-    document.body.prepend(n);
-  }
-  addEventListener('storage',e=>{if(e.key===themeKey)dispatchEvent(new CustomEvent('rzh-theme'))});
-  window.RZHBridge={prefix,playerKey,dealerKey,read,theme,setTheme,mergeProfiles,mountNavigation,businessDay,businessCutoff};
+  function mountNavigation(){document.getElementById('reviewNav')?.remove()}
+  window.RZHBridge={prefix,playerKey,dealerKey,read,theme,themeReady,mergeProfiles,mountNavigation,businessDay,businessCutoff};
 })();

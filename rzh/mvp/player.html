@@ -48,7 +48,7 @@ body:not(.merchant-mode) .card{background:linear-gradient(145deg,#211819,#141011
 
 
 
-<link rel="stylesheet" href="player-theme.css"><script src="shared.js"></script></head>
+<link rel="stylesheet" href="player-theme.css"><script src="shared.js?v=store-undo-20261102"></script></head>
 <body>
   <div id="app"><main class="page"><p class="muted">正在打开joker用户赛事…</p></main></div>
   <dialog id="dialog" aria-label="操作详情"></dialog>
@@ -937,14 +937,14 @@ body:not(.merchant-mode) .card{background:linear-gradient(145deg,#211819,#141011
     renderHome();
   }
   function renderAuth(register) {
-    const body=`<div class="auth-art">${A.crest(1)}</div><div class="auth-title"><span class="eyebrow">joker TOURNAMENT CLUB</span><h1>${register?'开启你的赛事旅程':'回到你的赛事主场'}</h1><p>${register?'创建赛事账号，留住每一个高光时刻。':'登录后查看你的荣誉、手牌与礼遇。'}</p></div><form id="auth-form" class="form-grid" data-register="${register?'yes':'no'}">
+    const body=`<div class="auth-art">${A.crest(1)}</div><div class="auth-title"><h1>${register?'注册账号':'账号登录'}</h1></div><form id="auth-form" class="form-grid" data-register="${register?'yes':'no'}">
     ${field('手机号','phone','','tel','autocomplete="username" inputmode="numeric" maxlength="11" required placeholder="请输入手机号"')}
     ${field('密码','password','','password',`autocomplete="${register?'new-password':'current-password'}" minlength="6" required placeholder="至少6位密码"`)}
     ${register?field('再次输入密码','confirm','','password','autocomplete="new-password" minlength="6" required placeholder="请再次输入密码"'):''}
     <label class="checkbox"><input type="checkbox" name="remember" checked>记住密码，下次自动登录</label>
     <button type="submit" class="button primary wide">${register?'注册并进入赛事':'登录用户赛事'}</button>
     </form><div class="spaced space-top">${register?'<span class="hint">已经有赛事账号？</span>'+link('去登录','login','link-button'):button('忘记密码？','forgot-password','link-button')+link('注册账号','register','link-button')}</div>
-    <div class="footer-note">赛事账号独立使用 · joker</div>`;
+`;
     shell(body,'',null);
   }
   function renderChangePassword() {
