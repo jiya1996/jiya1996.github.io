@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261102-03",
+  "version": "FE-20261102-04",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
@@ -7,8 +7,8 @@
       "bytes": 2077892
     },
     {
-      "sha256": "ed700f7794e4c66f0c8903e3cabfbfbd8512481b84b2a752a15287f5c0f7588d",
-      "bytes": 506436
+      "sha256": "c1db156a14244b4d01c3000be376a3200da511947d0a5f58a5694ff8351e9b85",
+      "bytes": 833457
     },
     {
       "sha256": "03cc038d916f3713554b055f3a201b49b536daa3fc72a16b65892cc18951806f",
@@ -19,8 +19,8 @@
       "bytes": 69530
     }
   ],
-  "base_version": "FE-20261102-02",
-  "change": "显示器入座画面适配16:9横屏并放大；人物与头像等比，保留九个座位和八套风格",
+  "base_version": "FE-20261102-03",
+  "change": "取消兔子上方荷官标签；倒计时屏休息和暂停全屏沙漏，保持原计时规则",
   "display_assets": [
     {
       "path": "screen.html",
@@ -29,8 +29,8 @@
     },
     {
       "path": "screen.js",
-      "sha256": "59cc61db82286a8fbd620b919fa305dbfafb1282b356d849ab4261d7aa8c7f87",
-      "bytes": 12204
+      "sha256": "e78cedc41c5dc17d7a01248484d59e0d4b97f8610761c42086638ebeacca0dff",
+      "bytes": 12162
     },
     {
       "path": "screen.css",
@@ -41,6 +41,33 @@
       "path": "assets/dealer-figure.png",
       "sha256": "a399d550a6922333d107dab55aa7e417000093c06e017a9215771458179c4507",
       "bytes": 124872
+    }
+  ],
+  "display_revision_assets": [
+    {
+      "path": "screen.html",
+      "sha256": "7d59eb37f84f6dbc2de5f6c9606d3e773178863afdc5380209d55b1d828ac03f",
+      "bytes": 889
+    },
+    {
+      "path": "screen.js",
+      "sha256": "e78cedc41c5dc17d7a01248484d59e0d4b97f8610761c42086638ebeacca0dff",
+      "bytes": 12162
+    },
+    {
+      "path": "timer.html",
+      "sha256": "4216d7bc4482e0212e0afa0ef904b15e4016bdc3af7ccad7ebbac7d5c3ae971b",
+      "bytes": 69717
+    },
+    {
+      "path": "timer-intermission.js",
+      "sha256": "a05dc8caa1c99ab6bd887b368e6bef36193da2b22c4374ba8ff12f9cd50892b5",
+      "bytes": 3938
+    },
+    {
+      "path": "timer-intermission.css",
+      "sha256": "3baf29879d2d5098fc6a8d2033712e80636dbb2a448a65465a1ce98ab13aba75",
+      "bytes": 1838
     }
   ]
 }

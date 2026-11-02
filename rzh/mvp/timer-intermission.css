@@ -1,0 +1,11 @@
+.timer-intermission[hidden]{display:none!important}
+.timer-intermission{position:absolute;inset:0;z-index:12;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45cqw;overflow:hidden;text-align:center;color:var(--tv-text);background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--tv-glow) 17%,var(--tv-bg)),color-mix(in srgb,var(--tv-bg) 90%,#000) 70%);font-family:var(--cn);padding:3cqw}
+.timer-intermission::before{content:"";position:absolute;inset:1.25cqw;border:.12cqw solid var(--m-mid);border-radius:1.2cqw;box-shadow:inset 0 0 0 .32cqw color-mix(in srgb,var(--m-mid) 12%,transparent),0 0 3cqw #0008;pointer-events:none}
+.intermission-brand{position:absolute;left:4cqw;top:3.2cqw;color:var(--m-mid);font:600 1.15cqw/1.4 "PF Serif",serif;letter-spacing:.3cqw}
+.intermission-hourglass{height:16cqw;width:13.54cqw;flex:none;filter:drop-shadow(0 .4cqw 1.4cqw #0008);margin-bottom:.3cqw}
+.intermission-title{font:800 4.1cqw/1.2 var(--cn);letter-spacing:.65cqw;padding-left:.65cqw;margin:0;color:var(--tv-text)}
+.intermission-time{font:600 9.5cqw/1.04 "PF Num",sans-serif;letter-spacing:.1cqw;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,var(--digit-hi),var(--m-hi) 55%,var(--digit-lo));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 .2cqw .25cqw #0008);margin-top:.4cqw}
+.intermission-state{font:600 1.5cqw/1.6 var(--cn);color:var(--m-hi);margin-top:.5cqw}.intermission-note{font:400 1.2cqw/1.7 var(--cn);color:var(--tv-sub);margin:0;max-width:78cqw}
+.sand-stream{animation:intermission-sand .85s linear infinite}.timer-intermission[data-paused=true] .sand-stream{animation-play-state:paused;opacity:.35}
+@keyframes intermission-sand{to{stroke-dashoffset:-20}}
+@media(prefers-reduced-motion:reduce){.sand-stream{animation:none}}
