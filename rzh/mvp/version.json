@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261102-06",
+  "version": "FE-20261102-07",
   "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
   "sources": [
     {
@@ -15,21 +15,21 @@
       "bytes": 2223449
     },
     {
-      "sha256": "ab1abaf8d047e92e40c577662a6d3c16cc2d189098cb152ba8d072dfebc7330f",
-      "bytes": 70163
+      "sha256": "9be760a7892752256fab811acbc58e7a4feac4373077aa0fed2bb7e54dcac167",
+      "bytes": 72271
     }
   ],
-  "base_version": "FE-20261102-05",
-  "change": "显示器计时状态统一：修复等待、结赛、末级持续误判暂停引起的沙漏闪烁；保留原计时规则及其他端逻辑",
+  "base_version": "FE-20261102-06",
+  "change": "修正倒计时末级持续的数字／文字排版；明确比赛仍进行、待开局与结赛；移除接收画面中的示例文案；八皮肤与横屏适配",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "b0e0ebf813a11d4a0f38b30aeb08c5e5d32bcceeec76708a5f1a999fb712f656",
+      "sha256": "bf457bf4656b5dfade2507c92c7ce8968d8de4c04e32bef0285fbc643fb68d5c",
       "bytes": 889
     },
     {
       "path": "screen.js",
-      "sha256": "9f2b7a228ff6dc7dba4945b1cf58fcf4cfc1d4496d48cfbb5ad2183bc5c2ad43",
+      "sha256": "79cd989eb3abc0d4ab7486b1bd5d1e5be26490ac5585f8d1f95e6b31bfdfaedc",
       "bytes": 12186
     },
     {
@@ -44,13 +44,13 @@
     },
     {
       "path": "timer.html",
-      "sha256": "081f686cd2f8a2d20aa697127c073037af9443607357cb13e64ad196f3ba4e08",
-      "bytes": 70240
+      "sha256": "498a187e6502d139fdbde6b829cac9cc111ab325ffe2523ed84a4cfa311ba8ea",
+      "bytes": 72348
     },
     {
       "path": "timer-receiver.js",
-      "sha256": "bf7985c6078a28e7f55d5be84ea4d7cb64f632b909699f7158aaebdbfd6cc59e",
-      "bytes": 923
+      "sha256": "d1d903481ec8b5fa58ff8265bc2c5f6171d48b4a66fb0494b41109b8bddb89bf",
+      "bytes": 951
     },
     {
       "path": "timer-intermission.js",
@@ -66,18 +66,18 @@
   "display_revision_assets": [
     {
       "path": "screen.html",
-      "sha256": "b0e0ebf813a11d4a0f38b30aeb08c5e5d32bcceeec76708a5f1a999fb712f656",
+      "sha256": "bf457bf4656b5dfade2507c92c7ce8968d8de4c04e32bef0285fbc643fb68d5c",
       "bytes": 889
     },
     {
       "path": "screen.js",
-      "sha256": "9f2b7a228ff6dc7dba4945b1cf58fcf4cfc1d4496d48cfbb5ad2183bc5c2ad43",
+      "sha256": "79cd989eb3abc0d4ab7486b1bd5d1e5be26490ac5585f8d1f95e6b31bfdfaedc",
       "bytes": 12186
     },
     {
       "path": "timer.html",
-      "sha256": "081f686cd2f8a2d20aa697127c073037af9443607357cb13e64ad196f3ba4e08",
-      "bytes": 70240
+      "sha256": "498a187e6502d139fdbde6b829cac9cc111ab325ffe2523ed84a4cfa311ba8ea",
+      "bytes": 72348
     },
     {
       "path": "timer-intermission.js",
@@ -91,8 +91,8 @@
     },
     {
       "path": "timer-receiver.js",
-      "sha256": "bf7985c6078a28e7f55d5be84ea4d7cb64f632b909699f7158aaebdbfd6cc59e",
-      "bytes": 923
+      "sha256": "d1d903481ec8b5fa58ff8265bc2c5f6171d48b4a66fb0494b41109b8bddb89bf",
+      "bytes": 951
     }
   ]
 }
