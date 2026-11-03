@@ -1,14 +1,14 @@
 {
-  "version": "FE-20261102-09",
-  "boundary": "同源浏览器三端前端验收，非正式后台或跨设备同步",
+  "version": "FE-20261103-01",
+  "boundary": "静态前端同源多标签演示；非正式后台、真实摄像头直播或跨设备同步",
   "sources": [
     {
-      "sha256": "d5610a24cf1a52ed86d4b1436cddb60977d0d82e349739babbe71b881252ae3e",
-      "bytes": 2077627
+      "sha256": "97ce826e3e76571cdd58cf6fc7fe67a89e0d81aaa4eab6572c9fd7131f015e6d",
+      "bytes": 2077892
     },
     {
-      "sha256": "65cebe64ba56ebefe248cf0e345418980ccad788c190a8b4bbdcf22fc1b463a7",
-      "bytes": 838490
+      "sha256": "c1db156a14244b4d01c3000be376a3200da511947d0a5f58a5694ff8351e9b85",
+      "bytes": 833457
     },
     {
       "sha256": "03cc038d916f3713554b055f3a201b49b536daa3fc72a16b65892cc18951806f",
@@ -19,8 +19,8 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261102-08",
-  "change": "补齐手机播报皇家同花顺选项，保留原默认牌型与30秒缓冲；简化牌型字段标签",
+  "base_version": "FE-20261102-06",
+  "change": "Display与Timer共用赛前九人席位；Display赛中直播区域与按座号匹配的玩家底牌栏；Timer开赛后保持专用计时；示例底牌只用于内存预览",
   "display_assets": [
     {
       "path": "screen.html",
@@ -66,72 +66,50 @@
   "display_revision_assets": [
     {
       "path": "screen.html",
-      "sha256": "bf457bf4656b5dfade2507c92c7ce8968d8de4c04e32bef0285fbc643fb68d5c",
-      "bytes": 889
+      "sha256": "99a6f6cef0255e6cb27a869405e97e0c2363119ee235c27362f0b5c70511e5f8",
+      "bytes": 1053
     },
     {
       "path": "screen.js",
-      "sha256": "79cd989eb3abc0d4ab7486b1bd5d1e5be26490ac5585f8d1f95e6b31bfdfaedc",
-      "bytes": 12186
+      "sha256": "165478bbbbf0050368e38bfbc8948e02f3e1ab811706abafc25ecc431a39058b",
+      "bytes": 13912
     },
     {
-      "path": "timer.html",
-      "sha256": "498a187e6502d139fdbde6b829cac9cc111ab325ffe2523ed84a4cfa311ba8ea",
-      "bytes": 72348
+      "path": "seating-stage.css",
+      "sha256": "4a21abb2029e5eb523bb0b1a45db0c179d0e1e4377360da4a952e3fec3df0b74",
+      "bytes": 5960
     },
     {
-      "path": "timer-intermission.js",
-      "sha256": "ef7fdebdc9ea7af45468d22fc01ffa23e6e1601b17f3192847f354ad277c5cb9",
-      "bytes": 4361
+      "path": "live-table.js",
+      "sha256": "9331255b000d464886407348b86b3c65562f8279879a41d1c2324f5b634b13bf",
+      "bytes": 3212
     },
     {
-      "path": "timer-intermission.css",
-      "sha256": "3baf29879d2d5098fc6a8d2033712e80636dbb2a448a65465a1ce98ab13aba75",
-      "bytes": 1838
+      "path": "live-table.css",
+      "sha256": "41bcc5637cebfc77c1a111fce375b8ce39586747c10f7beb25c172f3a38f4e48",
+      "bytes": 5298
     },
     {
-      "path": "timer-receiver.js",
-      "sha256": "d1d903481ec8b5fa58ff8265bc2c5f6171d48b4a66fb0494b41109b8bddb89bf",
-      "bytes": 951
-    }
-  ],
-  "store_config": "store-config.json",
-  "source_scope_note": "仅采用荷官源稿的界面片段（含皇家同花顺选项），未合并另行确认中的桌台业务规则。",
-  "ui_assets": [
-    {
-      "path": "dealer.html",
-      "sha256": "96fc5a3178cbf44ee2dd23f176fc5afac163e492ae2bc33e93de2b6170087312",
-      "bytes": 835361
+      "path": "display-preview.js",
+      "sha256": "3b31b99362f270ac23d887b7419c80347c8c760a5fd7d58c2469bb2613b2a933",
+      "bytes": 1685
     },
     {
-      "path": "player.html",
-      "sha256": "eadef082cb8fb51f058976a2fa406c3be519736f5e908aa222bad803c1e91836",
-      "bytes": 2077700
+      "path": "animation.html",
+      "sha256": "c7a45bef4ee3a4d1ff5fd7483fdfe45d9c9236451a5d30c59eae683569e05936",
+      "bytes": 2223685
     },
     {
-      "path": "shared.js",
-      "sha256": "1291c1d06a16c85c0f58c9e3678723a2ed4e07e3787be384857e3d96039529e9",
-      "bytes": 1959
-    },
-    {
-      "path": "review.js",
-      "sha256": "e2c7bb0761eb2de22ccb05c0427f9fe5831bf6b0a41be1e1d6247d5d596457a9",
-      "bytes": 2025
+      "path": "animation-receiver.js",
+      "sha256": "35c15804fdffe96153f44a46cc1bfd629b8296391c4a81b2ab2aeb7918932cd5",
+      "bytes": 3615
     },
     {
       "path": "index.html",
-      "sha256": "33652dfbdc1824cc170f40cb430603cccadc361d017386b96535851f9ae010cd",
-      "bytes": 3676
-    },
-    {
-      "path": "store-config.json",
-      "sha256": "78dd1fbb5b29c10f9cec03d824f011d8336f554df2f4d26d7af241d61a26929e",
-      "bytes": 22
-    },
-    {
-      "path": "screen.html",
-      "sha256": "fcd4d1f37cc03ae1fe670531c2accbea824e43078ee6a9c1673c7ca70e1b01a9",
-      "bytes": 911
+      "sha256": "89459d8e883ed06d2b1024eaf5d9de9ead0f13ecf58a26e327ee60bc5f02cf0a",
+      "bytes": 4190
     }
-  ]
+  ],
+  "base_public_version": "FE-20261102-09",
+  "publication": "github-pages-static"
 }
