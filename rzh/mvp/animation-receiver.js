@@ -1,6 +1,9 @@
 /* 独立播放页接入原动画；静态预览使用设备朗读，不向不存在的云TTS发送请求。 */
 'use strict';
-const receiverStyle=document.createElement('style');receiverStyle.textContent='html,body{margin:0!important;padding:0!important;width:100%;height:100%;overflow:hidden;background:#000}.layout{display:block!important;padding:0!important;margin:0!important}.layout>aside,body>header,.layout>section>.hint,.layout>section>.btns,.under,.stagehead{display:none!important}.layout>section{padding:0!important;margin:0!important;min-width:0!important}#stageBox{position:fixed!important;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,177.7778vh)!important;aspect-ratio:16/9;border-radius:0;box-shadow:none}';document.head.appendChild(receiverStyle);
+// 独立打开时保留左侧控件与右侧舞台；嵌入电视播放页时才隐藏预览工具。
+const receiverOnly=window.parent!==window||new URLSearchParams(location.search).get('screen')==='1';
+document.documentElement.dataset.displayMode=receiverOnly?'receiver':'preview';
+const receiverStyle=document.createElement('style');receiverStyle.textContent='html,body{margin:0!important;padding:0!important;width:100%;height:100%;overflow:hidden;background:#000}.layout{display:block!important;padding:0!important;margin:0!important}.layout>aside,body>header,.layout>section>.hint,.layout>section>.btns,.under,.stagehead{display:none!important}.layout>section{padding:0!important;margin:0!important;min-width:0!important}#stageBox{position:fixed!important;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,177.7778vh)!important;aspect-ratio:16/9;border-radius:0;box-shadow:none}';if(receiverOnly)document.head.appendChild(receiverStyle);
 HANDS.flush={...HANDS.fh,name:'同花',en:'FLUSH',cards:[['A','♠'],['J','♠'],['8','♠'],['5','♠'],['2','♠']],say:n=>`${n}，打出同花！`};
 prepareNarration=()=>Promise.resolve();
 say=function(text,ms,item){return new Promise(resolve=>{
@@ -25,3 +28,6 @@ window.Receiver={
  enqueue(it){return PF.enqueue(it)},state(){return PF.state()},stop(){return PF.hardReset()},narration(){return VOICE_TRACE.slice(-20)}
 };
 addEventListener('load',()=>{fit();parent.postMessage({type:'frame-ready'},location.origin)});
+
+// 公网静态预览沿用设备朗读，界面不宣称已经接入本地云音色服务。
+if(!receiverOnly){const oldLoadVoices=loadVoices;loadVoices=function(){oldLoadVoices();document.getElementById('voiceInfo').textContent='当前网页使用本机朗读；云希、晓晓音色需要另行接入配音服务。'};}

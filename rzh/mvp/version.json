@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261103-05",
+  "version": "FE-20261103-06",
   "boundary": "静态前端同源多标签演示；非正式后台、真实摄像头直播或跨设备同步",
   "sources": [
     {
@@ -19,8 +19,8 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261103-04",
-  "change": "删除荷官左右弧线；4、5、6下排等高，4与1、6与9上下对齐，围绕桌面中心镜像并留出相同头像间距；保持九座身份与圆形展示。",
+  "base_version": "FE-20261103-05",
+  "change": "恢复03可交互播报预览：左侧类型与风格控件、右侧播放舞台；只读屏嵌入时才隐藏控件。保留三个布局预览、本桌播放入口、04及05。",
   "display_assets": [
     {
       "path": "screen.html",
@@ -74,8 +74,8 @@
     },
     {
       "path": "animation.html",
-      "sha256": "d79b6c443f8cea92fe75cd875877ade4550030fc31f333e37aa2c9465d8cf22f",
-      "bytes": 2223682
+      "sha256": "26a94196ad540a28c246ed4c768e189bc8608be6666035ba0a4e29f3de7e0a5c",
+      "bytes": 2223684
     },
     {
       "path": "assets/rules-qr-placeholder.png",
@@ -91,25 +91,35 @@
       "path": "display-preview.js",
       "sha256": "a778408f89383edfc5b9ae253144adfd38796ffd50298817d3c912090a793b3d",
       "bytes": 1848
+    },
+    {
+      "path": "index.html",
+      "sha256": "1d28595d84c0e3a1963722ce0103d2512b296582bd589d9dffe503a8d905c9a2",
+      "bytes": 4812
+    },
+    {
+      "path": "animation-receiver.js",
+      "sha256": "930c5173a0a22900adb82d6d80a8b00f1f0afc3b81d0acf8594d65476291f9bd",
+      "bytes": 4239
     }
   ],
   "display_revision_assets": [
     {
-      "path": "screen.html",
-      "sha256": "c1617ec449e33786dc2e221fc2dc990b6943ee84b2f850f96fb9a9be709a6d13",
-      "bytes": 925
+      "path": "index.html",
+      "sha256": "1d28595d84c0e3a1963722ce0103d2512b296582bd589d9dffe503a8d905c9a2",
+      "bytes": 4812
     },
     {
-      "path": "screen.js",
-      "sha256": "c7b03545944723575a30d1fd5dd2128fedd7aa6512b01359fd20db88eae6b8ca",
-      "bytes": 12502
+      "path": "animation.html",
+      "sha256": "26a94196ad540a28c246ed4c768e189bc8608be6666035ba0a4e29f3de7e0a5c",
+      "bytes": 2223684
     },
     {
-      "path": "seating-stage.css",
-      "sha256": "74b7a78ecdef96066d7a2dac13a205887080d7dc4128116fc8dc97040f387a8a",
-      "bytes": 4140
+      "path": "animation-receiver.js",
+      "sha256": "930c5173a0a22900adb82d6d80a8b00f1f0afc3b81d0acf8594d65476291f9bd",
+      "bytes": 4239
     }
   ],
-  "base_public_version": "FE-20261103-04",
+  "base_public_version": "FE-20261103-05",
   "publication": "github-pages-static"
 }

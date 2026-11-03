@@ -123,7 +123,7 @@ textarea{width:100%;height:52px;resize:vertical}
 </style><link rel="icon" href="favicon.ico"></head><body>
 <header>
   <h1>赛事大屏动画模板预览 · pokerface-v02 特效版</h1>
-  <span class="sub">v02：击杀重拳 / 五牌逐张翻开 / 五剑炸桌巨剑插地 · 3 套演出 × 8 套皮肤可任意组合 · 模拟昵称/头像 · 程序音效 + Edge TTS 配音演示 · 非真实多设备同步</span>
+  <span class="sub">v02：击杀重拳 / 五牌逐张翻开 / 五剑炸桌巨剑插地 · 3 套演出 × 8 套皮肤可任意组合 · 模拟昵称/头像 · 程序音效 + 本机朗读预览 · 非真实多设备同步</span>
 </header>
 <div class="layout">
 <aside>
@@ -793,4 +793,4 @@ function init(){initCanvas();requestAnimationFrame(tick);applySkin('flame');
 window.PF={UI,SPOKEN,VOICE_TRACE,enqueue,snapshot,hardReset,state:()=>({stageState,busy,queue:queue.length,log:QLOG.map(q=>({id:q.id,scene:q.scene,status:q.status,label:q.label,note:q.note}))}),setUI:(o)=>{Object.assign(UI,o);}};
 document.addEventListener('DOMContentLoaded',init);
 </script>
-<link rel="stylesheet" href="live-table.css?v=seat-circles-20261103"><script src="live-table.js?v=seat-circles-20261103"></script><script src="animation-receiver.js?v=seat-circles-20261103"></script></body></html>
+<link rel="stylesheet" href="live-table.css?v=seat-circles-20261103"><script src="live-table.js?v=seat-circles-20261103"></script><script src="animation-receiver.js?v=broadcast-preview-20261103"></script></body></html>
