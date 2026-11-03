@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261103-01",
+  "version": "FE-20261103-02",
   "boundary": "静态前端同源多标签演示；非正式后台、真实摄像头直播或跨设备同步",
   "sources": [
     {
@@ -19,18 +19,18 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261102-06",
-  "change": "Display与Timer共用赛前九人席位；Display赛中直播区域与按座号匹配的玩家底牌栏；Timer开赛后保持专用计时；示例底牌只用于内存预览",
+  "base_version": "FE-20261103-01",
+  "change": "直播布局左侧5人、右侧4人；右下角赛事规则二维码示意。赛前玩家选座二维码留到后期，实际跳转链接未配置。",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "bf457bf4656b5dfade2507c92c7ce8968d8de4c04e32bef0285fbc643fb68d5c",
-      "bytes": 889
+      "sha256": "9895028f8285bd74399ba6a2f39c07d2800d85970efef2bd99aacf6f826faf3e",
+      "bytes": 1057
     },
     {
       "path": "screen.js",
-      "sha256": "79cd989eb3abc0d4ab7486b1bd5d1e5be26490ac5585f8d1f95e6b31bfdfaedc",
-      "bytes": 12186
+      "sha256": "195e3d809d7d49b9ecb39b733f3eea7a5bfebc4e2836eb02028d3044caee45bf",
+      "bytes": 13913
     },
     {
       "path": "screen.css",
@@ -61,55 +61,60 @@
       "path": "timer-intermission.css",
       "sha256": "3baf29879d2d5098fc6a8d2033712e80636dbb2a448a65465a1ce98ab13aba75",
       "bytes": 1838
+    },
+    {
+      "path": "live-table.js",
+      "sha256": "394c3af907ae3a49b2de0948b53df44aedce9c80a2831b39760507e2d0d4735b",
+      "bytes": 3444
+    },
+    {
+      "path": "live-table.css",
+      "sha256": "4dbee1cf7209faae18fb2a04ecc65dfdbbfa46238a860586cc160109949d7897",
+      "bytes": 5821
+    },
+    {
+      "path": "animation.html",
+      "sha256": "63b8454069bc8a4f0eb0b27c129baaff99a93015585d87eab55a73a91bdf753b",
+      "bytes": 2223688
+    },
+    {
+      "path": "assets/rules-qr-placeholder.png",
+      "sha256": "662007235d7369a72b4c87fab6ca0af742de305611511a15c56d449fba042c1e",
+      "bytes": 4717
     }
   ],
   "display_revision_assets": [
     {
-      "path": "screen.html",
-      "sha256": "99a6f6cef0255e6cb27a869405e97e0c2363119ee235c27362f0b5c70511e5f8",
-      "bytes": 1053
-    },
-    {
-      "path": "screen.js",
-      "sha256": "165478bbbbf0050368e38bfbc8948e02f3e1ab811706abafc25ecc431a39058b",
-      "bytes": 13912
-    },
-    {
-      "path": "seating-stage.css",
-      "sha256": "4a21abb2029e5eb523bb0b1a45db0c179d0e1e4377360da4a952e3fec3df0b74",
-      "bytes": 5960
-    },
-    {
       "path": "live-table.js",
-      "sha256": "9331255b000d464886407348b86b3c65562f8279879a41d1c2324f5b634b13bf",
-      "bytes": 3212
+      "sha256": "394c3af907ae3a49b2de0948b53df44aedce9c80a2831b39760507e2d0d4735b",
+      "bytes": 3444
     },
     {
       "path": "live-table.css",
-      "sha256": "41bcc5637cebfc77c1a111fce375b8ce39586747c10f7beb25c172f3a38f4e48",
-      "bytes": 5298
-    },
-    {
-      "path": "display-preview.js",
-      "sha256": "3b31b99362f270ac23d887b7419c80347c8c760a5fd7d58c2469bb2613b2a933",
-      "bytes": 1685
+      "sha256": "4dbee1cf7209faae18fb2a04ecc65dfdbbfa46238a860586cc160109949d7897",
+      "bytes": 5821
     },
     {
       "path": "animation.html",
-      "sha256": "c7a45bef4ee3a4d1ff5fd7483fdfe45d9c9236451a5d30c59eae683569e05936",
-      "bytes": 2223685
+      "sha256": "63b8454069bc8a4f0eb0b27c129baaff99a93015585d87eab55a73a91bdf753b",
+      "bytes": 2223688
     },
     {
-      "path": "animation-receiver.js",
-      "sha256": "35c15804fdffe96153f44a46cc1bfd629b8296391c4a81b2ab2aeb7918932cd5",
-      "bytes": 3615
+      "path": "screen.js",
+      "sha256": "195e3d809d7d49b9ecb39b733f3eea7a5bfebc4e2836eb02028d3044caee45bf",
+      "bytes": 13913
     },
     {
-      "path": "index.html",
-      "sha256": "89459d8e883ed06d2b1024eaf5d9de9ead0f13ecf58a26e327ee60bc5f02cf0a",
-      "bytes": 4190
+      "path": "screen.html",
+      "sha256": "9895028f8285bd74399ba6a2f39c07d2800d85970efef2bd99aacf6f826faf3e",
+      "bytes": 1057
+    },
+    {
+      "path": "assets/rules-qr-placeholder.png",
+      "sha256": "662007235d7369a72b4c87fab6ca0af742de305611511a15c56d449fba042c1e",
+      "bytes": 4717
     }
   ],
-  "base_public_version": "FE-20261102-09",
+  "base_public_version": "FE-20261103-01",
   "publication": "github-pages-static"
 }

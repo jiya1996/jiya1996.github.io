@@ -97,7 +97,7 @@ addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('#fra
 addEventListener('storage',e=>{if([B.dealerKey,B.playerKey].includes(e.key))check()});addEventListener('rzh-theme',()=>{lastSkin='';check()});
 addEventListener('resize',fitSeats);
 $('#layer').addEventListener('error',e=>{if(e.target.matches('.circle img'))e.target.hidden=true},true);
-fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=clock-layout-20261102':'animation.html?v=table-display-20261103';render()});
+fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=clock-layout-20261102':'animation.html?v=live-five-four-20261103';render()});
 if(preview){$('#status').textContent='示例预览 · 不改动实际比赛';$('#note').textContent='示例玩家与底牌仅供布局审阅 · 直播视频尚未接入';const exit=document.createElement('a');exit.href='screen.html?table='+table+(role==='timer'?'&role=timer':'');exit.textContent='退出示例';$('header div').prepend(exit)}
 if(role==='live'&&!preview){
  if(navigator.locks)navigator.locks.request(B.prefix+':live:'+table,async()=>{owner=true;$('#status').textContent='本桌播放页已就绪';await new Promise(()=>{})});
