@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261103-03",
+  "version": "FE-20261103-04",
   "boundary": "静态前端同源多标签演示；非正式后台、真实摄像头直播或跨设备同步",
   "sources": [
     {
@@ -19,18 +19,18 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261103-02",
-  "change": "移除展示画面中的演示说明、逐人底牌示例标签、页脚及皮肤名；清理赛前底部操作说明；保留赛事内容、座号、玩家信息和必要缺源状态。",
+  "base_version": "FE-20261103-03",
+  "change": "赛前空座圆圈显示数字，已入座只显示头像昵称；直播左1至5、右6至9；移除方框、座号描述及舞台冗余标题；完整16:9直播底图与等高玩家列。",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "d67d78795280a739e2606f7b31df2267e674b6e3c1ac8e68c6070c6447abfd31",
-      "bytes": 933
+      "sha256": "a31548ee8002acec18d8f5451009065025da1c46e4ffc06187c90b7bf73bf9c3",
+      "bytes": 929
     },
     {
       "path": "screen.js",
-      "sha256": "d7152bc7f6818ee41dbe60e889a5d9bf088acee6d8ed33f4bc7080331e0e5ddb",
-      "bytes": 13396
+      "sha256": "a60ea018da60ca533d4c55018cb09435b042f78b01a0cb658553bdba1d53e51c",
+      "bytes": 12925
     },
     {
       "path": "screen.css",
@@ -64,18 +64,18 @@
     },
     {
       "path": "live-table.js",
-      "sha256": "f0b80c707b558cf2d1ec988b888ffbd37e6078e979d3a38c55501ab3e095ae96",
-      "bytes": 2974
+      "sha256": "dbc958939eba49e05fd0e9cc86b96e6d9f3e71443b3f58a9479cbf9e0cf9864e",
+      "bytes": 2712
     },
     {
       "path": "live-table.css",
-      "sha256": "f7f26b716d48b7bd9804796d0c04b41bf904798bee25f794edaaa50d6ee27a12",
-      "bytes": 5594
+      "sha256": "e0bb125bcc0525ec86a282dd48103df9c4eb164a3be5199712753ba412e0a5fd",
+      "bytes": 3084
     },
     {
       "path": "animation.html",
-      "sha256": "198fdfc0d2b4133736c01400a4e3a0200601862c7cdd6805c5ec979932f1f9d6",
-      "bytes": 2223685
+      "sha256": "d79b6c443f8cea92fe75cd875877ade4550030fc31f333e37aa2c9465d8cf22f",
+      "bytes": 2223682
     },
     {
       "path": "assets/rules-qr-placeholder.png",
@@ -84,42 +84,52 @@
     },
     {
       "path": "seating-stage.css",
-      "sha256": "16d5ffec7fbbeb1f9ef7d7006bebea41ca56ed7eb4d85b241ce0f5de51f8ba09",
-      "bytes": 5959
+      "sha256": "91837513f7709ca2818d33d44edb66c2cfdca994bacd37f9192886ca1c24fd49",
+      "bytes": 4369
+    },
+    {
+      "path": "display-preview.js",
+      "sha256": "a778408f89383edfc5b9ae253144adfd38796ffd50298817d3c912090a793b3d",
+      "bytes": 1848
     }
   ],
   "display_revision_assets": [
     {
       "path": "screen.html",
-      "sha256": "d67d78795280a739e2606f7b31df2267e674b6e3c1ac8e68c6070c6447abfd31",
-      "bytes": 933
+      "sha256": "a31548ee8002acec18d8f5451009065025da1c46e4ffc06187c90b7bf73bf9c3",
+      "bytes": 929
     },
     {
       "path": "screen.js",
-      "sha256": "d7152bc7f6818ee41dbe60e889a5d9bf088acee6d8ed33f4bc7080331e0e5ddb",
-      "bytes": 13396
-    },
-    {
-      "path": "live-table.js",
-      "sha256": "f0b80c707b558cf2d1ec988b888ffbd37e6078e979d3a38c55501ab3e095ae96",
-      "bytes": 2974
-    },
-    {
-      "path": "live-table.css",
-      "sha256": "f7f26b716d48b7bd9804796d0c04b41bf904798bee25f794edaaa50d6ee27a12",
-      "bytes": 5594
+      "sha256": "a60ea018da60ca533d4c55018cb09435b042f78b01a0cb658553bdba1d53e51c",
+      "bytes": 12925
     },
     {
       "path": "seating-stage.css",
-      "sha256": "16d5ffec7fbbeb1f9ef7d7006bebea41ca56ed7eb4d85b241ce0f5de51f8ba09",
-      "bytes": 5959
+      "sha256": "91837513f7709ca2818d33d44edb66c2cfdca994bacd37f9192886ca1c24fd49",
+      "bytes": 4369
+    },
+    {
+      "path": "live-table.js",
+      "sha256": "dbc958939eba49e05fd0e9cc86b96e6d9f3e71443b3f58a9479cbf9e0cf9864e",
+      "bytes": 2712
+    },
+    {
+      "path": "live-table.css",
+      "sha256": "e0bb125bcc0525ec86a282dd48103df9c4eb164a3be5199712753ba412e0a5fd",
+      "bytes": 3084
+    },
+    {
+      "path": "display-preview.js",
+      "sha256": "a778408f89383edfc5b9ae253144adfd38796ffd50298817d3c912090a793b3d",
+      "bytes": 1848
     },
     {
       "path": "animation.html",
-      "sha256": "198fdfc0d2b4133736c01400a4e3a0200601862c7cdd6805c5ec979932f1f9d6",
-      "bytes": 2223685
+      "sha256": "d79b6c443f8cea92fe75cd875877ade4550030fc31f333e37aa2c9465d8cf22f",
+      "bytes": 2223682
     }
   ],
-  "base_public_version": "FE-20261103-02",
+  "base_public_version": "FE-20261103-03",
   "publication": "github-pages-static"
 }

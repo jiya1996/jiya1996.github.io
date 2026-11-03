@@ -7,7 +7,8 @@
   const colors=['#8e5665','#3e737c','#8270a1','#506a93','#a1714b','#557b67','#8b6d50','#7b6384','#5c7592'];
   const avatar=(name,color)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" rx="60" fill="${color}"/><circle cx="60" cy="43" r="22" fill="#f5e6d2"/><path d="M13 120c0-38 20-53 47-53s47 15 47 53" fill="#f5e6d2"/></svg>`);
   const players=names.map((name,i)=>({id:'preview-'+i,name,avatar:avatar(name,colors[i]),memberId:'J'+String(1001+i)}));
-  const seats=Object.fromEntries(players.map((p,i)=>[i+1,p.id]));
+  // 赛前样例同时展示空座与已入座，方便直接核对两种圆圈状态。
+  const seats=mode==='seating'?Object.fromEntries([1,5,9].map(n=>[n,players[n-1].id])):Object.fromEntries(players.map((p,i)=>[i+1,p.id]));
   const table=Number(new URLSearchParams(location.search).get('table'))||1;
   const game={id:'display-preview',table,status:'active',entries:players.map((p,i)=>({pid:p.id,seat:i+1,status:'active'})),stages:[{kind:'level',level:1,sb:25,bb:50,duration:1200}],clock:{index:0,mode:'countdown',paused:false,remaining:1200,deadline:Date.now()+1200000}};
   window.RZHDisplayPreview={mode,hands:mode==='cards'?{1:[['A','♠'],['K','♠']],3:[['10','♥'],['10','♣']],6:[['7','♦'],['2','♣']],9:[['Q','♥'],['J','♥']]}:null,
