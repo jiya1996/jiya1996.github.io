@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261103-04",
+  "version": "FE-20261103-05",
   "boundary": "静态前端同源多标签演示；非正式后台、真实摄像头直播或跨设备同步",
   "sources": [
     {
@@ -19,18 +19,18 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261103-03",
-  "change": "赛前空座圆圈显示数字，已入座只显示头像昵称；直播左1至5、右6至9；移除方框、座号描述及舞台冗余标题；完整16:9直播底图与等高玩家列。",
+  "base_version": "FE-20261103-04",
+  "change": "删除荷官左右弧线；4、5、6下排等高，4与1、6与9上下对齐，围绕桌面中心镜像并留出相同头像间距；保持九座身份与圆形展示。",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "a31548ee8002acec18d8f5451009065025da1c46e4ffc06187c90b7bf73bf9c3",
-      "bytes": 929
+      "sha256": "c1617ec449e33786dc2e221fc2dc990b6943ee84b2f850f96fb9a9be709a6d13",
+      "bytes": 925
     },
     {
       "path": "screen.js",
-      "sha256": "a60ea018da60ca533d4c55018cb09435b042f78b01a0cb658553bdba1d53e51c",
-      "bytes": 12925
+      "sha256": "c7b03545944723575a30d1fd5dd2128fedd7aa6512b01359fd20db88eae6b8ca",
+      "bytes": 12502
     },
     {
       "path": "screen.css",
@@ -84,8 +84,8 @@
     },
     {
       "path": "seating-stage.css",
-      "sha256": "91837513f7709ca2818d33d44edb66c2cfdca994bacd37f9192886ca1c24fd49",
-      "bytes": 4369
+      "sha256": "74b7a78ecdef96066d7a2dac13a205887080d7dc4128116fc8dc97040f387a8a",
+      "bytes": 4140
     },
     {
       "path": "display-preview.js",
@@ -96,40 +96,20 @@
   "display_revision_assets": [
     {
       "path": "screen.html",
-      "sha256": "a31548ee8002acec18d8f5451009065025da1c46e4ffc06187c90b7bf73bf9c3",
-      "bytes": 929
+      "sha256": "c1617ec449e33786dc2e221fc2dc990b6943ee84b2f850f96fb9a9be709a6d13",
+      "bytes": 925
     },
     {
       "path": "screen.js",
-      "sha256": "a60ea018da60ca533d4c55018cb09435b042f78b01a0cb658553bdba1d53e51c",
-      "bytes": 12925
+      "sha256": "c7b03545944723575a30d1fd5dd2128fedd7aa6512b01359fd20db88eae6b8ca",
+      "bytes": 12502
     },
     {
       "path": "seating-stage.css",
-      "sha256": "91837513f7709ca2818d33d44edb66c2cfdca994bacd37f9192886ca1c24fd49",
-      "bytes": 4369
-    },
-    {
-      "path": "live-table.js",
-      "sha256": "dbc958939eba49e05fd0e9cc86b96e6d9f3e71443b3f58a9479cbf9e0cf9864e",
-      "bytes": 2712
-    },
-    {
-      "path": "live-table.css",
-      "sha256": "e0bb125bcc0525ec86a282dd48103df9c4eb164a3be5199712753ba412e0a5fd",
-      "bytes": 3084
-    },
-    {
-      "path": "display-preview.js",
-      "sha256": "a778408f89383edfc5b9ae253144adfd38796ffd50298817d3c912090a793b3d",
-      "bytes": 1848
-    },
-    {
-      "path": "animation.html",
-      "sha256": "d79b6c443f8cea92fe75cd875877ade4550030fc31f333e37aa2c9465d8cf22f",
-      "bytes": 2223682
+      "sha256": "74b7a78ecdef96066d7a2dac13a205887080d7dc4128116fc8dc97040f387a8a",
+      "bytes": 4140
     }
   ],
-  "base_public_version": "FE-20261103-03",
+  "base_public_version": "FE-20261103-04",
   "publication": "github-pages-static"
 }

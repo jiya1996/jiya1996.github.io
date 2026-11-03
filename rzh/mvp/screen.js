@@ -2,8 +2,9 @@
 const B=RZHBridge,Q=new URLSearchParams(location.search),table=Number(Q.get('table'))||1,role=Q.get('role')==='timer'?'timer':'live';
 const $=s=>document.querySelector(s),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // 与已确认的荷官座位图共用布局：本人左手1号位在画面右上，右手9号位在左上。
-const POS={1:[74,9],2:[89,33],3:[89,63],4:[76,88],5:[50,96],6:[24,88],7:[11,63],8:[11,33],9:[26,9]};
-const WIDE_POS={1:[76,21],2:[91,40],3:[91,66],4:[75,84],5:[50,90],6:[25,84],7:[9,66],8:[9,40],9:[24,21]};
+const POS={1:[74,14.5],2:[89,38],3:[89,62],4:[74,85.5],5:[50,85.5],6:[26,85.5],7:[11,62],8:[11,38],9:[26,14.5]};
+// 1600×900画布：上排y=170、下排y=810，围绕桌面中心y=490镜像；4对齐1、6对齐9。
+const WIDE_POS={1:[76,170/9],2:[91,40],3:[91,620/9],4:[76,90],5:[50,90],6:[24,90],7:[9,620/9],8:[9,40],9:[24,170/9]};
 let themes={},ready=false,enabled=false,owner=false,boot=true,current=null,run=0,busy=false,lastPresentation='',lastResult='',lastSignature='',lastSkin='';
 const receiver=()=>$('#frame').contentWindow?.Receiver;
 const preview=window.RZHDisplayPreview;
@@ -18,7 +19,7 @@ function readable(fg,bg){if(contrast(fg,bg)>=4.5)return fg;const target=luminanc
 function skin(){const key=B.theme(),t=themes[key];if(!t)return;if(lastSkin!==key){lastSkin=key;let canvas=t.bg;for(let i=1;i<=20&&contrast(t.text,canvas)<7;i++)canvas=mixColor(t.bg,t.card,i/20);const values={bg:canvas,card:t.card,ink:t.text,metal:t.materials.metal,'metal-text':readable(t.materials.metal,canvas),muted:readable(readable(t.materials.muted,canvas),t.card),border:key==='flame'?'#48242b':mixColor(t.text,canvas,.82),well:key==='flame'?'#0a0809':t.materials.well,raised:key==='flame'?'#1c1517':t.materials.raised,accent:t.accent};for(const[k,v]of Object.entries(values))document.documentElement.style.setProperty('--'+k,v);document.documentElement.dataset.theme=key;document.documentElement.style.colorScheme=luminance(t.text)>.5?'dark':'light'}if(ready)receiver()?.skin?.(key)}
 function seatMap(d,seats){
  const fallback='<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"/><path d="M4 32c0-9 5-14 12-14s12 5 12 14"/></svg>';
- return `<div class="seat-view"><div class="table-map"><div class="seat-ring"><div class="felt"></div><div class="felt-label"><strong>joker</strong><span>等待正式开局</span></div>${Object.entries(POS).map(([n,[x,y]])=>{const p=d?.players.find(p=>p.id===seats[n]);return `<div class="seat ${p?'filled':'empty'}" data-seat="${n}" style="left:${x}%;top:${y}%" role="group" aria-label="${n}号位 ${p?esc(p.name):'待入座'}"><span class="circle">${p?`${fallback}${p.avatar?`<img src="${esc(p.avatar)}" alt="${esc(p.name)}的头像">`:''}`:n}</span>${p?`<b class="seatname">${esc(p.name)}</b>`:''}</div>`}).join('')}</div><div class="dealer-guide" role="img" aria-label="荷官位于牌桌上方长边中间，面向桌内"><svg class="dealer-arrows" viewBox="0 0 360 88" preserveAspectRatio="none" aria-hidden="true"><path fill="none" stroke="var(--metal-text)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="dealer-portrait"><img class="dealer-figure" src="assets/dealer-figure.png" width="450" height="338" alt="兔子荷官" draggable="false"></div></div></div></div>`;
+ return `<div class="seat-view"><div class="table-map"><div class="seat-ring"><div class="felt"></div><div class="felt-label"><strong>joker</strong><span>等待正式开局</span></div>${Object.entries(POS).map(([n,[x,y]])=>{const p=d?.players.find(p=>p.id===seats[n]);return `<div class="seat ${p?'filled':'empty'}" data-seat="${n}" style="left:${x}%;top:${y}%" role="group" aria-label="${n}号位 ${p?esc(p.name):'待入座'}"><span class="circle">${p?`${fallback}${p.avatar?`<img src="${esc(p.avatar)}" alt="${esc(p.name)}的头像">`:''}`:n}</span>${p?`<b class="seatname">${esc(p.name)}</b>`:''}</div>`}).join('')}</div><div class="dealer-guide" role="img" aria-label="荷官位于牌桌上方长边中间，面向桌内"><div class="dealer-portrait"><img class="dealer-figure" src="assets/dealer-figure.png" width="450" height="338" alt="兔子荷官" draggable="false"></div></div></div></div>`;
 }
 function livePlayers(d,g){
  return (g?.entries||[]).filter(e=>e.status==='active').map(e=>{const p=d.players.find(p=>p.id===e.pid);return p?{seat:Number(e.seat),name:p.name,avatar:p.avatar||'',memberId:p.memberId||''}:null}).filter(Boolean);
@@ -34,8 +35,6 @@ function fitSeats(){
  view.style.width=width*scale+'px';view.style.height=height*scale+'px';view.style.setProperty('--seat-scale',String(scale));
  const positions=wide?WIDE_POS:POS;
  view.querySelectorAll('.seat').forEach((seat,i)=>{const[x,y]=positions[i+1];seat.style.left=x+'%';seat.style.top=y+'%'});
- const arrows=view.querySelector('.dealer-arrows');arrows.setAttribute('viewBox',wide?'0 0 1600 330':'0 0 360 88');
- arrows.querySelector('path').setAttribute('d',wide?'M690 258Q620 292 565 260m0 0 7 18m-7-18 20 4M910 258Q980 292 1035 260m0 0-7 18m7-18-20 4':'M128 66Q110 74 96 62m0 0 3 6m-3-6 7 1M232 66Q250 74 264 62m0 0-3 6m3-6-7 1');
 }
 function render(){
  const d=read(),pres=d?.presentations[table],g=projected(d?.games.find(g=>g.id===pres?.game));skin();$('#title').textContent=`· ${table}号桌 · ${role==='timer'?'倒计时':'直播与播报'}`;
@@ -97,7 +96,7 @@ addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('#fra
 addEventListener('storage',e=>{if([B.dealerKey,B.playerKey].includes(e.key))check()});addEventListener('rzh-theme',()=>{lastSkin='';check()});
 addEventListener('resize',fitSeats);
 $('#layer').addEventListener('error',e=>{if(e.target.matches('.circle img'))e.target.hidden=true},true);
-fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=clock-layout-20261102':'animation.html?v=seat-circles-20261103';render()});
+fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=clock-layout-20261102':'animation.html?v=seating-gap-20261103';render()});
 if(preview){const exit=document.createElement('a');exit.href='screen.html?table='+table+(role==='timer'?'&role=timer':'');exit.textContent='退出示例';$('header div').prepend(exit)}
 if(role==='live'&&!preview){
  if(navigator.locks)navigator.locks.request(B.prefix+':live:'+table,async()=>{owner=true;$('#status').textContent='本桌播放页已就绪';await new Promise(()=>{})});
