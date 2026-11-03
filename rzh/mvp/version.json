@@ -1,5 +1,5 @@
 {
-  "version": "FE-20261103-02",
+  "version": "FE-20261103-03",
   "boundary": "静态前端同源多标签演示；非正式后台、真实摄像头直播或跨设备同步",
   "sources": [
     {
@@ -19,18 +19,18 @@
       "bytes": 72271
     }
   ],
-  "base_version": "FE-20261103-01",
-  "change": "直播布局左侧5人、右侧4人；右下角赛事规则二维码示意。赛前玩家选座二维码留到后期，实际跳转链接未配置。",
+  "base_version": "FE-20261103-02",
+  "change": "移除展示画面中的演示说明、逐人底牌示例标签、页脚及皮肤名；清理赛前底部操作说明；保留赛事内容、座号、玩家信息和必要缺源状态。",
   "display_assets": [
     {
       "path": "screen.html",
-      "sha256": "9895028f8285bd74399ba6a2f39c07d2800d85970efef2bd99aacf6f826faf3e",
-      "bytes": 1057
+      "sha256": "d67d78795280a739e2606f7b31df2267e674b6e3c1ac8e68c6070c6447abfd31",
+      "bytes": 933
     },
     {
       "path": "screen.js",
-      "sha256": "195e3d809d7d49b9ecb39b733f3eea7a5bfebc4e2836eb02028d3044caee45bf",
-      "bytes": 13913
+      "sha256": "d7152bc7f6818ee41dbe60e889a5d9bf088acee6d8ed33f4bc7080331e0e5ddb",
+      "bytes": 13396
     },
     {
       "path": "screen.css",
@@ -64,57 +64,62 @@
     },
     {
       "path": "live-table.js",
-      "sha256": "394c3af907ae3a49b2de0948b53df44aedce9c80a2831b39760507e2d0d4735b",
-      "bytes": 3444
+      "sha256": "f0b80c707b558cf2d1ec988b888ffbd37e6078e979d3a38c55501ab3e095ae96",
+      "bytes": 2974
     },
     {
       "path": "live-table.css",
-      "sha256": "4dbee1cf7209faae18fb2a04ecc65dfdbbfa46238a860586cc160109949d7897",
-      "bytes": 5821
+      "sha256": "f7f26b716d48b7bd9804796d0c04b41bf904798bee25f794edaaa50d6ee27a12",
+      "bytes": 5594
     },
     {
       "path": "animation.html",
-      "sha256": "63b8454069bc8a4f0eb0b27c129baaff99a93015585d87eab55a73a91bdf753b",
-      "bytes": 2223688
+      "sha256": "198fdfc0d2b4133736c01400a4e3a0200601862c7cdd6805c5ec979932f1f9d6",
+      "bytes": 2223685
     },
     {
       "path": "assets/rules-qr-placeholder.png",
       "sha256": "662007235d7369a72b4c87fab6ca0af742de305611511a15c56d449fba042c1e",
       "bytes": 4717
+    },
+    {
+      "path": "seating-stage.css",
+      "sha256": "16d5ffec7fbbeb1f9ef7d7006bebea41ca56ed7eb4d85b241ce0f5de51f8ba09",
+      "bytes": 5959
     }
   ],
   "display_revision_assets": [
     {
-      "path": "live-table.js",
-      "sha256": "394c3af907ae3a49b2de0948b53df44aedce9c80a2831b39760507e2d0d4735b",
-      "bytes": 3444
-    },
-    {
-      "path": "live-table.css",
-      "sha256": "4dbee1cf7209faae18fb2a04ecc65dfdbbfa46238a860586cc160109949d7897",
-      "bytes": 5821
-    },
-    {
-      "path": "animation.html",
-      "sha256": "63b8454069bc8a4f0eb0b27c129baaff99a93015585d87eab55a73a91bdf753b",
-      "bytes": 2223688
+      "path": "screen.html",
+      "sha256": "d67d78795280a739e2606f7b31df2267e674b6e3c1ac8e68c6070c6447abfd31",
+      "bytes": 933
     },
     {
       "path": "screen.js",
-      "sha256": "195e3d809d7d49b9ecb39b733f3eea7a5bfebc4e2836eb02028d3044caee45bf",
-      "bytes": 13913
+      "sha256": "d7152bc7f6818ee41dbe60e889a5d9bf088acee6d8ed33f4bc7080331e0e5ddb",
+      "bytes": 13396
     },
     {
-      "path": "screen.html",
-      "sha256": "9895028f8285bd74399ba6a2f39c07d2800d85970efef2bd99aacf6f826faf3e",
-      "bytes": 1057
+      "path": "live-table.js",
+      "sha256": "f0b80c707b558cf2d1ec988b888ffbd37e6078e979d3a38c55501ab3e095ae96",
+      "bytes": 2974
     },
     {
-      "path": "assets/rules-qr-placeholder.png",
-      "sha256": "662007235d7369a72b4c87fab6ca0af742de305611511a15c56d449fba042c1e",
-      "bytes": 4717
+      "path": "live-table.css",
+      "sha256": "f7f26b716d48b7bd9804796d0c04b41bf904798bee25f794edaaa50d6ee27a12",
+      "bytes": 5594
+    },
+    {
+      "path": "seating-stage.css",
+      "sha256": "16d5ffec7fbbeb1f9ef7d7006bebea41ca56ed7eb4d85b241ce0f5de51f8ba09",
+      "bytes": 5959
+    },
+    {
+      "path": "animation.html",
+      "sha256": "198fdfc0d2b4133736c01400a4e3a0200601862c7cdd6805c5ec979932f1f9d6",
+      "bytes": 2223685
     }
   ],
-  "base_public_version": "FE-20261103-01",
+  "base_public_version": "FE-20261103-02",
   "publication": "github-pages-static"
 }
