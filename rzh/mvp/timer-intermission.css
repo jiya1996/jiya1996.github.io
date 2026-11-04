@@ -9,3 +9,20 @@
 .sand-stream{animation:intermission-sand .85s linear infinite}.timer-intermission[data-paused=true] .sand-stream{animation-play-state:paused;opacity:.35}
 @keyframes intermission-sand{to{stroke-dashoffset:-20}}
 @media(prefers-reduced-motion:reduce){.sand-stream{animation:none}}
+
+.intermission-word{font:700 1.5cqw/1 Georgia,"Times New Roman",serif;letter-spacing:.12cqw;color:var(--m-hi)}
+
+/* C15 比赛暂停蒙版：半透明盖住倒计时与盲注信息，底层隐约可见；配色沿用皮肤变量 */
+.timer-intermission[data-kind=pause]{background:color-mix(in srgb,var(--tv-bg) 80%,transparent);-webkit-backdrop-filter:blur(.5cqw) saturate(.7);backdrop-filter:blur(.5cqw) saturate(.7)}
+.timer-intermission[data-kind=pause] .intermission-note:empty{display:none}
+.timer-intermission[data-kind=pause] .intermission-title{font-size:5.2cqw}
+.timer-intermission[data-kind=pause] .sand-stream{animation-play-state:running;opacity:1}
+.timer-intermission[data-kind=pause] .intermission-state{color:var(--pause,#E0A53A)}
+.timer-intermission[data-kind=pause] .intermission-state:empty,.intermission-time[hidden]{display:none}
+.timer-intermission[data-kind=pause] .intermission-note{color:var(--m-hi);font-size:1.6cqw}
+.timer-intermission[data-over=true] .sand-stream{animation-play-state:paused;opacity:.35}
+
+/* 蒙版内沿用同一枚品牌金币；遮住底层重复的暂停提示。 */
+.intermission-brand{display:flex;align-items:center;gap:.7cqw}
+.intermission-coin{width:2.8cqw;height:2.8cqw;border-radius:50%}
+#clockScreen:has(.timer-intermission[data-kind=pause]:not([hidden])) #statusBadge,#clockScreen:has(.timer-intermission[data-kind=pause]:not([hidden])) #clockNote{visibility:hidden}

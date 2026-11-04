@@ -205,8 +205,14 @@ body.screen-only{background:#000}
  .phone-panel{order:1}.preview{order:2}.tools{order:3}.scope{order:4}
  .preview-head .actions{gap:6px}.preview-head .actions a,.preview-head .actions button{padding:8px 10px}.screen-wrap{border-radius:8px}.explanation{margin-bottom:12px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.brand-name{font:800 2.25cqw/1.1 var(--cn);letter-spacing:.12cqw;white-space:nowrap}
+.brand-name b{font:700 2.35cqw/1 "PF Serif",serif;letter-spacing:.2cqw;background:linear-gradient(180deg,var(--m-hi),var(--m-mid) 60%,var(--m-lo));-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:.5cqw}
+.brand-coin{width:5.4cqw;height:5.4cqw;flex:none;border-radius:50%;overflow:hidden;box-shadow:0 0 0 .18cqw var(--m-mid),0 0 0 .36cqw var(--m-lo),0 .3cqw .6cqw #000c}
+.brand-coin img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.14)}
+.brand-name b{font:700 2.6cqw/1 Georgia,"Times New Roman",serif!important;letter-spacing:.18cqw!important;margin-right:.7cqw!important}
+.brand-name{font-size:1.7cqw!important;letter-spacing:.3cqw!important}
 </style>
-<link rel="icon" href="favicon.ico"><link rel="stylesheet" href="timer-intermission.css?v=20261102-rest-2"></head>
+<link rel="icon" href="favicon.ico"><link rel="stylesheet" href="timer-intermission.css?v=tv-merge-20261104"></head>
 <body>
 <header class="page-head"><div><h1>赛事倒计时屏 · 重设计预览（pokerface）</h1><p>上方／左侧是手机·Pad 精简控钟；右侧是门店 16:9 独立计时屏。示例场次，不操作真实比赛。</p></div><a class="back" href="screen.html">返回直播屏动画预览 ↗</a></header>
 <main class="layout">
@@ -214,7 +220,7 @@ body.screen-only{background:#000}
   <section class="phone-panel" aria-label="手机或Pad控钟"><div class="eyebrow">手机 / PAD · 荷官控钟</div>
    <div class="phone-id"><h2>1号桌</h2><span class="phone-level" id="phoneLevel" style="display:none" aria-hidden="true">LV5</span></div><p class="match">JOKER示例门店 · 本场演示</p>
    <div class="phone-state"><i class="dot" id="phoneDot"></i><span id="phoneState">比赛进行中</span></div>
-   <div class="phone-actions"><button class="primary" id="pauseButton">暂停</button><button id="prevButton">‹ 上一级</button><button id="nextButton">下一级 ›</button></div>
+   <div class="phone-actions"><select id="pauseDur" aria-label="休息时长"><option value="0" selected>暂停（不设时长）</option><option value="300">休息 5 分钟</option><option value="600">休息 10 分钟</option><option value="900">休息 15 分钟</option></select><button class="primary" id="pauseButton">暂停</button><button id="prevButton">‹ 上一级</button><button id="nextButton">下一级 ›</button></div>
    <p class="feedback" id="feedback" role="status">控钟结果会显示在计时屏上。</p></section>
   <section class="tools" aria-label="演示调试"><h2>演示调试区</h2><p class="hint">仅用于看效果，不属于荷官正式操作。</p>
    <label for="skinSelect">电视舞台皮肤（沿用八套皮肤规范）</label><select id="skinSelect"><option value="flame">01 赤焰迷醉空间（主稿）</option><option value="neon">02 绿动天地</option><option value="grass">03 青春聚力</option><option value="warm">04 温暖治愈风</option><option value="cute">05 可爱萌系风（夜店铬版）</option><option value="pop">06 霓虹撞色局</option><option value="energy">07 热情元气风</option><option value="star">08 星澜简介风</option></select>
@@ -230,9 +236,9 @@ body.screen-only{background:#000}
     <svg class="corner tl" viewBox="0 0 100 100" aria-hidden="true"><use href="#cornerArt"/></svg><svg class="corner tr" viewBox="0 0 100 100" aria-hidden="true"><use href="#cornerArt"/></svg><svg class="corner bl" viewBox="0 0 100 100" aria-hidden="true"><use href="#cornerArt"/></svg><svg class="corner br" viewBox="0 0 100 100" aria-hidden="true"><use href="#cornerArt"/></svg>
     <div class="stage">
      <div class="screen-head">
-      <div class="brand"><svg class="brand-icon" viewBox="0 0 100 100" aria-hidden="true"><use href="#emblemArt"/></svg><div><div class="brand-name"><b>JOKER</b>赛事</div><div class="brand-desc" id="brandDesc">本地预览 · 示例盲注结构</div></div></div>
+      <div class="brand"><span class="brand-coin" aria-hidden="true"><img src="assets/brand-coin.webp" alt=""></span><div><div class="brand-name"><b>joker</b>赛事计时</div><div class="brand-desc" id="brandDesc">本地预览 · 示例盲注结构</div></div></div>
       <div class="crest" aria-hidden="true"><span class="ttl">TOURNAMENT CLOCK</span><svg viewBox="0 0 220 14"><use href="#dividerArt"/></svg></div>
-      <div class="head-right"><div class="wall"><small>LOCAL TIME</small><span id="wallClock"></span></div><div class="table-tag">1号桌</div></div>
+      <div class="head-right"><div class="wall"><small>LOCAL TIME</small><span id="wallClock"></span></div></div>
      </div>
      <div class="clock-row">
       <div class="plate level-plate"><i class="guil"></i><span class="idx tl"><b>LV</b><svg viewBox="0 0 20 20"><use href="#pipSpade"/></svg></span><span class="idx br"><b>LV</b><svg viewBox="0 0 20 20"><use href="#pipSpade"/></svg></span><i class="gem t"></i><i class="gem b"></i><div class="plate-cap"><span id="levelTitle">当前级别</span><em>LEVEL</em></div><div id="levelLabel" class="gold"></div><div class="rule"></div><div class="side-note"><span id="restCap">下次休息</span><b id="restInfo">LV6 后 · 10 分钟</b></div></div>
@@ -240,7 +246,7 @@ body.screen-only{background:#000}
       <div class="plate next-plate"><i class="guil"></i><span class="idx tl"><b>NEXT</b><svg viewBox="0 0 20 20"><use href="#pipSpade"/></svg></span><span class="idx br"><b>NEXT</b><svg viewBox="0 0 20 20"><use href="#pipSpade"/></svg></span><i class="gem t"></i><i class="gem b"></i><div id="nextTitle">下一级</div><div id="nextMain">LV6 · 300 / 600</div><div class="rule"></div><div id="nextDuration">完整时长 20 分钟</div></div>
      </div>
      <div class="screen-bottom"><i class="guil"></i><span class="idx tl"><b>SB</b><svg viewBox="0 0 20 20"><use href="#pipSpade"/></svg></span><span class="idx br"><b>BB</b><svg viewBox="0 0 20 20"><use href="#pipSpade"/></svg></span><div class="blind-cap" id="blindCap">当前盲注 BLINDS</div><div class="stat"><div class="stat-label">小盲<em>SB</em></div><div class="stat-value gold" id="smallBlind">200</div></div><div class="slash" aria-hidden="true">/</div><div class="stat"><div class="stat-label">大盲<em>BB</em></div><div class="stat-value gold" id="bigBlind">400</div></div></div>
-     <footer class="screen-footer"><span id="phaseFootnote">按本场已配置结构自动推进</span><span class="motto">PLAY FAIR · PLAY PROUD</span><span>本桌计时 · 1号桌</span></footer>
+     <footer class="screen-footer"><span id="phaseFootnote">按本场已配置结构自动推进</span><span class="motto">PLAY FAIR · PLAY PROUD</span><span>joker · 本桌计时</span></footer>
     </div>
   </section></div>
   <p class="explanation">试一下：暂停后数字冻结并转为冷银；继续从剩余时间恢复。手动切级使用目标级的完整时长，并保持原来的运行／暂停状态。计时屏只读，直播屏的播报不会暂停这里的计时。</p>
@@ -352,7 +358,7 @@ function control(action){
  let s=project(readState()),phase=STAGES[s.index];const now=Date.now();
  if(action==='pause'){
   if(s.done)return;
-  s.running=!s.running;s.deadline=s.running?now+s.remaining:null;
+  s.running=!s.running;s.deadline=s.running?now+s.remaining:null;s.pausedAt=s.running?null:now;s.pauseDurationSec=s.running?null:(Number(document.getElementById('pauseDur')?.value)||null);
   feedback(s.running?'已继续，从剩余时间恢复。':(phase.rest?'休息已暂停。':'比赛已暂停。'));
  }else if(action==='prev'||action==='next'){
   if(phase.rest||s.done)return;
@@ -380,5 +386,5 @@ if(!screenOnly){
 }
 window.addEventListener('storage',e=>{if(e.key===KEY)render();});document.addEventListener('visibilitychange',render);setInterval(render,200);render();
 </script>
-<script src="timer-receiver.js?v=clock-layout-20261102"></script><script src="timer-intermission.js?v=clock-layout-20261102"></script></body>
+<script src="timer-receiver.js?v=tv-merge-20261104"></script><script src="timer-intermission.js?v=tv-merge-20261104"></script></body>
 </html>

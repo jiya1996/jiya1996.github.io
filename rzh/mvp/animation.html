@@ -120,6 +120,20 @@ textarea{width:100%;height:52px;resize:vertical}
 .fist{filter:drop-shadow(0 0 18px var(--glow)) drop-shadow(0 0 40px var(--glowA))}
 .dim{position:absolute;inset:-60px;background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,.55),#000 80%);opacity:0;pointer-events:none}
 .ko{position:absolute;padding:4px 22px;border:7px solid var(--glow);color:var(--glow);font-weight:900;border-radius:12px;text-shadow:0 0 16px var(--glowA);box-shadow:0 0 26px var(--glowA),inset 0 0 20px var(--glowA);background:rgba(0,0,0,.45);white-space:nowrap}
+#live{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,#2a2e33 0%,#15171a 55%,#08090a 100%)}
+#live{background:radial-gradient(ellipse 60% 55% at 50% 46%,color-mix(in srgb,var(--acc2) 34%,var(--deep)) 0%,var(--deep) 58%,#000 100%)!important}
+#live .idle-rays{position:absolute;inset:-20%;background:repeating-conic-gradient(from 0deg at 50% 46%,color-mix(in srgb,var(--glow) 10%,transparent) 0 4deg,transparent 4deg 15deg);-webkit-mask-image:radial-gradient(circle at 50% 46%,#000 0,transparent 55%);mask-image:radial-gradient(circle at 50% 46%,#000 0,transparent 55%);animation:idleSpin 90s linear infinite;opacity:.7}
+@keyframes idleSpin{to{transform:rotate(360deg)}}
+#live .idle-brand{position:absolute;left:0;right:0;top:250px;display:flex;flex-direction:column;align-items:center}
+#live .idle-coin{width:260px;height:260px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 6px var(--mid),0 0 0 12px var(--dk),0 0 0 15px color-mix(in srgb,var(--hi) 55%,transparent),0 0 90px var(--glowA),0 30px 60px rgba(0,0,0,.7)}
+#live .idle-coin img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.14)}
+#live .idle-word{margin-top:46px;font:700 150px/1 Georgia,"Times New Roman",serif;letter-spacing:14px;padding-left:14px;background:linear-gradient(180deg,#fff 0%,var(--hi) 25%,var(--mid) 60%,var(--dk) 85%,var(--hi) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 0 var(--dk)) drop-shadow(0 10px 18px rgba(0,0,0,.6)) drop-shadow(0 0 30px var(--glowA))}
+#live .idle-sub{margin-top:18px;font:700 30px/1 Georgia,serif;letter-spacing:18px;padding-left:18px;color:var(--hi);opacity:.85}
+#live .idle-line{margin-top:40px;padding:12px 40px;font:600 30px/1.3 "Songti SC","Noto Serif SC","Noto Serif CJK SC",serif;letter-spacing:6px;color:var(--hi);border-top:2px solid color-mix(in srgb,var(--mid) 60%,transparent);border-bottom:2px solid color-mix(in srgb,var(--mid) 60%,transparent)}
+/* 共用金币字标，不改现有直播栏的行列、牌面与二维码位置。 */
+.lt-brand{font-family:Georgia,"Times New Roman",serif!important;display:flex;align-items:center;gap:14px}.lt-brand::before{content:"";display:inline-block;width:48px;height:48px;background:url("assets/brand-coin.webp") center/contain no-repeat}
+.broadcast-player .white{max-width:620px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 </style><link rel="icon" href="favicon.ico"></head><body>
 <header>
   <h1>赛事大屏动画模板预览 · pokerface-v02 特效版</h1>
@@ -161,7 +175,7 @@ textarea{width:100%;height:52px;resize:vertical}
       <div class="hint">结赛只用正式前三，不涉及第 4 名及以后。冠军演出结束后自动转入前三名次，并停在前三页。结赛会清理本桌未开始的待播项。</div>
     </div>
     <div class="sceneopts" data-s="notice">
-      <textarea id="noticeText" maxlength="600">1号桌还有空位，欢迎入座</textarea>
+      <textarea id="noticeText" maxlength="600">还有空位，欢迎入座</textarea>
       <label class="row"><span>播放次数</span><input type="number" id="noticeTimes" min="1" max="3" value="1"></label>
       <div class="hint">普通文字 = 简洁通知 + 朗读同一正文，不套用赛事特效，与模板无关。</div>
     </div>
@@ -184,11 +198,9 @@ textarea{width:100%;height:52px;resize:vertical}
   </div>
   <div id="stageBox"><div id="stage">
     <div id="live">
-      <div class="table"></div><div class="scan"></div>
-      <div class="lbl">模拟直播背景 · 非真实摄像头</div>
-      <div class="rec"><i></i>LIVE · 1号桌 <span id="liveClock"></span></div>
-      <div class="wm">JOKER 赛事 <em>· 1号桌</em></div>
-      <div class="qr"><span>规则二维码位<br>(示意)</span></div>
+      <div class="idle-rays"></div>
+      <div class="idle-brand"><span class="idle-coin"><img src="assets/brand-coin.webp" alt=""></span><div class="idle-word">joker</div><div class="idle-sub">TOURNAMENT CLUB</div><div class="idle-line">本桌赛事进行中 · 精彩时刻即将呈现</div></div>
+      <span id="liveClock" hidden></span>
     </div>
     <div id="resultTag"></div>
     <div id="ov"></div>
@@ -237,7 +249,7 @@ let CUR={skin:'flame',tpl:'dyn'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const stage=$('#stage'), ovRoot=$('#ov');
 const pById=id=>PLAYERS.find(p=>p.id==id);
-const seatTxt=p=>`1号桌 · ${p.seat}号位`;
+const seatTxt=p=>{const seat=Number(p?.seat);return Number.isInteger(seat)&&seat>=1&&seat<=9?`${seat}号位`:""};
 
 /* ================= run tracking ================= */
 let RUN={anims:[],timers:[],waits:[]}; let ABORT=0;
@@ -405,7 +417,8 @@ function sweep(o,x,y,w,h,delay){const c=box(o,'',x,y,w,h,null,{overflow:'hidden'
 function fxSlot(o,d){if(d.fx==='slot'){const b=box(o,'',1560,640,300,330,null,{border:'3px dashed rgba(255,255,255,.55)',borderRadius:'18px',background:'rgba(0,0,0,.35)'});img(b,'hunter',50,10,200,'hex');el(b,'abs cx',{top:'225px',fontSize:'24px',lineHeight:1.35,color:'#eee'},'玩家自选出场特效<br>接入位（素材待接）');A(b,[{opacity:.6},{opacity:1}],{duration:900,iterations:Infinity,direction:'alternate',fill:'none'});}
  el(o,'slot',null,d.fx==='slot'?'出场特效：玩家已选（本版以占位框示意接入位，正式播放玩家所选特效）':'出场特效：玩家未选 → 门店默认欢迎（'+TPL[CUR.tpl]+'）');}
 function nameplate(o,p,x,y,avs,ns,sub,delay,mode){ // avatar + name row
- const g=box(o,'',x,y,null,null);const a=avatar(g,p,avs,0,0);const n=txt(g,'white heavy',avs+34,avs*.5-ns*.62,fitName(p.name,ns,900),esc(p.name));const s=sub?txt(g,'glowt',avs+38,avs*.5+ns*.48,Math.round(ns*.42),sub):null;
+ const g=box(o,'broadcast-player',x,y,null,null);g.dataset.player=String(p.id??'');const a=avatar(g,p,avs,0,0);const n=txt(g,'white heavy',avs+34,avs*.5-ns*.62,fitName(p.name,ns,900),esc(p.name));const s=sub?txt(g,'glowt',avs+38,avs*.5+ns*.48,Math.round(ns*.42),sub):null;
+ if(mode==='identity'){g.style.zIndex='30';return g;}
  if(mode==='slide')from(g,{transform:'translateX(-700px) skewX(-12deg)'},delay,420);else if(mode==='wipe'){from(a,{transform:'scale(.6)'},delay,420);wipe(n,delay+120);s&&wipe(s,delay+260);}else from(g,{transform:'translateY(60px)'},delay,700,'ease-out');return g;}
 
 /* ================= 赛场动感 dyn ================= */
@@ -552,6 +565,7 @@ function lingerEmbers(t0,t1,x=960,y=900,sp=700){at(t0,()=>every(150,()=>embers(x
 
 /* ================= 场景：击杀（A 头像登场 → 蓄力 → 重拳 → 击杀爆点 → 大字砸入）================= */
 function sceneKill(o,d){const T=tp(),R=rig(o),cam=R.cam,hasB=!!d.B,ay=hasB?420:380,ax=hasB?520:960,as=hasB?360:400,bx=1420,bs=320;
+ nameplate(cam,d.A,hasB?180:650,910,104,48,seatTxt(d.A),0,'identity');if(hasB)nameplate(cam,d.B,1130,910,104,48,seatTxt(d.B),0,'identity');
  const bigK=txt(cam,'heavy ital',0,250,460,'KILL',{left:'50%',color:'transparent',WebkitTextStroke:`5px ${cssv('--glow')}`,opacity:0,marginLeft:'-560px'});
  if(CUR.tpl==='dyn')slashes(cam,0,[[150,46],[900,38,'m']]);
  if(CUR.tpl==='glory'){spot(cam,ax,0,0,0,700,720);halo(cam,ax,ay,as*1.6,300,6000);}
@@ -614,10 +628,10 @@ function sceneHand(o,d){const h=HANDS[d.hand];if(h.special)return scene27(o,d,h)
  sfx('suck',tC-160,.2);
  // 徽章 + 牌型大字（在顿帧结束、震屏峰值时落位）
  const emW=box(cam,'',EX-165,EY-165,330,330);emblem(emW,h,0,0,330);A(emW,[{transform:'scale(0)',opacity:0},{transform:'scale(1.12)',opacity:1,offset:.6},{transform:'scale(1)',opacity:1}],{delay:tI+T.stop,duration:380,easing:'cubic-bezier(.3,1.3,.5,1)'});
- const nm=ctext(cam,430,`<span class="${T.tf} m3d" style="font-size:${h.name.length>3?190:230}px;letter-spacing:10px">${esc(h.name)}</span>`);slam(nm,tI+T.stop+70,1.8,420);sfx('hit',tI+T.stop+300);
- const en=ctext(cam,650,`<span class="glowt heavy" style="font-size:46px;letter-spacing:14px">${h.en}</span>`);wipe(en,tI+T.stop+500,520,'c');
+ const nm=ctext(cam,392,`<span class="${T.tf} m3d" style="display:inline-block;line-height:1;font-size:${h.name.length>3?178:206}px;letter-spacing:10px">${esc(h.name)}</span>`);slam(nm,tI+T.stop+70,1.8,420);sfx('hit',tI+T.stop+300);
+ const en=ctext(cam,646,`<span class="glowt heavy" style="display:inline-block;line-height:1;font-size:42px;letter-spacing:14px">${h.en}</span>`);wipe(en,tI+T.stop+500,520,'c');
  // 星级只在最终揭晓时出现；不预先露出未点亮的占位星。
- const starAt=tI+T.stop+700,st=ctext(cam,712,'',{fontSize:'44px',opacity:0});st.classList.add('rarity-stars');st.setAttribute('aria-label',`牌型稀有度：${r}颗星`);
+ const starAt=tI+T.stop+700,st=ctext(cam,718,'',{fontSize:'42px',opacity:0});st.classList.add('rarity-stars');st.setAttribute('aria-label',`牌型稀有度：${r}颗星`);
  A(st,[{opacity:0},{opacity:1}],{delay:starAt,duration:180});
  for(let i=0;i<r;i++){const s=document.createElement('span');s.className='glowt';s.textContent='★';s.style.cssText='margin:0 6px;opacity:0;display:inline-block';st.appendChild(s);
   A(s,[{opacity:0,transform:'scale(2.4)'},{opacity:1,transform:'scale(1)'}],{delay:starAt+i*110,duration:260});sfx('tick',starAt+i*110,1800+i*200);}
@@ -625,7 +639,7 @@ function sceneHand(o,d){const h=HANDS[d.hand];if(h.special)return scene27(o,d,h)
   A(ry,[{opacity:0,transform:'scale(.3) rotate(0deg)'},{opacity:1,transform:'scale(1) rotate(30deg)'}],{duration:700,easing:'ease-out'});A(ry,[{rotate:'0deg'},{rotate:'360deg'}],{duration:24000,iterations:Infinity,easing:'linear',fill:'none'});
   if(CUR.tpl==='glory')halo(cam,EX,EY,560,0,5000);if(CUR.tpl==='pro')svgLines(cam,[{d:rect(EX-200,EY-200,400,400),w:3,glow:1}],0,500);
   cards.forEach(c=>A(c.w,[{opacity:1},{opacity:0}],{delay:T.stop,duration:90,fill:'forwards'}));});
- nameplate(cam,d.A,640,810,150,74,seatTxt(d.A),tI+T.stop+650,'slide');sfx('whoosh',tI+T.stop+650);
+ nameplate(cam,d.A,640,810,150,74,seatTxt(d.A),0,'identity');sfx('whoosh',tI+T.stop+650);
  if(r>=4){at(tI+900,()=>{wave(EX,EY,1200,900,50);burst(EX,EY,NP(r===5?160:80),24,'spark',fxCols());camShake(cam,r===5?14:8,300);rain(NP(r*30));});sfx('impact',tI+900);sfx(r===5?'fanfare':'win',tI+950);}
  else if(r===3){at(tI+900,()=>rain(NP(50)));sfx('win',tI+900);}else sfx('win',tI+800);
  if(r===5){at(tI+1700,()=>{flashC(R.o,0,.45,500);cannon(0,1080,-1,NP(80));cannon(1920,1080,-2.1,NP(80));});sfx('shimmer',tI+1700);at(tI+1600,()=>{spot(cam,600,-20,8,0,900);spot(cam,1320,20,-8,0,900);});}
@@ -645,7 +659,7 @@ function scene27(o,d,h){const T=tp(),R=rig(o),cam=R.cam,cs=[0,1],pos=[[760,560,-
  const sp=ctext(cam,EY-110,`<span class="ko" style="position:static;display:inline-block;font-size:170px;transform:rotate(-10deg)">收池！</span>`);slam(sp,tI+T.stop+40,2.4,360);sfx('kick',tI+T.stop+200);
  const nm=ctext(cam,520,`<span class="${T.tf} m3d" style="font-size:170px;letter-spacing:8px">27收池</span>`);slam(nm,tI+T.stop+380,1.7,400);sfx('hit',tI+T.stop+600);at(tI+T.stop+620,()=>camShake(cam,10,240));
  const en=ctext(cam,712,'<span class="glowt heavy" style="font-size:42px;letter-spacing:8px">7-2 TAKES THE POT · 最弱起手 照样收池</span>');wipe(en,tI+T.stop+700,500,'c');
- nameplate(cam,d.A,640,830,140,70,seatTxt(d.A),tI+T.stop+850,'slide');sfx('whoosh',tI+T.stop+850);
+ nameplate(cam,d.A,640,830,140,70,seatTxt(d.A),0,'identity');sfx('whoosh',tI+T.stop+850);
  at(tI+500,()=>rain(NP(40),'chip'));sfx('coins',tI+600);sfx('coins',tI+1100);lingerEmbers(tI+300,tI+3300);
  return {dur:tI+T.stop+3500,speak:[narrationText('hand',d),tI+T.stop+520]};}
 
@@ -694,7 +708,7 @@ function sceneChamp(o,d){const T=tp(),R=rig(o,{lines:8}),cam=R.cam,P1=d.P1||d.A;
  const en=ctext(cam,515,`<span class="heavy" style="font-size:38px;letter-spacing:40px;margin-right:-40px;color:var(--hi);text-shadow:0 2px 0 #000,0 0 14px rgba(0,0,0,.9)">CHAMPION</span>`,{zIndex:6});wipe(en,500,500,'c');
  const bp=box(cam,'plate',510,798,900,196,null,{background:'linear-gradient(180deg,rgba(0,0,0,.78),rgba(0,0,0,.88)) padding-box,linear-gradient(180deg,var(--hi),var(--mid) 45%,var(--dk)) border-box',boxShadow:'0 20px 50px rgba(0,0,0,.6),0 0 24px var(--glowA)'});from(bp,{transform:'scaleX(.2)'},480,380);
  const nm=ctext(cam,815,`<span class="white heavy" style="font-size:${fitName(P1.name,96,1200)}px">${esc(P1.name)}</span>`);from(nm,{transform:'translateY(60px) scale(.9)'},520,420);
- const sb=ctext(cam,935,`<span class="glowt heavy" style="font-size:40px;letter-spacing:8px">本场冠军 · 1号桌</span>`);wipe(sb,760,500,'c');
+ const sb=ctext(cam,935,`<span class="glowt heavy" style="font-size:40px;letter-spacing:8px">本场冠军</span>`);wipe(sb,760,500,'c');
  });
  at(tT+230,()=>{camShake(cam,18,420);burst(960,640,NP(120),20,'spark',fxCols());wave(960,640,900,700,36);});sfx('smash',tT+230,.8*T.k);
  sfx('fanfare',tT+600);
@@ -758,7 +772,7 @@ async function runItem(it){const g=ABORT;it.ttsFailed=false;it.voicePreparationF
  ok=await playScene(it,it.scene,it.d);if(!ok)return;
  await exitAnim(it.tpl);if(g!==ABORT)return;clearRun();ovRoot.innerHTML='';ovRoot.style.display='none';stageState='live';applySkin(UI.skin);it.status=it.ttsFailed?'error':'done';lastItem=it;renderQ();}
 function finishResult(it,label){stageState='result';RUN.timers.forEach(t=>{clearTimeout(t);clearInterval(t)});RUN.timers=[];const rt=$('#resultTag');rt.textContent='结赛停留页 · '+label+' · 等待下一场入座（点“恢复直播 / 模拟下一场”）';rt.style.display='block';it.status=it.ttsFailed?'error':'done';it.note='停留：'+label;lastItem=it;renderQ();}
-async function runNotice(it){if(it.d.soundTest){sfx('chime',0,880);sfx('win',400);}const L=$('#noticeLayer');L.innerHTML='';const n=el(L,'notice',null,`<div class="nh">${it.d.soundTest?'Edge配音试听':'通知 · 1号桌（普通文字：无赛事特效）'}</div>${esc(it.d.text)}`);n.animate([{opacity:0,transform:'translateY(40px)'},{opacity:1,transform:'none'}],{duration:350,fill:'both'});
+async function runNotice(it){if(it.d.soundTest){sfx('chime',0,880);sfx('win',400);}const L=$('#noticeLayer');L.innerHTML='';const n=el(L,'notice',null,`<div class="nh">${it.d.soundTest?'Edge配音试听':'通知'}</div>${esc(it.d.text)}`);n.animate([{opacity:0,transform:'translateY(40px)'},{opacity:1,transform:'none'}],{duration:350,fill:'both'});
  for(let i=0;i<it.d.times;i++){const g=ABORT;const r=await Promise.all([say(it.d.text,i?400:300,it),wait(Math.min(9000,1800+it.d.text.length*120))]);if(g!==ABORT){L.innerHTML='';return;}}
  const a=n.animate([{opacity:1},{opacity:0}],{duration:300,fill:'forwards'});await a.finished.catch(()=>{});L.innerHTML='';}
 async function hardReset(){const token={generation:++ABORT};resetToken=token;const owner=pumpOwner;queue.forEach(q=>{q.status='purged';q.note='预览工具：手动清空'});queue.length=0;QLOG.forEach(q=>{if(q.status==='playing'){q.status='aborted';}});clearRun();$('#noticeLayer').innerHTML='';
@@ -793,4 +807,4 @@ function init(){initCanvas();requestAnimationFrame(tick);applySkin('flame');
 window.PF={UI,SPOKEN,VOICE_TRACE,enqueue,snapshot,hardReset,state:()=>({stageState,busy,queue:queue.length,log:QLOG.map(q=>({id:q.id,scene:q.scene,status:q.status,label:q.label,note:q.note}))}),setUI:(o)=>{Object.assign(UI,o);}};
 document.addEventListener('DOMContentLoaded',init);
 </script>
-<link rel="stylesheet" href="live-table.css?v=seat-circles-20261103"><script src="live-table.js?v=seat-circles-20261103"></script><script src="animation-receiver.js?v=broadcast-preview-20261103"></script></body></html>
+<link rel="stylesheet" href="live-table.css?v=seat-circles-20261103"><script src="live-table.js?v=seat-circles-20261103"></script><script src="animation-receiver.js?v=tv-merge-20261104"></script></body></html>

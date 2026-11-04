@@ -33,3 +33,6 @@ header b,header a,footer{color:var(--metal-text,var(--metal))}button{border-colo
 .seat-view[data-layout=wide] .dealer-arrows{top:0;height:330px}
 .seat-view[data-layout=wide] .dealer-arrows path{stroke-width:3}
 #layer[data-layout=wide]>h1{margin:0 0 12px;font-size:clamp(24px,2vw,36px)}
+
+/* 仅统一外壳品牌，已确认的座位圆圈与桌面几何保持原样。 */
+.screen-brand{display:flex;align-items:center;gap:12px}.screen-brand>img{width:44px;height:44px;object-fit:contain}.screen-brand .brand-word{font:700 28px/1 Georgia,"Times New Roman",serif;letter-spacing:2px}.screen-brand #title{font-size:14px}

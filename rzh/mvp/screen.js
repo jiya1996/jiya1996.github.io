@@ -11,7 +11,8 @@ const preview=window.RZHDisplayPreview;
 function read(){return preview?.data||B.read(B.dealerKey,null)}
 function update(mutator){if(preview)return;const d=read();if(!d)return;mutator(d);localStorage.setItem(B.dealerKey,JSON.stringify(d));}
 function projected(g){if(!g)return null;g=structuredClone(g);const c=g.clock;if(g.status==='active'&&!c.paused&&c.mode!=='sustain'){while(c.deadline<=Date.now()){if(c.index+1>=g.stages.length){c.mode='sustain';break}c.index++;c.deadline+=g.stages[c.index].duration*1000;c.remaining=g.stages[c.index].duration}}return g}
-function player(d,id){const p=d.players.find(p=>p.id===id);return{id:p.id,name:p.name,avatar:p.avatar||'',glyph:p.name.slice(-1),suit:'♠',def:!p.avatar}}
+function seatOf(g,id){const entries=g?.entries?.filter(e=>e.pid===id&&e.status!=='void')||[];const e=entries.filter(e=>e.status==='active').at(-1)||entries.at(-1);return e?.seat??null}
+function player(d,id,g){const p=d.players.find(p=>p.id===id);return{id:p.id,name:p.name,avatar:p.avatar||'',glyph:p.name.slice(-1),suit:'♠',def:!p.avatar,seat:seatOf(g,id)}}
 function mixColor(a,b,p){return '#'+[1,3,5].map(i=>Math.round(parseInt(a.slice(i,i+2),16)*(1-p)+parseInt(b.slice(i,i+2),16)*p).toString(16).padStart(2,'0')).join('')}
 function luminance(hex){return [1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0)}
 function contrast(a,b){return(Math.max(luminance(a),luminance(b))+.05)/(Math.min(luminance(a),luminance(b))+.05)}
@@ -37,22 +38,22 @@ function fitSeats(){
  view.querySelectorAll('.seat').forEach((seat,i)=>{const[x,y]=positions[i+1];seat.style.left=x+'%';seat.style.top=y+'%'});
 }
 function render(){
- const d=read(),pres=d?.presentations[table],g=projected(d?.games.find(g=>g.id===pres?.game));skin();$('#title').textContent=`· ${table}号桌 · ${role==='timer'?'倒计时':'直播与播报'}`;
+ const d=read(),pres=d?.presentations[table],g=projected(d?.games.find(g=>g.id===pres?.game));skin();$('#title').textContent=role==='timer'?'赛事计时':'直播与播报';
  $('#sound').hidden=!!preview||role==='timer'||enabled;$('#silent').hidden=!!preview||role==='timer'||enabled;
  const seating=!g||pres?.mode==='seating';
  if(role==='timer'&&!seating){if(ready)receiver()?.update(g,B.theme());$('#frame').hidden=false;$('#layer').hidden=true;return}
  const nextSignature=JSON.stringify([pres,d?.drafts[pres?.account]?.seats,d?.players.map(p=>[p.id,p.name,p.avatar,p.memberId]),g?.result,g?.status,g?.entries,lastResult]);
  if(nextSignature!==lastSignature){lastSignature=nextSignature;if(!seating)delete $('#layer').dataset.layout;
   if(seating){$('#frame').hidden=true;$('#layer').hidden=false;$('#layer').innerHTML=seatMap(d,d?.drafts[pres?.account]?.seats||{});fitSeats()}
-  else if(g.result&&['done','failed'].includes(g.resultPlayback?.status)&&lastResult!==g.resultPlayback.id&&!current){$('#frame').hidden=true;$('#layer').hidden=false;$('#layer').innerHTML=`<h1>本场正式前三名</h1><div class="podium">${[2,0,1].map(i=>{const p=player(d,g.result.pids[i]);return `<div class="rank"><strong>${['冠军','亚军','季军'][i]}</strong>${p.avatar?`<p><img src="${esc(p.avatar)}" alt=""></p>`:''}<b>${esc(p.name)}</b></div>`}).join('')}</div><p>结果版本 ${g.result.version} · 等待下一场准备</p>`}
+  else if(g.result&&['done','failed'].includes(g.resultPlayback?.status)&&lastResult!==g.resultPlayback.id&&!current){$('#frame').hidden=true;$('#layer').hidden=false;$('#layer').innerHTML=`<h1>本场正式前三名</h1><div class="podium">${[2,0,1].map(i=>{const p=player(d,g.result.pids[i]);return `<div class="rank"><strong>${['冠军','亚军','季军'][i]}</strong>${p.avatar?`<p><img src="${esc(p.avatar)}" alt=""></p>`:''}<b>${esc(p.name)}</b></div>`}).join('')}</div><p>等待下一场准备</p>`}
   else{$('#frame').hidden=false;$('#layer').hidden=true}
  }
  if(role==='live'&&!seating&&ready)receiver()?.updateTable?.({table,players:livePlayers(d,g),hands:preview?.hands||null,preview:!!preview,colors:Object.fromEntries(['bg','card','ink','metal-text','muted','border','accent','raised','well'].map(k=>[k,getComputedStyle(document.documentElement).getPropertyValue('--'+k).trim()]))});
 }
 function itemFor(d,b,g){const base={id:'broadcast:'+b.id+':'+b.completed,tpl:'dyn',skin:B.theme(),label:b.title,status:'pending',t:new Date().toLocaleTimeString('zh-CN',{hour12:false})};
  if(b.type==='text')return {...base,scene:'notice',d:{text:b.body,times:1}};
- if(b.type==='hand')return {...base,scene:'hand',d:{A:player(d,b.a),hand:({'皇家同花顺':'rf','同花顺':'sf','四条':'quads','葫芦':'fh','同花':'flush'})[b.hand]}};
- return {...base,scene:b.b?'killAB':'killA',d:{A:player(d,b.a),...(b.b?{B:player(d,b.b)}:{})}};
+ if(b.type==='hand')return {...base,scene:'hand',d:{A:player(d,b.a,g),hand:({'皇家同花顺':'rf','同花顺':'sf','四条':'quads','葫芦':'fh','同花':'flush'})[b.hand]}};
+ return {...base,scene:b.b?'killAB':'killA',d:{A:player(d,b.a,g),...(b.b?{B:player(d,b.b,g)}:{})}};
 }
 async function stopCurrent(){run++;await receiver()?.stop?.();current=null;busy=false;}
 async function pump(){
@@ -70,7 +71,7 @@ async function pump(){
   const count=finale?1:b.repeats-b.completed;
   for(let i=0;i<count;i++){
    if(token!==run)return;const latest=read(),bg=latest.games.find(x=>x.id===g.id),bb=latest.broadcasts.find(x=>x.id===id);
-   const item=finale?{id:'result:'+id,tpl:'dyn',skin:B.theme(),scene:'finale',label:'先冠军后前三',status:'pending',t:'',d:{A:player(latest,g.result.pids[0]),P1:player(latest,g.result.pids[0]),P2:player(latest,g.result.pids[1]),P3:player(latest,g.result.pids[2])}}:itemFor(latest,bb,bg);
+   const item=finale?{id:'result:'+id,tpl:'dyn',skin:B.theme(),scene:'finale',label:'先冠军后前三',status:'pending',t:'',d:{A:player(latest,g.result.pids[0],bg),P1:player(latest,g.result.pids[0],bg),P2:player(latest,g.result.pids[1],bg),P3:player(latest,g.result.pids[2],bg)}}:itemFor(latest,bb,bg);
    await receiver().preload(Object.values(item.d).filter(p=>p&&typeof p==='object'&&p.id));
    if(token!==run)return;lastSignature='';render();receiver().enqueue(item);
    let status;
@@ -96,7 +97,7 @@ addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('#fra
 addEventListener('storage',e=>{if([B.dealerKey,B.playerKey].includes(e.key))check()});addEventListener('rzh-theme',()=>{lastSkin='';check()});
 addEventListener('resize',fitSeats);
 $('#layer').addEventListener('error',e=>{if(e.target.matches('.circle img'))e.target.hidden=true},true);
-fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=clock-layout-20261102':'animation.html?v=seating-gap-20261103';render()});
+fetch('themes.json').then(r=>r.json()).then(x=>{themes=x;$('#frame').src=role==='timer'?'timer.html?screen=1&v=tv-merge-20261104':'animation.html?v=tv-merge-20261104';render()});
 if(preview){const exit=document.createElement('a');exit.href='screen.html?table='+table+(role==='timer'?'&role=timer':'');exit.textContent='退出示例';$('header div').prepend(exit)}
 if(role==='live'&&!preview){
  if(navigator.locks)navigator.locks.request(B.prefix+':live:'+table,async()=>{owner=true;$('#status').textContent='本桌播放页已就绪';await new Promise(()=>{})});
